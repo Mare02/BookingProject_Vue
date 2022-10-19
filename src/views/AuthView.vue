@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import service from '../Services/API'
+import service from '../services/API'
 
 export default {
   name: 'AuthView',
