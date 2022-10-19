@@ -25,6 +25,18 @@ const utils = {
     catch (error) {
       return error
     }
+  },
+  "logIn": async function(email, password){
+    try{
+      let res = await axios.post(`${api_url + 'auth/login'}`,{
+        email: email, password: password
+      })
+      console.log(res);
+      return res
+    }
+    catch (error) {
+      return error
+    }
   }
 }
 
