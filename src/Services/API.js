@@ -14,14 +14,18 @@ const utils = {
       console.log(error);
     }
   },
-  // "signUp": async function(firstname, lastname, email, password){
-  //   try {
-  //     await axios.post(`${api_url + 'auth/signup'}`)
-  //   } 
-  //   catch (error) {
-  //     console.log(error); 
-  //   }
-  // }
+  "signUp": async function(firstName, lastName, email, password, confirm_password){
+    try {
+      let res = await axios.post(`${api_url + 'auth/signup'}`, {
+        firstname: firstName, lastname: lastName, email: email, password: password, cpassword: confirm_password
+      })
+      console.log(res);
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  }
 }
 
 export default utils 
