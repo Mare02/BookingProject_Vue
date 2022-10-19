@@ -31,7 +31,7 @@
         </div>
       </transition>
     </div>
-    <button class="login-btn" v-if="!showRegister">Log In</button>
+    <button class="login-btn" v-if="!showRegister" @click="logIn()">Log In</button>
     <button class="register-btn" v-if="showRegister" @click="signUp()">Register</button>
     <div class="reg-option" v-if="!showRegister">
       <span>Dont't have an account?</span>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import service from '../services/API'
+import service from '../Services/API'
 
 export default {
   name: 'AuthView',
@@ -77,6 +77,18 @@ export default {
       console.log(res.data.msg);
 
       this.inputs = {
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        c_password: ''
+      }
+    },
+    async logIn(){
+      let res = await service.logIn(this.inputs.email, this.inputs.password)
+      console.log(res);
+
+      this.inputs={
         first_name: '',
         last_name: '',
         email: '',
