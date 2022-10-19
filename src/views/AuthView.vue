@@ -2,17 +2,17 @@
 <div class="auth-container">
   <div class="inputs-wrapper">
     <span class="title" v-if="!showRegister">Sign In</span>
-    <span class="title" v-if="showRegister">Register</span>
+    <span class="title" v-if="showRegister">Sign Up</span>
     <div class="inputs">
       <transition>
         <div class="input-div" v-if="showRegister">
-          <label>First Name:</label>
+          <label>First name:</label>
           <input type="text" v-model="inputs.first_name">
         </div>
       </transition>
       <transition>
         <div class="input-div" v-if="showRegister">
-          <label>Last Name:</label>
+          <label>Last name:</label>
           <input type="text" v-model="inputs.last_name">
         </div>
       </transition>
@@ -22,7 +22,11 @@
       </div>
       <div class="input-div">
         <label>Password:</label>
-        <input type="password" v-model="inputs.password">
+        <input type="password" v-model="inputs.password" id="password">
+        <div class="show-pass-div">
+          <input type="checkbox" @click="showPass()">
+          <span>show password</span>
+        </div>
       </div>
       <transition>
         <div class="input-div" v-if="showRegister">
@@ -31,11 +35,11 @@
         </div>
       </transition>
     </div>
-    <button class="login-btn" v-if="!showRegister" @click="logIn()">Log In</button>
-    <button class="register-btn" v-if="showRegister" @click="signUp()">Register</button>
+    <button class="login-btn" v-if="!showRegister" @click="logIn()">Sign In</button>
+    <button class="register-btn" v-if="showRegister" @click="signUp()">Submit</button>
     <div class="reg-option" v-if="!showRegister">
       <span>Dont't have an account?</span>
-      <button @click="changeReg()">Register</button>
+      <button @click="changeReg()">Sign Up</button>
     </div>
     <div class="log-option" v-if="showRegister">
       <span>Already have an account?</span>
@@ -74,7 +78,7 @@ export default {
     async signUp(){
       let res = await service.signUp(this.inputs.first_name, this.inputs.last_name, 
                                     this.inputs.email, this.inputs.password, this.inputs.c_password)
-      console.log(res.data.msg);
+      console.log(res);
 
       this.inputs = {
         first_name: '',
@@ -94,6 +98,14 @@ export default {
         email: '',
         password: '',
         c_password: ''
+      }
+    },
+    showPass(){
+      const pass = document.getElementById("password");
+      if (pass.type === "password") {
+        pass.type = "text";
+      } else {
+        pass.type = "password";
       }
     }
   }
