@@ -7,11 +7,10 @@ const utils = {
       const res = await axios.get(`${api_url + 'apartments'}`, 
         {params:{des_id: des_id, check_in: check_in_date, check_out: check_out_date}}
       )
-      console.log(res);
       return res.data.data
     } 
     catch (error) {
-      console.log(error);
+      return error
     }
   },
   "signUp": async function(firstName, lastName, email, password, confirm_password){
@@ -19,7 +18,6 @@ const utils = {
       let res = await axios.post(`${api_url + 'auth/signup'}`, {
         firstname: firstName, lastname: lastName, email: email, password: password, cpassword: confirm_password
       })
-      console.log(res);
       return res
     } 
     catch (error) {

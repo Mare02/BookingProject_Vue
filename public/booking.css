@@ -95,6 +95,9 @@ body{
 .inputs-wrapper .inputs .input-div input:focus{
   border: 2px solid var(--nav-bg-color);
 }
+/* .inputs-wrapper .inputs .input-div input:invalid{
+  border: 2px solid red;
+} */
 .inputs-wrapper .inputs .input-div label{
   margin-bottom: 5px;
   color: rgb(65, 65, 65);
