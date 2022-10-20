@@ -1,24 +1,17 @@
 <template>
-<div>
-
-</div>
+  <Input/>
 </template>
 
 <script>
+import Input from '../components/Input-Home.vue'
 
 export default {
-  name: 'HomeView',
   components: {
-  },
-  mounted(){
-  },
-  data(){
-    return{
-
-    }
-  },
-  methods:{
-
+    Input
   }
 }
 </script>
+
+<style>
+
+</style>

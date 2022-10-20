@@ -104,9 +104,7 @@ export default {
       console.log(this.v$.$errors);
       this.showRegister = !this.showRegister
       this.passMatch = true
-      this.api_error_msg = '',
-      
-      console.log(this.v$.$errors);
+      this.api_error_msg = ''
     },
     async signUp(){
       this.v$.$validate()
