@@ -70,7 +70,6 @@ export default {
   components: {
   },
   mounted(){
-    
   },
   data(){
     return{
@@ -101,9 +100,13 @@ export default {
   },
   methods:{
     changeReg(){
+      this.v$.$reset()
+      console.log(this.v$.$errors);
       this.showRegister = !this.showRegister
       this.passMatch = true
-      this.api_error_msg = ''
+      this.api_error_msg = '',
+      
+      console.log(this.v$.$errors);
     },
     async signUp(){
       this.v$.$validate()
@@ -150,7 +153,7 @@ export default {
           pass_co.type = "password";
         }
       }
-    }
+    },
   }
 }
 </script>
