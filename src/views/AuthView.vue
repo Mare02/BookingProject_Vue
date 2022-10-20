@@ -100,13 +100,10 @@ export default {
   },
   methods:{
     changeReg(){
-      this.v$.$reset()
-      console.log(this.v$.$errors);
       this.showRegister = !this.showRegister
       this.passMatch = true
-      this.api_error_msg = '',
-      
-      console.log(this.v$.$errors);
+      this.api_error_msg = ''
+      this.v$.$reset()
     },
     async signUp(){
       this.v$.$validate()

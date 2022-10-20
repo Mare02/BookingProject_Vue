@@ -30,26 +30,40 @@ body{
   padding: 10px;
 }
 
-.nav-links button{
-  font-size: 1rem;
+.nav-links{
+  width: auto;
+  font-size: 1.2rem;
+}
+.nav-links .link{
+  font-size: 1.1rem;
   padding: 0.5rem;
-  border: 1px solid white;
+  border: none;
   background: none;
   border-radius: 10px;
   cursor: pointer;
   margin: 0.5rem;
   text-decoration: none;
   color: white;
-  
+  text-shadow: 0 5px 5px black;
+  transition: all 0.3s;
 }
-.nav-links button:hover{
+.nav-links .link:hover{
   background-color: rgba(255, 255, 255, 0.219);
 }
-.nav-links{
-  width: auto;
-  font-size: 1.2rem;
-}
 
+.link-signin{
+  font-size: 1.1rem;
+  border-radius: 10px;
+  padding: 0.5rem;
+  border: none;
+  color: var(--nav-bg-color);
+  cursor: pointer;
+  margin: 1rem;
+  transition: all 0.3s;
+}
+.link-signin:hover{
+  background-color: rgb(193, 182, 201);
+}
 .nav-title{
   width: auto;
   font-size: 1.2rem;
@@ -118,7 +132,6 @@ body{
   margin-left: 0.5rem;
 }
 
-
 .login-btn, .register-btn{
   font-size: 1.1rem;
   padding: 0.7rem;
@@ -149,6 +162,16 @@ body{
 }
 
 
+.home-container{
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+.home-title{
+  font-size: 2rem;
+  padding-top: 5rem;
+}
+
+/*errors*/
 .error{
   border: 2px solid red !important;
 }
@@ -158,6 +181,25 @@ body{
   margin-bottom: 0.5rem;
 }
 
+
+/*utils*/
+.d-flex{
+  display: flex;
+}
+.j-center{
+  justify-content: center;
+}
+.a-center{
+  align-items: center;
+}
+.w-100{
+  width: 100%;
+}
+.h-100{
+  height: 100vh;
+}
+
+/*transition-tag*/
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
