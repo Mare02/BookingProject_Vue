@@ -2,40 +2,54 @@
 <div class="auth-container">
   <div class="inputs-wrapper">
     <span class="title" v-if="!showRegister">Sign In</span>
-    <span class="title" v-if="showRegister">Register</span>
+    <span class="title" v-if="showRegister">Sign Up</span>
     <div class="inputs">
       <transition>
         <div class="input-div" v-if="showRegister">
-          <label>First Name:</label>
-          <input type="text" v-model="inputs.first_name">
+          <label>First name:</label>
+          <input type="text" v-model="inputs.first_name"
+            :class="{error: v$.inputs.first_name.$errors.length}">
+          <span v-for="error in v$.inputs.first_name.$errors" :key="error" class="error-msg">{{error.$message}}</span>
         </div>
       </transition>
       <transition>
         <div class="input-div" v-if="showRegister">
-          <label>Last Name:</label>
-          <input type="text" v-model="inputs.last_name">
+          <label>Last name:</label>
+          <input type="text" v-model="inputs.last_name"
+            :class="{error: v$.inputs.last_name.$errors.length}">
+          <span v-for="error in v$.inputs.last_name.$errors" :key="error" class="error-msg">{{error.$message}}</span>
         </div>
       </transition>
       <div class="input-div">
         <label>Email:</label>
-        <input type="text" v-model="inputs.email">
+        <input type="text" v-model="inputs.email"
+          :class="{error: v$.inputs.email.$errors.length}">
+        <span v-for="error in v$.inputs.email.$errors" :key="error" class="error-msg">{{error.$message}}</span>
       </div>
       <div class="input-div">
-        <label>Password:</label>
-        <input type="password" v-model="inputs.password">
+        <label>Password: </label>
+        <input type="password" v-model="inputs.password" id="password" 
+          :class="{error: v$.inputs.password.$errors.length}">
+        <div class="show-pass-div">
+          <input type="checkbox" @click="showPass()">
+          <span>show password</span>
+        </div>
+        <span v-for="error in v$.inputs.password.$errors" :key="error" class="error-msg">{{error.$message}}</span>
       </div>
       <transition>
         <div class="input-div" v-if="showRegister">
           <label>Confirm password:</label>
-          <input type="password" v-model="inputs.c_password">
+          <input type="password" v-model="inputs.c_password" id="password-co"
+            :class="{error: v$.inputs.c_password.$errors.length}">
+          <span v-for="error in v$.inputs.c_password.$errors" :key="error" class="error-msg">{{error.$message}}</span>
         </div>
       </transition>
     </div>
-    <button class="login-btn" v-if="!showRegister" @click="logIn()">Log In</button>
-    <button class="register-btn" v-if="showRegister" @click="signUp()">Register</button>
+    <button  class="login-btn" v-if="!showRegister" @click="logIn()">Sign In</button>
+    <button type="submit" class="register-btn" v-if="showRegister" @click="signUp()">Submit</button>
     <div class="reg-option" v-if="!showRegister">
       <span>Dont't have an account?</span>
-      <button @click="changeReg()">Register</button>
+      <button @click="changeReg()">Sign Up</button>
     </div>
     <div class="log-option" v-if="showRegister">
       <span>Already have an account?</span>
@@ -46,18 +60,23 @@
 </template>
 
 <script>
-import service from '../services/API'
+// import service from '../services/API'
+import useVuelidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+// import { useToast } from "vue-toastification";
 
 export default {
   name: 'AuthView',
   components: {
   },
   mounted(){
+    
   },
   data(){
     return{
       showRegister: false,
 
+      v$: useVuelidate(),
       inputs: {
         first_name: '',
         last_name: '',
@@ -67,33 +86,72 @@ export default {
       }
     }
   },
+  validations(){
+    return{
+      inputs: {
+        first_name: {required},
+        last_name: {required},
+        email: {required},
+        password: {required},
+        c_password: {required}
+      }
+    }
+  },
   methods:{
     changeReg(){
       this.showRegister = !this.showRegister
     },
     async signUp(){
-      let res = await service.signUp(this.inputs.first_name, this.inputs.last_name, 
-                                    this.inputs.email, this.inputs.password, this.inputs.c_password)
-      console.log(res.data.msg);
-
-      this.inputs = {
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        c_password: ''
+      this.v$.$validate()
+      if(this.v$.$error){
+        console.log('Inputs are empty')
       }
+      // const res = await service.signUp(this.inputs.first_name, this.inputs.last_name, 
+      //                               this.inputs.email, this.inputs.password, this.inputs.c_password)
+      // console.log(res);
+      // if(res.response.data.msg){
+      //   const toast = useToast()
+      //   toast.error(res.response.data.msg, {position: 'top-center', timeout: 4000, hideProgressBar: true})
+      // }
+
+      // this.inputs = {
+      //   first_name: '',
+      //   last_name: '',
+      //   email: '',
+      //   password: '',
+      //   c_password: ''
+      // }
     },
     async logIn(){
-      let res = await service.logIn(this.inputs.email, this.inputs.password)
-      console.log(res);
+      console.log(this.v$);
+      this.v$.$validate()
+      if(this.v$.$error){
+        console.log('Inputs are empty')
+      }
+      // const res = await service.logIn(this.inputs.email, this.inputs.password)
+      // console.log(res);
 
-      this.inputs={
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        c_password: ''
+      // this.inputs={
+      //   first_name: '',
+      //   last_name: '',
+      //   email: '',
+      //   password: '',
+      //   c_password: ''
+      // }
+    },
+    showPass(){
+      const pass = document.getElementById("password");
+      const pass_co = document.getElementById('password-co')
+      if (pass.type === "password") {
+        pass.type = "text";
+        if(pass_co){
+          pass_co.type = "text";
+        }
+      } else {
+        pass.type = "password";
+        if(pass_co){
+          pass_co.type = "password";
+        }
       }
     }
   }

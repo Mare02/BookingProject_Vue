@@ -1,19 +1,26 @@
 *{
   padding: 0;
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: bold;
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 600;
 }
 
 :root{
-  --bg-color: linear-gradient(90deg, rgba(95,90,168,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)
+  --nav-bg-color: rgb(77, 76, 125);
+  --btn-color: rgb(77, 76, 125);
+  --btn-color-hover: rgb(77, 76, 125, 0.7);
+  --link-color: rgb(110, 109, 175);
+  --bg-color: rgb(249, 245, 235);
+}
+
+body{
+  background-color: var(--bg-color);
 }
 
 .navbar{
   height: 3rem;
   position: sticky;
-  background: rgb(95,90,168);
-  background: linear-gradient(90deg, rgba(95,90,168,1) 0%, rgba(103,103,252,1) 34%, rgba(3,146,212,1) 57%, rgba(15,86,101,1) 95%);
+  background-color: var(--nav-bg-color);
   color: white;
   font-weight: bold;
   top: 0;
@@ -24,7 +31,7 @@
 }
 
 .nav-links button{
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 0.5rem;
   border: 1px solid white;
   background: none;
@@ -33,6 +40,7 @@
   margin: 0.5rem;
   text-decoration: none;
   color: white;
+  
 }
 .nav-links button:hover{
   background-color: rgba(255, 255, 255, 0.219);
@@ -44,7 +52,7 @@
 
 .nav-title{
   width: auto;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .auth-container{
@@ -54,7 +62,7 @@
   
 }
 .inputs-wrapper{
-  width: 30rem;
+  width: 35rem;
   height: 40rem;
   border-radius: 20px;
   display: flex;
@@ -76,30 +84,54 @@
   margin-top: 1rem;
 }
 .inputs-wrapper .inputs .input-div input{
-  border: 2px solid gray;
+  border: 2px solid rgb(234, 227, 210);
   height: 1.5rem;
   padding: 0.5rem;
-  font-size: 1.2rem;
-  font-weight: 400;
+  font-size: 1.1rem;
+  font-weight: 500;
+  outline: none;
+  border-radius: 5px;
 }
+.inputs-wrapper .inputs .input-div input:focus{
+  border: 2px solid var(--nav-bg-color);
+}
+/* .inputs-wrapper .inputs .input-div input:invalid{
+  border: 2px solid red;
+} */
 .inputs-wrapper .inputs .input-div label{
   margin-bottom: 5px;
   color: rgb(65, 65, 65);
 }
 
+.show-pass-div{
+  display: flex;
+  align-items: center;
+}
+.show-pass-div input{
+  width: 1rem;
+  cursor: pointer;
+}
+.show-pass-div span{
+  font-weight: 500;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
+
 .login-btn, .register-btn{
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   padding: 0.7rem;
   border: none;
-  background-color: rgb(42, 99, 255);
+  background-color: var(--btn-color);
   border-radius: 5px;
   cursor: pointer;
   margin: 0.5rem;
   text-decoration: none;
   color: white;
 }
-.login-btn:hover{
-  background-color: rgb(42, 99, 255, 0.7);
+.login-btn:hover, .register-btn:hover{
+  background-color: var(--btn-color-hover);
+  transition: all 0.3s;
 }
 
 .reg-option, .log-option{
@@ -112,9 +144,17 @@
  border: none;
  font-size: 1.1rem;
  cursor: pointer;
- color: rgb(0, 68, 255);
+ color: var(--link-color);
 }
 
+
+.error{
+  border: 2px solid red !important;
+}
+.error-msg{
+  color: red;
+  font-weight: 300;
+}
 
 .v-enter-active,
 .v-leave-active {
