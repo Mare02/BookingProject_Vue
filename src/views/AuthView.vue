@@ -29,7 +29,7 @@
       <div class="input-div">
         <label>Password: </label>
         <input type="password" v-model="inputs.password" id="password" 
-          :class="{error: v$.inputs.password.$errors.length}">
+          :class="{error: v$.inputs.password.$errors.length || !passMatch}">
         <div class="show-pass-div">
           <input type="checkbox" @click="showPass()">
           <span>show password</span>
@@ -40,11 +40,12 @@
         <div class="input-div" v-if="showRegister">
           <label>Confirm password:</label>
           <input type="password" v-model="inputs.c_password" id="password-co"
-            :class="{error: v$.inputs.c_password.$errors.length}">
+            :class="{error: v$.inputs.c_password.$errors.length || !passMatch}">
           <span v-for="error in v$.inputs.c_password.$errors" :key="error" class="error-msg">{{error.$message}}</span>
         </div>
       </transition>
     </div>
+    <span class="error-msg">{{api_error_msg}}</span>
     <button  class="login-btn" v-if="!showRegister" @click="logIn()">Sign In</button>
     <button type="submit" class="register-btn" v-if="showRegister" @click="signUp()">Submit</button>
     <div class="reg-option" v-if="!showRegister">
@@ -60,21 +61,21 @@
 </template>
 
 <script>
-// import service from '../services/API'
+import service from '../services/API'
 import useVuelidate from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
-// import { useToast } from "vue-toastification";
+import { required, email, minLength } from '@vuelidate/validators'
 
 export default {
   name: 'AuthView',
   components: {
   },
   mounted(){
-    
   },
   data(){
     return{
       showRegister: false,
+      passMatch: true,
+      api_error_msg: '',
 
       v$: useVuelidate(),
       inputs: {
@@ -91,53 +92,52 @@ export default {
       inputs: {
         first_name: {required},
         last_name: {required},
-        email: {required},
-        password: {required},
+        email: {required, email},
+        password: {required, minLength: minLength(8)},
         c_password: {required}
       }
     }
   },
   methods:{
     changeReg(){
+      this.v$.$reset()
+      console.log(this.v$.$errors);
       this.showRegister = !this.showRegister
+      this.passMatch = true
+      this.api_error_msg = '',
+      
+      console.log(this.v$.$errors);
     },
     async signUp(){
       this.v$.$validate()
-      if(this.v$.$error){
-        console.log('Inputs are empty')
+      if(!this.v$.$error){
+        const res = await service.signUp(this.inputs.first_name, this.inputs.last_name, 
+                                    this.inputs.email, this.inputs.password, this.inputs.c_password)
+        if(res.status !== 200){
+          this.api_error_msg = res.response.data.msg
+          if(res.response.data.msg == 'Passwords do not match!'){
+            this.passMatch = false
+            console.log(this.passMatch);
+          }
+        }
+        else{
+          this.api_error_msg = ''
+        }
       }
-      // const res = await service.signUp(this.inputs.first_name, this.inputs.last_name, 
-      //                               this.inputs.email, this.inputs.password, this.inputs.c_password)
-      // console.log(res);
-      // if(res.response.data.msg){
-      //   const toast = useToast()
-      //   toast.error(res.response.data.msg, {position: 'top-center', timeout: 4000, hideProgressBar: true})
-      // }
-
-      // this.inputs = {
-      //   first_name: '',
-      //   last_name: '',
-      //   email: '',
-      //   password: '',
-      //   c_password: ''
-      // }
     },
     async logIn(){
       console.log(this.v$);
-      this.v$.$validate()
-      if(this.v$.$error){
-        console.log('Inputs are empty')
+      this.v$.$validate(this.inputs.email, this.inputs.password)
+      if(!this.v$.inputs.email.$error && !this.v$.inputs.password.$error){
+        const res = await service.logIn(this.inputs.email, this.inputs.password)
+        console.log(res);
+        if(res.status !== 200){
+          this.api_error_msg = res.response.data.msg
+        }
+        else{
+          this.api_error_msg = ''
+        }
       }
-      // const res = await service.logIn(this.inputs.email, this.inputs.password)
-      // console.log(res);
-
-      // this.inputs={
-      //   first_name: '',
-      //   last_name: '',
-      //   email: '',
-      //   password: '',
-      //   c_password: ''
-      // }
     },
     showPass(){
       const pass = document.getElementById("password");
@@ -153,7 +153,7 @@ export default {
           pass_co.type = "password";
         }
       }
-    }
+    },
   }
 }
 </script>

@@ -53,6 +53,7 @@ body{
 .nav-title{
   width: auto;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .auth-container{
@@ -154,6 +155,7 @@ body{
 .error-msg{
   color: red;
   font-weight: 300;
+  margin-bottom: 0.5rem;
 }
 
 .v-enter-active,
