@@ -52,7 +52,7 @@ body{
 
 .nav-title{
   width: auto;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .auth-container{
@@ -147,6 +147,14 @@ body{
  color: var(--link-color);
 }
 
+
+.error{
+  border: 2px solid red !important;
+}
+.error-msg{
+  color: red;
+  font-weight: 300;
+}
 
 .v-enter-active,
 .v-leave-active {
