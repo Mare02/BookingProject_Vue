@@ -166,3 +166,8 @@ body{
 .v-leave-to {
   opacity: 0;
 }
+.profil{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}

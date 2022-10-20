@@ -18,9 +18,10 @@ export default{
     },
     redirectHome(){
       this.$router.push({name: 'home'})
-    }
+    },
+    },
   }
-}
+
 
 </script>
 

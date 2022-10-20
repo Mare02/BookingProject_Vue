@@ -73,6 +73,7 @@ export default {
   },
   data(){
     return{
+      isLogin:false,
       showRegister: false,
       passMatch: true,
       api_error_msg: '',
@@ -122,6 +123,9 @@ export default {
         }
         else{
           this.api_error_msg = ''
+          for(let el in this.inputs){
+            this.inputs[el]=''
+          }
         }
       }
     },
@@ -133,8 +137,11 @@ export default {
         console.log(res);
         if(res.status !== 200){
           this.api_error_msg = res.response.data.msg
+          console.log(this.isLogin)
         }
         else{
+          this.isLogin=true,
+           console.log(this.isLogin)
           this.api_error_msg = ''
         }
       }
