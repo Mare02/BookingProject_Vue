@@ -29,7 +29,7 @@
       <div class="input-div">
         <label>Password: </label>
         <input type="password" v-model="inputs.password" id="password" 
-          :class="{error: v$.inputs.password.$errors.length || !passMatch}">
+          :class="{error: v$.inputs.password.$errors.length}">
         <div class="show-pass-div">
           <input type="checkbox" @click="showPass()">
           <span>show password</span>
@@ -40,7 +40,7 @@
         <div class="input-div" v-if="showRegister">
           <label>Confirm password:</label>
           <input type="password" v-model="inputs.c_password" id="password-co"
-            :class="{error: v$.inputs.c_password.$errors.length || !passMatch}">
+            :class="{error: v$.inputs.c_password.$errors.length}">
           <span v-for="error in v$.inputs.c_password.$errors" :key="error" class="error-msg">{{error.$message}}</span>
         </div>
       </transition>
@@ -63,7 +63,7 @@
 <script>
 import service from '../services/API'
 import useVuelidate from '@vuelidate/core'
-import { required, email, minLength } from '@vuelidate/validators'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
 
 export default {
   name: 'AuthView',
@@ -74,7 +74,6 @@ export default {
   data(){
     return{
       showRegister: false,
-      passMatch: true,
       api_error_msg: '',
 
       v$: useVuelidate(),
@@ -94,7 +93,7 @@ export default {
         last_name: {required},
         email: {required, email},
         password: {required, minLength: minLength(8)},
-        c_password: {required}
+        c_password: {required, minLength: minLength(8), sameAs: helpers.withMessage('Passwords do not match!', sameAs(this.inputs.password))}
       }
     }
   },
@@ -108,32 +107,26 @@ export default {
     async signUp(){
       this.v$.$validate()
       if(!this.v$.$error){
+        for(let el in this.inputs){
+          this.inputs[el].trim()
+        }
         const res = await service.signUp(this.inputs.first_name, this.inputs.last_name, 
                                     this.inputs.email, this.inputs.password, this.inputs.c_password)
-        if(res.status !== 200){
-          this.api_error_msg = res.response.data.msg
-          if(res.response.data.msg == 'Passwords do not match!'){
-            this.passMatch = false
-            console.log(this.passMatch);
-          }
-        }
-        else{
-          this.api_error_msg = ''
-        }
+        if(res.status !== 200) this.api_error_msg = res.response.data.msg;
+        else this.api_error_msg = '';
       }
     },
     async logIn(){
       console.log(this.v$);
       this.v$.$validate(this.inputs.email, this.inputs.password)
       if(!this.v$.inputs.email.$error && !this.v$.inputs.password.$error){
+        for(let el in this.inputs){
+          this.inputs[el].trim()
+        }
         const res = await service.logIn(this.inputs.email, this.inputs.password)
         console.log(res);
-        if(res.status !== 200){
-          this.api_error_msg = res.response.data.msg
-        }
-        else{
-          this.api_error_msg = ''
-        }
+        if(res.status !== 200) this.api_error_msg = res.response.data.msg;
+        else this.api_error_msg = '';
       }
     },
     showPass(){
@@ -141,14 +134,11 @@ export default {
       const pass_co = document.getElementById('password-co')
       if (pass.type === "password") {
         pass.type = "text";
-        if(pass_co){
-          pass_co.type = "text";
-        }
-      } else {
+        if(pass_co) pass_co.type = "text";
+      } 
+      else {
         pass.type = "password";
-        if(pass_co){
-          pass_co.type = "password";
-        }
+        if(pass_co) pass_co.type = "password";
       }
     },
   }
