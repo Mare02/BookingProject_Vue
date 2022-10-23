@@ -19,7 +19,7 @@ body{
 
 .navbar{
   height: 3rem;
-  position: sticky;
+  /* position: sticky; */
   background-color: var(--nav-bg-color);
   color: white;
   font-weight: bold;
@@ -28,6 +28,7 @@ body{
   align-items: center;
   justify-content: space-between;
   padding: 10px;
+  z-index: 3;
 }
 
 .nav-links{
@@ -206,6 +207,7 @@ label{
   cursor: pointer;
   transition: all 0.3s;
   justify-content: left;
+  border-top: 1px solid lightgray;
 }
 .search-dropdown li .loc-name{
   display: flex;
@@ -233,9 +235,9 @@ label{
   padding: 4rem;
 }
 
-section{
+/* section{
   margin-top: 4rem;
-}
+} */
 .section-div{
   padding-left: 15rem;
   padding-right: 15rem;
@@ -269,6 +271,60 @@ section{
 .card-img img{
   width: auto;
   height: 100%;
+}
+
+.apa-list{
+  list-style: none;
+}
+.apa-list .apa-list-item{
+  border: 1px solid lightgray;
+  border-radius: 20px;
+  width: 50rem;
+  height: 18rem;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+.apa-card-img{
+  height: 15rem;
+  width: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.apa-card-img img{
+  width: auto;
+  height: 100%;
+}
+
+.carousel{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 18rem;
+  width: 18rem;
+}
+.carousel-slide{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.carousel-item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.carousel__next .carousel__icon, .carousel__prev .carousel__icon{
+  border: 2px solid white;
+  border-radius: 10px;
+  /* fill: white; */
+  box-shadow: 0 0 10px 1px black;
+  visibility: hidden;
+}
+.carousel:hover button svg{
+  visibility: visible;
 }
 
 
@@ -308,7 +364,12 @@ section{
 .h-100{
   height: 100vh;
 }
-
+.mt-5{
+  margin-top: 5rem;
+}
+.c-pointer{
+  cursor: pointer;
+}
 
 /*transition-tag*/
 .v-enter-active,

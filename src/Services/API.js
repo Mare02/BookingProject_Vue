@@ -41,7 +41,6 @@ const utils = {
       let res = await axios.get(`${api_url + 'destinations/search'}`, {
         params:{search: search}
       })
-      console.log(res);
       return res
     } 
     catch (error) {
@@ -49,10 +48,10 @@ const utils = {
       return error  
     }
   },
-  "getDestinationsById": async function(des_id){
+  "getDestinationsById": async function(sta_id){
     try {
       let res = await axios.get(`${api_url + 'destinations'}`, {
-        params:{des_id: des_id}
+        params:{sta_id: sta_id}
       })
       console.log(res);
       return res

@@ -22,7 +22,7 @@
       <input type="date" v-model="checkOutDate">
     </div>
     <div class="searchComp-section">
-      <button class="search-btn">Search</button>
+      <button @click="emitData()" class="search-btn">Search</button>
     </div>
   </div>
 </template>
@@ -58,6 +58,9 @@
       },
       closeDropdown(){
         this.destinations = []
+      },
+      emitData(){
+        this.$emit('data', {des_id: this.destination_id, check_in: this.checkInDate, check_out: this.checkOutDate})
       }
     }
   }
