@@ -3,9 +3,11 @@
     <div class="nav-title">
       <span @click="redirectHome()">Booking Project</span>
     </div>
-    <nav class="nav-links">
-      <button v-if="$route.path !== '/auth'" @click="redirectToAuth()">Sign In</button>
-    </nav>
+    <div class="d-flex a-center">
+      <nav class="nav-links">
+        <button class="link-signin" v-if="$route.path !== '/auth'" @click="redirectToAuth()">Sign In</button>
+      </nav>
+    </div>
   </div>
 </template>
 
