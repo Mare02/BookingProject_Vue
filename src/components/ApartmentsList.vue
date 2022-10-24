@@ -11,7 +11,9 @@
           </Slide>
           <template #addons>
             <Navigation/>
+            <Pagination/>
           </template>
+          
         </Carousel>
         <Carousel class="carousel" :wrapAround="true" v-else>
           <Slide class="carousel-slide">
@@ -30,7 +32,7 @@
   </div>
 </template>
 <script>
-import { Carousel, Navigation, Slide } from 'vue3-carousel'
+import { Carousel, Navigation, Slide, Pagination } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
 export default{
@@ -39,6 +41,7 @@ export default{
     Carousel,
     Slide,
     Navigation,
+    Pagination
   },
   mounted(){
 
