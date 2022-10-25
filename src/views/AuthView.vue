@@ -113,24 +113,8 @@ export default {
         }
         const res = await service.signUp(this.inputs.first_name, this.inputs.last_name, 
                                     this.inputs.email, this.inputs.password, this.inputs.c_password)
-<<<<<<< HEAD
-        if(res.status !== 200){
-          this.api_error_msg = res.response.data.msg
-          if(res.response.data.msg == 'Passwords do not match!'){
-            this.passMatch = false
-            console.log(this.passMatch);
-          }
-        }
-        else{
-          this.api_error_msg = ''
-          for(let el in this.inputs){
-            this.inputs[el]=''
-          }
-        }
-=======
         if(res.status !== 200) this.api_error_msg = res.response.data.msg;
         else this.api_error_msg = '';
->>>>>>> 6733982eb17561fee81d9425f55d58988260da3e
       }
     },
     async logIn(){
@@ -142,20 +126,11 @@ export default {
         }
         const res = await service.logIn(this.inputs.email, this.inputs.password)
         console.log(res);
-<<<<<<< HEAD
-        if(res.status !== 200){
-          this.api_error_msg = res.response.data.msg
-          console.log(this.isLogin)
-        }
-        else{
-          this.isLogin=true,
-           console.log(this.isLogin)
-          this.api_error_msg = ''
-        }
-=======
+        
         if(res.status !== 200) this.api_error_msg = res.response.data.msg;
-        else this.api_error_msg = '';
->>>>>>> 6733982eb17561fee81d9425f55d58988260da3e
+        else {
+          this.$router.push({name: 'profil'})
+        }this.api_error_msg = '';
       }
     },
     showPass(){

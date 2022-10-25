@@ -380,12 +380,6 @@ label{
 .v-leave-to {
   opacity: 0;
 }
-<<<<<<< HEAD
-.profil{
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-=======
 
 
 /*media*/
@@ -410,5 +404,37 @@ label{
   .home-title{
     font-size: 2.2rem;
   }
->>>>>>> 6733982eb17561fee81d9425f55d58988260da3e
+}
+.profile_page{
+  display: flex;
+  flex-direction: column;
+}
+.user_profil{
+  display: flex;
+  flex-direction: row;
+}
+.user_info{
+  display: flex;
+  background-color: aqua;
+  padding: 20px;
+  margin: 20px;
+  height: 50%;
+  height: 30%;
+  border:1px solid black;
+  border-width: 0.2rem
+}
+.changes{
+  background-color: blue;
+  padding: 20px;
+  margin: 20px;
+  width: 50%;
+  height: 50%;
+}
+.reservations{
+  background-color: red;
+  padding: 20px;
+  margin: 20px;
+  width: 50%;
+  height: 50%;
+
 }

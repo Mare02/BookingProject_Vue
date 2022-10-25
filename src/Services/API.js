@@ -16,7 +16,7 @@ const utils = {
   "signUp": async function(firstName, lastName, email, password, confirm_password){
     try {
       let res = await axios.post(`${api_url + 'auth/signup'}`, {
-        firstname: firstName, lastname: lastName, email: email, password: password, cpassword: confirm_password
+        firstname: firstName, lastname: lastName, email: email, password: password, c_password: confirm_password
       })
       return res
     } 
