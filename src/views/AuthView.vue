@@ -113,7 +113,10 @@ export default {
         const res = await service.signUp(this.inputs.first_name, this.inputs.last_name, 
                                     this.inputs.email, this.inputs.password, this.inputs.c_password)
         if(res.status !== 200) this.api_error_msg = res.response.data.msg;
-        else this.api_error_msg = '';
+        else{
+          this.api_error_msg = '';
+          this.changeReg()
+        }
       }
     },
     async logIn(){
@@ -126,7 +129,10 @@ export default {
         const res = await service.logIn(this.inputs.email, this.inputs.password)
         console.log(res);
         if(res.status !== 200) this.api_error_msg = res.response.data.msg;
-        else this.api_error_msg = '';
+        else{
+          this.api_error_msg = '';
+          this.$router.push({name: 'home'})
+        } 
       }
     },
     showPass(){

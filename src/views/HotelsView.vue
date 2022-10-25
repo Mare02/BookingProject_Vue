@@ -52,13 +52,9 @@ export default{
   components:{
     HotelsList,
   },
-  created(){
-    console.log(this.$route);
-  },
   mounted(){
     this.route_data = JSON.parse(this.$route.params.data)
     this.getHotels()
-    console.log(this.$route);
   },
   data(){
     return{

@@ -54,12 +54,10 @@
           const res = await service.searchDestinations(this.search.trim())
           this.destinations = res.data.data
           this.arrLength = this.destinations.length
-          console.log(this.arrLength);
         }
         else{
           this.destinations = []
           this.arrLength = this.destinations.length
-          console.log(this.arrLength);
         }
       },
       selectDestination(id, name){

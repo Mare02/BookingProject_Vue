@@ -10,12 +10,11 @@
           </Slide>
           <template #addons>
             <Navigation v-if="hot.images.length > 1"/>
-            <Pagination v-if="hot.images.length > 1"/>
           </template>
         </Carousel>
         <Carousel class="carousel" :wrapAround="true" v-else>
           <Slide class="carousel-slide">
-            <div class="hot-card-img">
+            <div class="hot-card-img" @click="redirectToHotel(hot.hot_id)">
               <img src="../assets/street-out-city-centre-paris-random-walk-making-shots-beautiful-houses-huge-135493410.jpg" alt="">
             </div>
           </Slide>
@@ -46,7 +45,7 @@
   </div>
 </template>
 <script>
-import { Carousel, Navigation, Slide, Pagination } from 'vue3-carousel'
+import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
 export default{
@@ -55,7 +54,6 @@ export default{
     Carousel,
     Slide,
     Navigation,
-    Pagination,
   },
   mounted(){
 
