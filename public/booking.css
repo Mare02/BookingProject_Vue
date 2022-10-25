@@ -20,6 +20,7 @@ body{
 .navbar{
   height: 3rem;
   /* position: sticky; */
+  position: relative;
   background-color: var(--nav-bg-color);
   color: white;
   font-weight: bold;
