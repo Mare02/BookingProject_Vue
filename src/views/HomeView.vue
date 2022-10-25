@@ -44,7 +44,7 @@ export default {
       this.destinations = res.data.data
     },
     redirectTo(data){
-      this.$router.push({name: "apartments", params: { data: JSON.stringify(data) }})
+      this.$router.push({name: "hotels", params: { data: JSON.stringify(data) }})
     }
   }
 }
