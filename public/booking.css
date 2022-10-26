@@ -321,7 +321,7 @@ label{
   cursor: pointer;
 }
 .small-card{
-  height: 5rem;
+  height: 3.5rem;
   min-width: 5rem;
   max-width: 5rem;
   display: flex;
@@ -570,17 +570,17 @@ label{
 }
 @media(max-width: 1000px){
   .big-card{
-    width: 40rem;
-    height: 25rem;
+    width: 39rem;
+    height: 24rem;
   }
   .small-card{
-    height: 4.2rem;
+    height: 2.8rem;
     min-width: 4.2rem;
     max-width: 4.2rem;
     margin: 1.5px;
   }
   .gallery-selector{
-    width: 40rem;
+    width: 39rem;
   }
   .section-div{
     padding-left: 3rem;
@@ -629,5 +629,9 @@ label{
 }
 ::-webkit-scrollbar-button{
   background-color: rgb(83, 83, 83);
+  height: 10px;
+}
+
+.gallery-selector::-webkit-scrollbar{
   height: 10px;
 }

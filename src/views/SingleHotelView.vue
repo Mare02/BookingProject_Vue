@@ -6,7 +6,7 @@
           <span class="section-title">{{hotel.hot_name}}</span>
         </div>
       </div>
-      <div class="d-flex a-center f-col w-100 mt-3">
+      <div class="d-flex a-center f-col w-100 mt-1">
         <div class="big-card">
           <img :src="selectedUrl" alt="" id="showing-img" v-if="selectedUrl">
         </div>
