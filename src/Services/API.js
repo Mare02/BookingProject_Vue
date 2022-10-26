@@ -2,10 +2,10 @@ import axios from 'axios'
 const api_url = 'http://908q122.e2.mars-hosting.com/booking/'
 
 const utils = {
-  "getApartments": async function(des_id, check_in_date, check_out_date){
+  "getApartments": async function(hot_id, check_in_date, check_out_date){
     try {
       const res = await axios.get(`${api_url + 'apartments'}`, 
-        {params:{des_id: des_id, check_in: check_in_date, check_out: check_out_date}}
+        {params:{hot_id: hot_id, check_in: check_in_date, check_out: check_out_date}}
       )
       return res.data.data
     } 
@@ -16,6 +16,15 @@ const utils = {
   "getHotels": async function(des_id){
     try {
       const res = await axios.get(`${api_url + 'hotels'}`, {params:{des_id: des_id}})
+      return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getHotelById": async function(id){
+    try {
+      const res = await axios.get(`${api_url + 'hotels/' + id}`)
       return res.data.data
     } 
     catch (error) {

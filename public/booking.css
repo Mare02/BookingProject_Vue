@@ -275,6 +275,26 @@ label{
   height: 100%;
 }
 
+.card-horizontal-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+  padding-top: 1rem;
+}
+.card-horizontal-text{
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+}
+.card-horizontal-footer{
+  height: 10%;
+  display: flex;
+  align-self: flex-end;
+  padding-bottom: 1rem;
+}
+
+
 .hot-list{
   list-style: none;
   width: 100%;
@@ -300,7 +320,43 @@ label{
   border-radius: 10px;
   cursor: pointer;
 }
-.hot-card-img img{
+.small-card{
+  height: 5rem;
+  min-width: 5rem;
+  max-width: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 3px;
+  transition: all 0.3s;
+}
+.small-card:hover{
+  opacity: 0.7;
+}
+.big-card{
+  height: 30rem;
+  width: 45rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+}
+.gallery-selector{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45rem;
+  overflow-x: scroll;
+  cursor: grab;
+}
+
+.hot-card-img img, .small-card img, .big-card img{
   width: auto;
   height: 100%;
 }
@@ -436,7 +492,6 @@ label{
   visibility: visible;
 }
 
-
 /*errors*/
 .error{
   border: 2px solid red !important;
@@ -476,6 +531,21 @@ label{
 .mt-5{
   margin-top: 5rem;
 }
+.mt-3{
+  margin-top: 3rem;
+}
+.mt-2{
+  margin-top: 2rem;
+}
+.mt-1{
+  margin-top: 1rem;
+}
+.m-1{
+  margin: 1rem;
+}
+.m-2{
+  margin: 2rem;
+}
 .c-pointer{
   cursor: pointer;
 }
@@ -499,6 +569,19 @@ label{
   }
 }
 @media(max-width: 1000px){
+  .big-card{
+    width: 40rem;
+    height: 25rem;
+  }
+  .small-card{
+    height: 4.2rem;
+    min-width: 4.2rem;
+    max-width: 4.2rem;
+    margin: 1.5px;
+  }
+  .gallery-selector{
+    width: 40rem;
+  }
   .section-div{
     padding-left: 3rem;
     padding-right: 3rem;

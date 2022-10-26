@@ -20,7 +20,7 @@
           </Slide>
         </Carousel>
         <div class="hot-list-details">
-          <div class="hot-top">
+          <div class="card-horizontal-header">
             <div class="hot-header">
               <a class="hot-name" @click="redirectToHotel(hot.hot_id)">{{hot.hot_name}}</a>
               <div class="hot-rating">
@@ -28,12 +28,12 @@
               </div>
             </div>
           </div>
-          <div class="hot-bottom">
+          <div class="card-horizontal-text">
             <div class="hot-description">
               <p>{{hot.hot_description}}</p>
             </div>
           </div>
-          <div class="hot-end">
+          <div class="card-horizontal-footer">
             <div class="hot-price">
               <label class="price-label">Price: </label>
               <span class="price">[PRICE]</span>
@@ -72,22 +72,5 @@ export default{
 }
 </script>
 <style>
-.hot-top{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 20%;
-  padding-top: 1rem;
-}
-.hot-bottom{
-  height: 70%;
-  display: flex;
-  flex-direction: column;
-}
-.hot-end{
-  height: 10%;
-  display: flex;
-  align-self: flex-end;
-  padding-bottom: 1rem;
-}
+
 </style>
