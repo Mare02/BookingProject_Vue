@@ -2,7 +2,7 @@
 <div class="home-container">
   <span class="home-title">Find your next stay</span>
   <Search @data="redirectTo"/>
-  <section class="w-100 mt-5">
+  <!-- <section class="w-100 mt-5">
     <div class="section-div">
       <div class="section-header">
         <span class="section-title">Delve into the gems of Serbia</span>
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 </div>
 </template>
 
@@ -44,7 +44,7 @@ export default {
       this.destinations = res.data.data
     },
     redirectTo(data){
-      this.$router.push({name: "apartments", params: { data: JSON.stringify(data) }})
+      this.$router.push({name: "hotels", params: { data: JSON.stringify(data) }})
     }
   }
 }

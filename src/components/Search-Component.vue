@@ -1,8 +1,8 @@
 <template>
   <div class="searchComp-div">
-    <div class="searchComp-section">
+    <div class="searchComp-section" id="text-input-sec">
       <label>Destination:</label>
-      <input type="text" v-model="search" @input="searchDestinations()" id="des-input">
+      <input type="text" v-model="search" @input="searchDestinations()" id="des-input" autocomplete="off">
       <ul class="search-dropdown" id="dropdown" v-if="arrLength > 0" :class="{reactiveItems: arrLength <= 5, fiveItems: arrLength > 5}">
         <li v-for="des in destinations" :key="des.des_id" class="d-flex a-center" @click="selectDestination(des.des_id, des.des_name)">
           <img src="../assets/icons/free-location-pointer-icon-2961-thumb.png" alt="" class="des-icon">
@@ -21,7 +21,7 @@
       <label>Check out:</label>
       <input type="date" v-model="checkOutDate">
     </div>
-    <div class="searchComp-section">
+    <div class="searchComp-section" id="search-sec">
       <button @click="emitData()" class="search-btn">Search</button>
     </div>
   </div>
@@ -54,12 +54,10 @@
           const res = await service.searchDestinations(this.search.trim())
           this.destinations = res.data.data
           this.arrLength = this.destinations.length
-          console.log(this.arrLength);
         }
         else{
           this.destinations = []
           this.arrLength = this.destinations.length
-          console.log(this.arrLength);
         }
       },
       selectDestination(id, name){
