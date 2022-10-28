@@ -35,8 +35,9 @@
           </div>
           <div class="card-horizontal-footer">
             <div class="hot-price">
-              <label class="price-label">Price: </label>
-              <span class="price">[PRICE]</span>
+              <label class="price-label">Starting from: </label>
+              <span class="price" v-if="hot.full_price">{{numberWithCommas(hot.full_price)}} RSD</span>
+              <span class="price" v-if="!hot.full_price && hot.price_per_day">{{hot.price_per_day}} RSD / day</span>
             </div>
           </div>
         </div>
@@ -67,6 +68,10 @@ export default{
     redirectToHotel(id){
       console.log(id);
       this.$router.push({name: 'hotel', params:{id: id, data_id: JSON.stringify({check_in: this.check_in, check_out: this.check_out})}})
+    },
+    numberWithCommas(number){
+      console.log(number);
+      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   }
 }

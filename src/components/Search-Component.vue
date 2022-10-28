@@ -1,10 +1,10 @@
 <template>
-  <div class="searchComp-div">
-    <div class="searchComp-section" id="text-input-sec">
+  <div :class="{'searchComp-div': !vertical, 'searchComp-div-ver': vertical}">
+    <div class="searchComp-section">
       <label>Destination:</label>
       <input type="text" v-model="search" @input="searchDestinations()" id="des-input" autocomplete="off">
-      <ul class="search-dropdown" id="dropdown" v-if="arrLength > 0" :class="{reactiveItems: arrLength <= 5, fiveItems: arrLength > 5}">
-        <li v-for="des in destinations" :key="des.des_id" class="d-flex a-center" @click="selectDestination(des.des_id, des.des_name)">
+      <ul class="search-dropdown" id="dropdown" v-if="arrLength > 0" :class="{'dropdownReactive': arrLength <= 5, 'dropdownMin': arrLength > 5}">
+        <li v-for="des in destinations" :key="des.des_id" class="d-flex a-center" @click="selectDestination(des.des_id, des.des_name, des.sta_name)">
           <img src="../assets/icons/free-location-pointer-icon-2961-thumb.png" alt="" class="des-icon">
           <div class="loc-name">
             <span>{{des.des_name}}</span>
@@ -15,11 +15,11 @@
     </div>
     <div class="searchComp-section">
       <label>Check in:</label>
-      <input type="date" v-model="checkInDate" placeholder="date">
+      <input type="date" v-model="checkInDate" id="date-input">
     </div>
     <div class="searchComp-section">
       <label>Check out:</label>
-      <input type="date" v-model="checkOutDate">
+      <input type="date" v-model="checkOutDate" id="date-input">
     </div>
     <div class="searchComp-section" id="search-sec">
       <button @click="emitData()" class="search-btn">Search</button>
@@ -30,7 +30,7 @@
   import service from '../services/API'
   
   export default{
-    props:[],
+    props:['vertical'],
     mounted(){
       document.addEventListener('click', (event) => {
         if(event.target.id != 'des-input' && event.target.id != 'dropdown'){
@@ -60,9 +60,9 @@
           this.arrLength = this.destinations.length
         }
       },
-      selectDestination(id, name){
+      selectDestination(id, des_name, sta_name){
         this.destination_id = id
-        this.search = name
+        this.search = `${des_name}, ${sta_name}`
       },
       closeDropdown(){
         this.destinations = []
@@ -76,10 +76,11 @@
 </script>
 
 <style scoped>
-  .fiveItems{
-    min-height: calc(5 * 3.5rem);
-  }
-  .reactiveItems{
-    min-height: calc(v-bind('arrLength') * 3.5rem);
-  }
+.dropdownMin{
+  min-height: calc(5 * 3.5rem);
+}
+.dropdownReactive{
+  min-height: calc(v-bind('arrLength') * 3.5rem);
+  overflow-y: visible;
+}
 </style>

@@ -13,9 +13,11 @@ const utils = {
       return error
     }
   },
-  "getHotels": async function(des_id){
+  "getHotels": async function(des_id, check_in, check_out){
     try {
-      const res = await axios.get(`${api_url + 'hotels'}`, {params:{des_id: des_id}})
+      const res = await axios.get(`${api_url + 'hotels'}`, {params:{
+        des_id: des_id, check_in: check_in, check_out: check_out
+      }})
       return res.data.data
     } 
     catch (error) {

@@ -1,7 +1,7 @@
 <template>
 <div class="home-container">
   <span class="home-title">Find your next stay</span>
-  <Search @data="redirectTo"/>
+  <Search @data="redirect" :vertical="false"/>
   <!-- <section class="w-100 mt-5">
     <div class="section-div">
       <div class="section-header">
@@ -43,7 +43,7 @@ export default {
       let res = await service.getDestinationsById(1)
       this.destinations = res.data.data
     },
-    redirectTo(data){
+    redirect(data){
       this.$router.push({name: "hotels", params: { data: JSON.stringify(data) }})
     }
   }

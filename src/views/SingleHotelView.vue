@@ -28,11 +28,6 @@
         <span class="section-desc">{{hotel.hot_description_long}}</span>
       </div>
       <div class="mt-3 d-flex j-center">
-        <!-- <div class="apartments-div">
-          <div v-for="apa in apartments" :key="apa.apa_id" class="apartments-div-item">
-            {{apa[1].cat_name}}
-          </div>
-        </div> -->
         <table class="table">
           <tr class="table-section">
             <th class="col-title-small">Room Type</th>
