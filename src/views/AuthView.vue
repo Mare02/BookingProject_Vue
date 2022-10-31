@@ -131,16 +131,10 @@ export default {
         console.log(res);
         
         if(res.status !== 200) this.api_error_msg = res.response.data.msg;
-<<<<<<< HEAD
-        else {
-          this.$router.push({name: 'profil'})
-        }this.api_error_msg = '';
-=======
         else{
           this.api_error_msg = '';
           this.$router.push({name: 'home'})
         } 
->>>>>>> ca87b91c2c26c15eabea7f4159865d135ce61970
       }
     },
     showPass(){
