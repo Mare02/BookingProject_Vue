@@ -1,23 +1,6 @@
 <template>
   <div class="section-div d-flex j-center mt-5">
     <div class="filters">
-      <!-- <div class="filter-search-div">
-        <div class="filter-search-div-sec">
-          <label>Destination:</label>
-          <input type="text" id="search-input">
-        </div>
-        <div class="filter-search-div-sec">
-          <label>Check in:</label>
-          <input type="date">
-        </div>
-        <div class="filter-search-div-sec">
-          <label>Check out:</label>
-          <input type="date">
-        </div>
-        <div class="filter-search-div-sec">
-          <button class="search-btn">Search</button>
-        </div>
-      </div> -->
       <Search :vertical="true" @data="redirectTo"/>
       <div class="filter-search-div">
         <div class="filters-title">

@@ -363,9 +363,9 @@ label{
   cursor: pointer;
 }
 .small-card{
-  height: 3.5rem;
-  min-width: 5rem;
-  max-width: 5rem;
+  height: 3rem;
+  min-width: 4.5rem;
+  max-width: 4.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -379,8 +379,8 @@ label{
   opacity: 0.7;
 }
 .big-card{
-  height: 30rem;
-  width: 45rem;
+  height: 25rem;
+  width: 40rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -393,7 +393,7 @@ label{
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 45rem;
+  width: 40rem;
   overflow-x: scroll;
   cursor: grab;
 }
@@ -494,8 +494,8 @@ label{
   align-items: center;
 }
 .price-input{
-  width: 80%;
-  
+  width: 70%;
+  height: 1rem;
 }
 .filter-label{
   font-size: 1.1rem;
@@ -613,8 +613,8 @@ label{
 }
 @media(max-width: 1000px){
   .big-card{
-    width: 39rem;
-    height: 24rem;
+    width: 35rem;
+    height: 20rem;
   }
   .small-card{
     height: 2.8rem;
@@ -623,7 +623,7 @@ label{
     margin: 1.5px;
   }
   .gallery-selector{
-    width: 39rem;
+    width: 35rem;
   }
   .section-div{
     padding-left: 3rem;
