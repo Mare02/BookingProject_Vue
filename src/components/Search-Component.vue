@@ -37,6 +37,14 @@
           this.closeDropdown()
         }
       })
+      if(localStorage.getItem('des_name')){
+        this.selectDestination(localStorage.getItem('des_id'), localStorage.getItem('des_name'), 
+                              localStorage.getItem('sta_name'))
+        if(localStorage.getItem('check_in') && localStorage.getItem('check_out')){
+          this.checkInDate = localStorage.getItem('check_in')
+          this.checkOutDate = localStorage.getItem('check_out')
+        }
+      }
     },
     data(){
       return{
@@ -69,7 +77,10 @@
         this.arrLength = this.destinations.length
       },
       emitData(){
-        this.$emit('data', {des_id: this.destination_id, check_in: this.checkInDate, check_out: this.checkOutDate})
+        localStorage.setItem('check_in', this.checkInDate)
+        localStorage.setItem('check_out', this.checkOutDate)
+        localStorage.setItem('des_id', this.destination_id)
+        this.$emit('search')
       }
     }
   }

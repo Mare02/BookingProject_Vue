@@ -16,13 +16,13 @@ const routes = [
     component: AuthView,
   },
   {
-    path: '/hotels/:data',
+    path: '/hotels',
     name: 'hotels',
     props: true,
     component: HotelsView,
   },
   {
-    path: '/hotels/:id/:data_id',
+    path: '/hotels/:hot_id',
     name: 'hotel',
     component: SingleHotelView,
   },

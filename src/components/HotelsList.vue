@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex f-col a-center w-100">
-    <ul class="hot-list">
+    <ul class="hot-list" id="hotels-list">
       <li class="hot-list-item" v-for="hot in hotels" :key="hot.hot_id">
         <Carousel class="carousel" :wrapAround="true" v-if="hot.images">
           <Slide v-for="img in hot.images" :key="img.file_id" class="carousel-slide">
@@ -50,14 +50,14 @@ import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
 export default{
-  props: ['hotels', 'check_in', 'check_out'],
+  props: ['hotels'],
   components:{
     Carousel,
     Slide,
     Navigation,
   },
   mounted(){
-
+    this.$emit('loaded')
   },
   data(){
     return{
@@ -65,9 +65,9 @@ export default{
     }
   },
   methods:{
-    redirectToHotel(id){
-      console.log(id);
-      this.$router.push({name: 'hotel', params:{id: id, data_id: JSON.stringify({check_in: this.check_in, check_out: this.check_out})}})
+    redirectToHotel(hot_id){
+      console.log(hot_id);
+      this.$router.push({name: 'hotel', params:{hot_id: hot_id}})
     },
   }
 }

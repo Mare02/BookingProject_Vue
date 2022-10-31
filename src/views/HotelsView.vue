@@ -1,7 +1,7 @@
 <template>
   <div class="section-div d-flex j-center mt-5">
     <div class="filters">
-      <Search :vertical="true" @data="redirectTo"/>
+      <Search :vertical="true" @search="redirectTo" v-if="isLoadedList"/>
       <div class="filter-search-div">
         <div class="filters-title">
           <span class="title">Filters</span>
@@ -12,19 +12,23 @@
             <div class="d-flex j-center w-100">
               <div class="d-flex f-col a-center">
                 <label>From:</label>
-                <input class="price-input" type="number">
+                <input class="price-input" type="number" v-model="filters.start_price">
               </div>
               <div class="d-flex f-col a-center">
                 <label>To:</label>
-                <input class="price-input" type="number">
+                <input class="price-input" type="number" v-model="filters.end_price"> 
               </div>
+            </div>
+            <div class="mt-2">
+              <button class="search-btn" @click="getHotels(filters.start_price, filters.end_price)"
+              >Submit</button>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="hot-list-container">
-      <HotelsList :hotels="hotels" :check_in="route_data.check_in" :check_out="route_data.check_out"/>
+      <HotelsList :hotels="hotels" @loaded='this.isLoadedList = true'/>
     </div>
   </div>
 </template>
@@ -38,25 +42,33 @@ export default{
     HotelsList, Search
   },
   mounted(){
-    this.route_data = JSON.parse(this.$route.params.data)
-    this.getHotels(this.route_data.des_id, this.route_data.check_in, this.route_data.check_out)
+    this.getHotels()
   },
   data(){
     return{
-      route_data: {},
-
-      hotels: []
+      hotels: [],
+      filters: {
+        start_price: null,
+        end_price: null,
+        isLoadedList: false
+      }
     }
   },
   methods:{
-    async getHotels(des_id, check_in, check_out){
-      let res = await service.getHotels(des_id, check_in, check_out)
+    async getHotels(){
+      let res = await service.getHotels(localStorage.getItem('des_id'), 
+                                        localStorage.getItem('check_in') || null, 
+                                        localStorage.getItem('check_out') || null,
+                                        this.filters.start_price || null,
+                                        this.filters.end_price || null)
       this.hotels = res
+      console.log(res);
+      localStorage.setItem('des_name', res[0].des_name)
+      localStorage.setItem('sta_name', res[0].sta_name)
     },
-    redirectTo(data){
-      this.$router.push({name: "hotels", params: { data: JSON.stringify(data) }})
-      this.getHotels(data.des_id, data.check_in, data.check_out)
-    }
+    redirectTo(){
+      this.getHotels()
+    },
   },
 }
 </script>

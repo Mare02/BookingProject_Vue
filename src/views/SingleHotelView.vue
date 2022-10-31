@@ -59,7 +59,6 @@ import service from '../services/API'
 
 export default{
   mounted(){
-      this.route_data = JSON.parse(this.$route.params.data_id)
       this.getHotelById()
       this.getApartments()
     },
@@ -76,7 +75,7 @@ export default{
     },
     methods:{
       async getHotelById(){
-        const hot_id = this.$route.params.id
+        const hot_id = this.$route.params.hot_id
         const res = await service.getHotelById(hot_id)
         this.hotel = res[0]
         if(this.hotel.images){
@@ -84,8 +83,8 @@ export default{
         }
       },
       async getApartments(){
-        const hot_id = this.$route.params.id
-        const res = await service.getApartments(hot_id, this.route_data.check_in, this.route_data.check_out)
+        const hot_id = this.$route.params.hot_id
+        const res = await service.getApartments(hot_id, localStorage.getItem('check_in'), localStorage.getItem('check_out'))
         console.log(res);
         this.apartments = res
       },
