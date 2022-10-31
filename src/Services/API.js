@@ -13,11 +13,13 @@ const utils = {
       return error
     }
   },
-  "getHotels": async function(des_id, check_in, check_out, start_price, end_price){
+  "getHotels": async function(des_id, check_in, check_out, start_price, end_price, features){
     try {
       const res = await axios.get(`${api_url + 'hotels'}`, {params:{
-        des_id: des_id, check_in: check_in, check_out: check_out, start_price: start_price, end_price: end_price
+        des_id: des_id, check_in: check_in, check_out: check_out, 
+        start_price: start_price, end_price: end_price, features: features
       }})
+      console.log(res.data);
       return res.data.data
     } 
     catch (error) {
@@ -81,6 +83,15 @@ const utils = {
     catch (error) {
       console.log(error);
       return error  
+    }
+  },
+  "getFeatures": async function(){
+    try {
+      let res = await axios.get('http://908q122.e2.mars-hosting.com/booking/features')
+      return res.data.data
+    } 
+    catch (error) {
+      return error
     }
   }
 }

@@ -31,7 +31,7 @@ export default {
     Search
   },
   mounted(){
-    this.getDestinations()
+    // this.getDestinations()
   },
   data(){
     return{

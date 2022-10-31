@@ -42,6 +42,9 @@
           </div>
         </div>
       </li>
+      <li class="hot-list-error-div" v-if="hotels.length === 0">
+        <span class="search-error-msg">Sorry, there are no properties that match your search parameters.</span>
+      </li>
     </ul>
   </div>
 </template>

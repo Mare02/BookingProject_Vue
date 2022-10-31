@@ -2,7 +2,10 @@
   <div :class="{'searchComp-div': !vertical, 'searchComp-div-ver': vertical}">
     <div class="searchComp-section">
       <label>Destination:</label>
-      <input type="text" v-model="search" @input="searchDestinations()" id="des-input" autocomplete="off">
+      <div class="rel">
+        <input type="text" v-model="search" @input="searchDestinations()" id="des-input" autocomplete="off" placeholder="Search">
+        <img src="../assets/icons/free-location-pointer-icon-2961-thumb.png" class="des-icon-abs" alt="">
+      </div>
       <ul class="search-dropdown" id="dropdown" v-if="arrLength > 0" :class="{'dropdownReactive': arrLength <= 5, 'dropdownMin': arrLength > 5}">
         <li v-for="des in destinations" :key="des.des_id" class="d-flex a-center" @click="selectDestination(des.des_id, des.des_name, des.sta_name)">
           <img src="../assets/icons/free-location-pointer-icon-2961-thumb.png" alt="" class="des-icon">
