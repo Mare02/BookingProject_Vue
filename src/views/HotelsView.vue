@@ -1,5 +1,5 @@
 <template>
-  <div class="section-div tags-div">
+  <div class="section-div d-flex j-center a-center f-wrap mt-2">
     <div class="tag-button d-flex a-center">
       <img src="../assets/icons8-tag-window-100.png" alt="">
       Family
@@ -25,7 +25,7 @@
       Pet Friendly
     </div>
   </div>
-  <div class="section-div d-flex j-center mt-2">
+  <div class="section-div d-flex j-center mt-2" id="hotels-view">
     <div class="filters">
       <Search :vertical="true" @search="getHotels()" v-if="isLoadedList"/>
       <div class="filter-search-div">
@@ -145,13 +145,7 @@ export default{
   color: white;
   border: 2px solid rgb(187, 187, 152);
 }
-.tags-div{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
+
 .features-div{
   margin-top: 1rem;
   width: 100%;

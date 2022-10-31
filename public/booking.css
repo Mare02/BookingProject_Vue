@@ -673,6 +673,14 @@ label{
     font-size: 2.2rem;
   }
 }
+@media(max-width: 850px){
+  .filters{
+    flex-direction: row;
+  }
+  #hotels-view{
+    flex-direction: column;
+  }
+}
 @media(max-width: 800px){
   .searchComp-div #text-input-sec{
     width: 100%;

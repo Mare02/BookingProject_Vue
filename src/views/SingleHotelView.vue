@@ -3,7 +3,7 @@
     <div class="hot-list-details">
       <div class="card-horizontal-header">
         <div class="d-flex j-center">  
-          <span class="section-title">{{hotel.hot_name}}</span>
+          <span class="hotel-title">{{hotel.hot_name}}</span>
         </div>
       </div>
       <div class="d-flex a-center f-col w-100 mt-1">
@@ -98,6 +98,11 @@ export default{
 }
 </script>
 <style>
+.hotel-title{
+  font-size: 2rem;
+  margin: 1.5rem;
+  color: rgb(99, 68, 129);
+}
 .feature-div{
   padding: 0.5rem;
   border: 1px solid lightgrey;
