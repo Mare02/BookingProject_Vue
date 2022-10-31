@@ -28,19 +28,25 @@
         <span class="section-desc">{{hotel.hot_description_long}}</span>
       </div>
       <div class="mt-3 d-flex j-center">
-        <!-- <div class="apartments-div">
-          <div v-for="apa in apartments" :key="apa.apa_id" class="apartments-div-item">
-            {{apa[1].cat_name}}
-          </div>
-        </div> -->
         <table class="table">
           <tr class="table-section">
             <th class="col-title-small">Room Type</th>
             <th class="col-title">Price Per Day</th>
+            <th class="col-button-title">Test</th>
           </tr>
-          <tr v-for="apa in apartments.count" :key="apa.apa_id" class="table-section">
-            <td class="col-text">{{apa.cat_name}}</td>
-            <td class="col-text">{{apa.price_per_day}}</td>
+          <tr v-for="apa in apartments" :key="apa.apa_id" class="table-section">
+            <td class="col-text d-flex f-col">
+              <span class="col-text-title">{{apa.cat_name}}</span>
+              <span class="mt-1">Features:</span>
+              <hr>
+              <div>
+                <label v-for="fea in apa.features" :key="fea.fea_id">
+                  {{fea.fea_name}}
+                </label>
+              </div>
+            </td>
+            <td class="col-text col-price">{{apa.price_per_day.toLocaleString("en-US")}} RSD</td>
+            <td class="col-button">test</td>
           </tr>
         </table>
       </div>
@@ -56,6 +62,9 @@ export default{
       this.route_data = JSON.parse(this.$route.params.data_id)
       this.getHotelById()
       this.getApartments()
+    },
+    components:{
+      
     },
     data(){
       return{
@@ -82,16 +91,17 @@ export default{
       },
       changeImg(src){
         this.selectedUrl = src
-      }
+      },
     }
 }
 </script>
 <style>
 .feature-div{
   padding: 0.5rem;
-  border: 2px solid lightgray;
-  border-radius: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
   margin: 0.5rem;
+  color: rgb(75, 75, 75);
 }
 .apartments-div{
   display: flex;
@@ -101,7 +111,6 @@ export default{
 }
 .table{
   border-radius: 10px;
-  width: 80%;
 }
 .col-title{
   border-top: 2px solid lightgray;
@@ -114,7 +123,6 @@ export default{
 .col-title-small{
   color: white;
   background-color: rgb(95, 75, 112);
-  width: 10rem;
   border-top: 2px solid lightgray;
   border-right: 2px solid lightgray;
   border-left: 2px solid lightgray;
@@ -125,8 +133,27 @@ export default{
   border-bottom: 2px solid gray;
   border-left: 2px solid lightgray;
   text-align: left;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  height: 3rem;
+  padding: 1rem;
+  width: 20rem;
+}
+.col-button{
+  width: 5rem;
+  border-right: 2px solid lightgray;
+  border-bottom: 2px solid lightgray;
+  text-align: center;
+}
+.col-button-title{
+  border-right: 2px solid lightgray;
+  border-top: 2px solid lightgray;
+  border-bottom: 2px solid lightgray;
+}
+.col-text-title{
+  color: rgb(79, 65, 92);
+  font-size: 1.1rem;
+  border-bottom: 2px solid rgb(79, 65, 92);
+}
+.col-price{
+  width: 5rem;
+  text-align: center;
 }
 </style>

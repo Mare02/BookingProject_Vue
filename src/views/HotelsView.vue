@@ -1,23 +1,7 @@
 <template>
   <div class="section-div d-flex j-center mt-5">
     <div class="filters">
-      <div class="filter-search-div">
-        <div class="filter-search-div-sec">
-          <label>Destination:</label>
-          <input type="text" id="search-input">
-        </div>
-        <div class="filter-search-div-sec">
-          <label>Check in:</label>
-          <input type="date">
-        </div>
-        <div class="filter-search-div-sec">
-          <label>Check out:</label>
-          <input type="date">
-        </div>
-        <div class="filter-search-div-sec">
-          <button class="search-btn">Search</button>
-        </div>
-      </div>
+      <Search :vertical="true" @data="redirectTo"/>
       <div class="filter-search-div">
         <div class="filters-title">
           <span class="title">Filters</span>
@@ -47,14 +31,15 @@
 <script>
 import service from '../services/API'
 import HotelsList from '../components/HotelsList.vue'
+import Search from '../components/Search-Component.vue'
 
 export default{
   components:{
-    HotelsList,
+    HotelsList, Search
   },
   mounted(){
     this.route_data = JSON.parse(this.$route.params.data)
-    this.getHotels()
+    this.getHotels(this.route_data.des_id, this.route_data.check_in, this.route_data.check_out)
   },
   data(){
     return{
@@ -64,12 +49,15 @@ export default{
     }
   },
   methods:{
-    async getHotels(){
-      let res = await service.getHotels(this.route_data.des_id)
-      console.log(res);
+    async getHotels(des_id, check_in, check_out){
+      let res = await service.getHotels(des_id, check_in, check_out)
       this.hotels = res
+    },
+    redirectTo(data){
+      this.$router.push({name: "hotels", params: { data: JSON.stringify(data) }})
+      this.getHotels(data.des_id, data.check_in, data.check_out)
     }
-  }
+  },
 }
 </script>
 <style>

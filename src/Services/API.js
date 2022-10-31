@@ -13,9 +13,11 @@ const utils = {
       return error
     }
   },
-  "getHotels": async function(des_id){
+  "getHotels": async function(des_id, check_in, check_out){
     try {
-      const res = await axios.get(`${api_url + 'hotels'}`, {params:{des_id: des_id}})
+      const res = await axios.get(`${api_url + 'hotels'}`, {params:{
+        des_id: des_id, check_in: check_in, check_out: check_out
+      }})
       return res.data.data
     } 
     catch (error) {
@@ -32,7 +34,9 @@ const utils = {
     }
   },
   "signUp": async function(firstName, lastName, email, password, confirm_password){
+    console.log(arguments);
     try {
+      
       let res = await axios.post(`${api_url + 'auth/signup'}`, {
         firstname: firstName, lastname: lastName, email: email, password: password, c_password: confirm_password
       })

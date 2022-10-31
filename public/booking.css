@@ -28,7 +28,7 @@ body{
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  z-index: 3;
+  z-index: 10;
 }
 
 .nav-links{
@@ -53,7 +53,7 @@ body{
 }
 
 .link-signin{
-  font-size: 1rem;
+  font-size: 1.1rem;
   border-radius: 10px;
   padding: 0.5rem;
   border: none;
@@ -173,14 +173,36 @@ label{
   max-height: 5rem;
   max-width: 45rem;
 }
+.searchComp-div-ver{
+  border: 2px solid lightgrey;
+  border-radius: 20px;
+  background-color: white;
+  height: auto;
+  display: flex;
+  max-height: auto;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1rem;
+  margin-bottom: 1rem;
+}
 .searchComp-section{
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+}
+.searchComp-div-ver .searchComp-section{
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
 }
 .search-btn{
-  font-size: 1.1rem;
-  padding: 1rem;
+  font-size: 1rem;
+  padding: 0.8rem;
   border: none;
   background-color: var(--btn-color);
   border-radius: 10px;
@@ -193,8 +215,14 @@ label{
 .search-btn:hover{
   background-color: var(--btn-color-hover);
 }
-.searchComp-div #text-input-sec #des-input{
+.searchComp-div #des-input{
   width: 90%;
+}
+.searchComp-div-ver #des-input{
+  width: 80%;
+}
+.searchComp-div-ver #date-input{
+  width: 80%;
 }
 .search-dropdown{
   list-style: none;
@@ -204,6 +232,20 @@ label{
   border-radius: 10px;
   z-index: 3;
   overflow-y: scroll;
+  position: absolute;
+  top: 4.5rem;
+}
+.searchComp-div-ver .search-dropdown{
+  list-style: none;
+  background-color: white;
+  border: 2px solid rgb(234, 227, 210);
+  border-top: none !important;
+  border-radius: 10px;
+  z-index: 3;
+  overflow-y: scroll;
+  position: absolute;
+  top: 4.5rem;
+  box-shadow: 0 0 10px 2px gray;
 }
 .search-dropdown li{
   width: 14rem;
@@ -321,9 +363,9 @@ label{
   cursor: pointer;
 }
 .small-card{
-  height: 3.5rem;
-  min-width: 5rem;
-  max-width: 5rem;
+  height: 3rem;
+  min-width: 4.5rem;
+  max-width: 4.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -337,8 +379,8 @@ label{
   opacity: 0.7;
 }
 .big-card{
-  height: 30rem;
-  width: 45rem;
+  height: 25rem;
+  width: 40rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -351,7 +393,7 @@ label{
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 45rem;
+  width: 40rem;
   overflow-x: scroll;
   cursor: grab;
 }
@@ -404,7 +446,7 @@ label{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 1rem;
+  margin-right: 2rem;
   min-width: 13rem;
   max-width: 18rem;
 }
@@ -452,8 +494,8 @@ label{
   align-items: center;
 }
 .price-input{
-  width: 80%;
-  
+  width: 70%;
+  height: 1rem;
 }
 .filter-label{
   font-size: 1.1rem;
@@ -467,6 +509,8 @@ label{
   justify-content: center;
   height: 16rem;
   width: 16rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 .carousel__slide{
   display: flex;
@@ -499,7 +543,6 @@ label{
 .error-msg{
   color: red;
   font-weight: 300;
-  margin-bottom: 0.5rem;
 }
 
 
@@ -570,8 +613,8 @@ label{
 }
 @media(max-width: 1000px){
   .big-card{
-    width: 39rem;
-    height: 24rem;
+    width: 35rem;
+    height: 20rem;
   }
   .small-card{
     height: 2.8rem;
@@ -580,7 +623,7 @@ label{
     margin: 1.5px;
   }
   .gallery-selector{
-    width: 39rem;
+    width: 35rem;
   }
   .section-div{
     padding-left: 3rem;
