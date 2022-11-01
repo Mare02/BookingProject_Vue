@@ -25,64 +25,59 @@
       Pet Friendly
     </div>
   </div>
+  
   <div class="section-div d-flex j-center mt-2" id="hotels-view">
-    <div class="slider-menu" id="slider">
-      <div class="filters">
-        <Search :vertical="true" @search="getHotels()" v-if="false"/>
-        <div class="filter-search-div">
-          <div class="filters-title">
-            <span class="title">Filters</span>
-          </div>
-          <div class="filters-content">
-            <div class="filter-inputs-div border-b">
-              <label class="filter-label">Price:</label>
-              <div class="d-flex j-center w-100 border-b">
-                <div class="d-flex f-col a-center">
-                  <label>From:</label>
-                  <input class="price-input" type="number" v-model="filters.start_price">
+    <div style="max-width: 30%; margin-right: 2rem;" class="d-flex f-col a a-center">
+      <Search :vertical="showVerSearch" @search="getHotels()" v-if="true"/>
+      <div class="slider-menu" id="slider">
+        <div class="filters">
+          <div class="filter-search-div">
+            <div class="filters-title">
+              <span class="title">Filters</span>
+            </div>
+            <div class="filters-content">
+              <div class="filter-inputs-div border-b">
+                <label class="filter-label">Price:</label>
+                <div class="d-flex j-center w-100 border-b">
+                  <div class="d-flex f-col a-center">
+                    <label>From:</label>
+                    <input class="price-input" type="number" v-model="filters.start_price">
+                  </div>
+                  <div class="d-flex f-col a-center">
+                    <label>To:</label>
+                    <input class="price-input" type="number" v-model="filters.end_price"> 
+                  </div>
                 </div>
-                <div class="d-flex f-col a-center">
-                  <label>To:</label>
-                  <input class="price-input" type="number" v-model="filters.end_price"> 
+                <div class="mt-1">
+                  <label class="filter-label">Features</label>
                 </div>
-              </div>
-              <div class="mt-1">
-                <label class="filter-label">Features</label>
-              </div>
-              <div class="features-div">
-                <div class="features-item" v-for="fea in featuresDb" :key="fea.fea_id">
-                  <input type="checkbox" class="checkbox" :value="fea.fea_id" @change="getCheckedFeatures()">
-                  <label>{{fea.fea_name}}</label>
+                <div class="features-div">
+                  <div class="features-item" v-for="fea in featuresDb" :key="fea.fea_id">
+                    <input type="checkbox" class="checkbox" :value="fea.fea_id" @change="getCheckedFeatures()">
+                    <label>{{fea.fea_name}}</label>
+                  </div>
                 </div>
-              </div>
-              <div class="mt-1">
-                <button class="search-btn" @click="getHotels(filters.start_price, filters.end_price)"
-                >Submit</button>
+                <div class="mt-1">
+                  <button class="search-btn" @click="getHotels(filters.start_price, filters.end_price)"
+                  >Submit</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <img @click="showSlider()" class="slider-btn" src="../assets/arrow.png" alt="" id="slider-btn">
       </div>
-      <!-- <button class="slider-btn" @click="showSlider()"></button> -->
-      <svg @click="showSlider()" class="slider-btn" id="slider-btn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 256C0 397.4 114.6 512 256 512s256-114.6 256-256S397.4 0 256 0S0 114.6 0 256zM241 377c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l87-87-87-87c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L345 239c9.4 9.4 9.4 24.6 0 33.9L241 377z"/></svg>
     </div>
+    
     <div class="hot-list-container">
       <HotelsList :hotels="hotels" @loaded='this.isLoadedList = true'/>
     </div>
   </div>
 </template>
-<script>
 
+<script>
 const x = window.matchMedia("(min-width: 850px)")
-x.addEventListener('change', () => {
-  let slider = document.getElementById('slider')
-  let btn = document.getElementById('slider-btn')
-  
-  if(x.matches && slider.style.transform !== "translateX(0rem)"){
-    slider.style.transform = "translateX(0rem)"
-    btn.style.transform = "rotateZ(0deg)"
-  }
-})
+const xMax = window.matchMedia("(max-width: 850px)")
 
 import service from '../services/API'
 import HotelsList from '../components/HotelsList.vue'
@@ -95,6 +90,20 @@ export default{
   mounted(){
     this.getHotels()
     this.getFeatures()
+
+    x.addEventListener('change', () => {
+      let slider = document.getElementById('slider')
+      let btn = document.getElementById('slider-btn')
+      
+      if(x.matches && slider.style.transform !== "translateX(0rem)"){
+        slider.style.transform = "translateX(0rem)"
+        btn.style.transform = "rotateZ(0deg)"
+      }
+      else if(xMax.matches && slider.style.transform == "translateX(0rem)"){
+        slider.style.transform = "translateX(-17rem)"
+        btn.style.transform = "rotateZ(0deg)"
+      }
+    })
   },
   data(){
     return{
@@ -106,6 +115,7 @@ export default{
         featuresArr: []
       },
       isLoadedList: false,
+      showVerSearch: true
     }
   },
   methods:{

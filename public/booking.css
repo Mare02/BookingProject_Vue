@@ -471,16 +471,16 @@ label{
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 13rem;
 }
 .slider-menu{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 2rem;
+  /* margin-right: 2rem; */
   padding: 0;
-  width: 30%;
+  width: 100%;
   height: auto;
-  min-width: 13rem;
   max-width: 18rem;
 }
 .slider-btn{
@@ -488,8 +488,8 @@ label{
   border-radius: 100%;
   fill: white;
   box-shadow: 0 0 10px 1px black;
-  width: 3.5rem;
-  background-color: black;
+  width: 3rem;
+  background-color: var(--nav-bg-color);
   margin-left: 5px;
   cursor: pointer;
   transition: all 0.3s;
@@ -722,6 +722,9 @@ label{
   }
   .slider-btn{
     display: block;
+  }
+  #hotels-view{
+    flex-direction: column;
   }
 }
 @media(max-width: 800px){
