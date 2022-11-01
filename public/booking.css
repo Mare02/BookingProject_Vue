@@ -483,6 +483,18 @@ label{
   min-width: 13rem;
   max-width: 18rem;
 }
+.slider-btn{
+  display: none;
+  border-radius: 100%;
+  fill: white;
+  box-shadow: 0 0 10px 1px black;
+  width: 3.5rem;
+  background-color: black;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
 .hot-list-container{
   min-width: 35rem;
   max-width: 50rem;
@@ -691,19 +703,25 @@ label{
     backdrop-filter: blur(5px);
     border-radius: 10px;
     padding: 1rem;
+    box-shadow: 0 0 20px 1px black;
   }
   .slider-menu{
-    transform: translateX(-50rem);
+    transform: translateX(-17rem);
+    width: 30rem;
     position: fixed;
     height: calc(100vh - 3.72rem);
     top: 3.72rem;
     left: 0;
-    padding-left: 1rem;
     padding-right: 1rem;
     z-index: 10;
     justify-content: center;
     overflow: hidden;
     transition: all 0.3s;
+    flex-direction: row;
+    min-width: 20rem;
+  }
+  .slider-btn{
+    display: block;
   }
 }
 @media(max-width: 800px){
