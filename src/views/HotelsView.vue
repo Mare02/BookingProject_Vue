@@ -26,37 +26,39 @@
     </div>
   </div>
   <div class="section-div d-flex j-center mt-2" id="hotels-view">
-    <div class="filters">
-      <Search :vertical="true" @search="getHotels()" v-if="isLoadedList"/>
-      <div class="filter-search-div">
-        <div class="filters-title">
-          <span class="title">Filters</span>
-        </div>
-        <div class="filters-content">
-          <div class="filter-inputs-div border-b">
-            <label class="filter-label">Price:</label>
-            <div class="d-flex j-center w-100 border-b">
-              <div class="d-flex f-col a-center">
-                <label>From:</label>
-                <input class="price-input" type="number" v-model="filters.start_price">
+    <div class="slider-menu" id="slider">
+      <div class="filters">
+        <Search :vertical="true" @search="getHotels()" v-if="false"/>
+        <div class="filter-search-div">
+          <div class="filters-title">
+            <span class="title">Filters</span>
+          </div>
+          <div class="filters-content">
+            <div class="filter-inputs-div border-b">
+              <label class="filter-label">Price:</label>
+              <div class="d-flex j-center w-100 border-b">
+                <div class="d-flex f-col a-center">
+                  <label>From:</label>
+                  <input class="price-input" type="number" v-model="filters.start_price">
+                </div>
+                <div class="d-flex f-col a-center">
+                  <label>To:</label>
+                  <input class="price-input" type="number" v-model="filters.end_price"> 
+                </div>
               </div>
-              <div class="d-flex f-col a-center">
-                <label>To:</label>
-                <input class="price-input" type="number" v-model="filters.end_price"> 
+              <div class="mt-1">
+                <label class="filter-label">Features</label>
               </div>
-            </div>
-            <div class="mt-1">
-              <label class="filter-label">Features</label>
-            </div>
-            <div class="features-div">
-              <div class="features-item" v-for="fea in featuresDb" :key="fea.fea_id">
-                <input type="checkbox" class="checkbox" :value="fea.fea_id" @change="getCheckedFeatures()">
-                <label>{{fea.fea_name}}</label>
+              <div class="features-div">
+                <div class="features-item" v-for="fea in featuresDb" :key="fea.fea_id">
+                  <input type="checkbox" class="checkbox" :value="fea.fea_id" @change="getCheckedFeatures()">
+                  <label>{{fea.fea_name}}</label>
+                </div>
               </div>
-            </div>
-            <div class="mt-1">
-              <button class="search-btn" @click="getHotels(filters.start_price, filters.end_price)"
-              >Submit</button>
+              <div class="mt-1">
+                <button class="search-btn" @click="getHotels(filters.start_price, filters.end_price)"
+                >Submit</button>
+              </div>
             </div>
           </div>
         </div>
@@ -65,6 +67,7 @@
     <div class="hot-list-container">
       <HotelsList :hotels="hotels" @loaded='this.isLoadedList = true'/>
     </div>
+    <button @click="showSlider()">SHOW MENU</button>
   </div>
 </template>
 <script>
@@ -119,6 +122,10 @@ export default{
       }
       console.log(this.filters.featuresArr);
       this.getHotels()
+    },
+    showSlider(){
+      let el = document.getElementById('slider')
+      el.style.transform = "translateX(0rem)"
     }
   },
 }
