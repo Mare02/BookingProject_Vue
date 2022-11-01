@@ -2,10 +2,10 @@ import axios from 'axios'
 const api_url = 'http://908q122.e2.mars-hosting.com/booking/'
 
 const utils = {
-  "getApartments": async function(des_id, check_in_date, check_out_date){
+  "getApartments": async function(hot_id, check_in_date, check_out_date){
     try {
       const res = await axios.get(`${api_url + 'apartments'}`, 
-        {params:{des_id: des_id, check_in: check_in_date, check_out: check_out_date}}
+        {params:{hot_id: hot_id, check_in: check_in_date, check_out: check_out_date}}
       )
       return res.data.data
     } 
@@ -13,10 +13,34 @@ const utils = {
       return error
     }
   },
-  "signUp": async function(firstName, lastName, email, password, confirm_password){
+  "getHotels": async function(des_id, check_in, check_out, start_price, end_price, features){
     try {
+      const res = await axios.get(`${api_url + 'hotels'}`, {params:{
+        des_id: des_id, check_in: check_in, check_out: check_out, 
+        start_price: start_price, end_price: end_price, features: features
+      }})
+      console.log(res.data);
+      return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getHotelById": async function(id){
+    try {
+      const res = await axios.get(`${api_url + 'hotels/' + id}`)
+      return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "signUp": async function(firstName, lastName, email, password, confirm_password){
+    console.log(arguments);
+    try {
+      
       let res = await axios.post(`${api_url + 'auth/signup'}`, {
-        firstname: firstName, lastname: lastName, email: email, password: password, cpassword: confirm_password
+        firstname: firstName, lastname: lastName, email: email, password: password, c_password: confirm_password
       })
       return res
     } 
@@ -59,6 +83,15 @@ const utils = {
     catch (error) {
       console.log(error);
       return error  
+    }
+  },
+  "getFeatures": async function(){
+    try {
+      let res = await axios.get('http://908q122.e2.mars-hosting.com/booking/features')
+      return res.data.data
+    } 
+    catch (error) {
+      return error
     }
   }
 }

@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AuthView from '../views/AuthView.vue'
-import ApartmentsView from '../views/ApartmentsView.vue'
+import HotelsView from '../views/HotelsView.vue'
+import SingleHotelView from '../views/SingleHotelView.vue'
 
 const routes = [
   {
@@ -15,10 +16,15 @@ const routes = [
     component: AuthView,
   },
   {
-    path: '/apartments/:data',
-    name: 'apartments',
+    path: '/hotels',
+    name: 'hotels',
     props: true,
-    component: ApartmentsView,
+    component: HotelsView,
+  },
+  {
+    path: '/hotels/:hot_id',
+    name: 'hotel',
+    component: SingleHotelView,
   },
 ]
 

@@ -1,8 +1,8 @@
 <template>
 <div class="home-container">
   <span class="home-title">Find your next stay</span>
-  <Search @data="redirectTo"/>
-  <section class="w-100 mt-5">
+  <Search @search="redirect" :vertical="false"/>
+  <!-- <section class="w-100 mt-5">
     <div class="section-div">
       <div class="section-header">
         <span class="section-title">Delve into the gems of Serbia</span>
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 </div>
 </template>
 
@@ -30,7 +30,7 @@ export default {
     Search
   },
   mounted(){
-    this.getDestinations()
+    // this.getDestinations()
   },
   data(){
     return{
@@ -42,8 +42,8 @@ export default {
       let res = await service.getDestinationsById(1)
       this.destinations = res.data.data
     },
-    redirectTo(data){
-      this.$router.push({name: "apartments", params: { data: JSON.stringify(data) }})
+    redirect(){
+      this.$router.push({name: "hotels"}) 
     }
   }
 }
