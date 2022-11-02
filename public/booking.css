@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight&display=swap');
+
 *{
   padding: 0;
   margin: 0;
@@ -15,6 +18,7 @@
 
 body{
   background-color: var(--bg-color);
+  overflow-x: hidden;
 }
 
 .navbar{
@@ -29,6 +33,15 @@ body{
   justify-content: space-between;
   padding: 10px;
   z-index: 10;
+  /* box-shadow: 0 5px 10px 5px gray; */
+}
+
+.logo-span-part{
+  color: rgb(187, 187, 152);
+}
+.logo-span{
+  font-size: 1.5rem;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .nav-links{
@@ -54,7 +67,7 @@ body{
 
 .link-signin{
   font-size: 1.1rem;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 0.5rem;
   border: none;
   color: var(--nav-bg-color);
@@ -175,7 +188,7 @@ label{
 }
 .searchComp-div-ver{
   border: 2px solid lightgrey;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: white;
   height: auto;
   display: flex;
@@ -191,9 +204,9 @@ label{
   flex-direction: column;
   align-items: center;
   position: relative;
+  margin-bottom: 1rem;
 }
 .searchComp-div-ver .searchComp-section{
-  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -205,7 +218,7 @@ label{
   padding: 0.8rem;
   border: none;
   background-color: var(--btn-color);
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
   margin: 1rem;
   text-decoration: none;
@@ -269,9 +282,21 @@ label{
   width: 1.3rem;
   margin: 0.9rem;
 }
+.des-icon-abs{
+  width: 1.3rem;
+  margin: 0.9rem;
+  position: absolute;
+  right: 1rem;
+}
+.rel{
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .home-container{
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -342,8 +367,8 @@ label{
   width: 100%;
 }
 .hot-list .hot-list-item{
-  border: 1px solid lightgray;
-  border-radius: 20px;
+  /* border: 1px solid lightgray; */
+  border-radius: 10px;
   width: 100%;
   height: 18rem;
   display: flex;
@@ -441,15 +466,35 @@ label{
 
 
 .filters{
-  width: 30%;
+  width: 100%;
   height: 30rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 2rem;
   min-width: 13rem;
+}
+.slider-menu{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* margin-right: 2rem; */
+  padding: 0;
+  width: 100%;
+  height: auto;
   max-width: 18rem;
 }
+.slider-btn{
+  display: none;
+  border-radius: 100%;
+  fill: white;
+  box-shadow: 0 0 10px 1px black;
+  width: 3rem;
+  background-color: var(--nav-bg-color);
+  margin-left: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
 .hot-list-container{
   min-width: 35rem;
   max-width: 50rem;
@@ -461,21 +506,9 @@ label{
   width: 100%;
   height: auto;
   padding-top: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: white;
   border: 2px solid lightgrey;
-}
-.filter-search-div-sec{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-.filter-search-div-sec #search-input{
-  width: 80%;
-  margin-right: 2rem;
-  margin-left: 2rem;
 }
 .filters-title{
   height: 2.5rem;
@@ -488,7 +521,6 @@ label{
   font-size: 1.2rem;
 }
 .filter-inputs-div{
-  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -540,9 +572,22 @@ label{
 .error{
   border: 2px solid red !important;
 }
+.hot-list-error-div{
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .error-msg{
   color: red;
   font-weight: 300;
+}
+.search-error-msg{
+  color: red;
+  font-weight: 500;
+  font-size: 1.2rem;
+  margin-top: 15rem;
+  width: 100%;
 }
 
 
@@ -592,6 +637,13 @@ label{
 .c-pointer{
   cursor: pointer;
 }
+.border-2{
+  border: 2px solid gray;
+}
+.border-b{
+  padding-bottom: 1rem;
+  border-bottom: 1px solid lightgray;
+}
 
 /*transition-tag*/
 .v-enter-active,
@@ -602,6 +654,7 @@ label{
 .v-leave-to {
   opacity: 0;
 }
+
 
 
 /*media*/
@@ -638,6 +691,40 @@ label{
   }
   .home-title{
     font-size: 2.2rem;
+  }
+}
+@media(max-width: 850px){
+  .filters{
+    position: sticky;
+    z-index: 15;
+    height: auto;
+    background: none;
+    background-color: rgba(119, 119, 119, 0.4);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 0 20px 1px black;
+  }
+  .slider-menu{
+    transform: translateX(-17rem);
+    width: 30rem;
+    position: fixed;
+    height: calc(100vh - 3.72rem);
+    top: 3.72rem;
+    left: 0;
+    padding-right: 1rem;
+    z-index: 10;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.3s;
+    flex-direction: row;
+    min-width: 20rem;
+  }
+  .slider-btn{
+    display: block;
+  }
+  #hotels-view{
+    flex-direction: column;
   }
 }
 @media(max-width: 800px){

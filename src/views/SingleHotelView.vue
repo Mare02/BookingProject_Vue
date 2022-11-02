@@ -3,7 +3,7 @@
     <div class="hot-list-details">
       <div class="card-horizontal-header">
         <div class="d-flex j-center">  
-          <span class="section-title">{{hotel.hot_name}}</span>
+          <span class="hotel-title">{{hotel.hot_name}}</span>
         </div>
       </div>
       <div class="d-flex a-center f-col w-100 mt-1">
@@ -32,7 +32,7 @@
           <tr class="table-section">
             <th class="col-title-small">Room Type</th>
             <th class="col-title">Price Per Day</th>
-            <th class="col-button-title">Test</th>
+            <th class="col-button-title">Reserve</th>
           </tr>
           <tr v-for="apa in apartments" :key="apa.apa_id" class="table-section">
             <td class="col-text d-flex f-col">
@@ -46,7 +46,9 @@
               </div>
             </td>
             <td class="col-text col-price">{{apa.price_per_day.toLocaleString("en-US")}} RSD</td>
-            <td class="col-button">test</td>
+            <td class="col-button">
+              <button class="reserve-button">Select</button>
+            </td>
           </tr>
         </table>
       </div>
@@ -59,7 +61,6 @@ import service from '../services/API'
 
 export default{
   mounted(){
-      this.route_data = JSON.parse(this.$route.params.data_id)
       this.getHotelById()
       this.getApartments()
     },
@@ -76,7 +77,7 @@ export default{
     },
     methods:{
       async getHotelById(){
-        const hot_id = this.$route.params.id
+        const hot_id = this.$route.params.hot_id
         const res = await service.getHotelById(hot_id)
         this.hotel = res[0]
         if(this.hotel.images){
@@ -84,8 +85,9 @@ export default{
         }
       },
       async getApartments(){
-        const hot_id = this.$route.params.id
-        const res = await service.getApartments(hot_id, this.route_data.check_in, this.route_data.check_out)
+        const hot_id = this.$route.params.hot_id
+        const res = await service.getApartments(hot_id, localStorage.getItem('check_in'), 
+                                                localStorage.getItem('check_out'))
         console.log(res);
         this.apartments = res
       },
@@ -96,6 +98,11 @@ export default{
 }
 </script>
 <style>
+.hotel-title{
+  font-size: 2rem;
+  margin: 1.5rem;
+  color: rgb(99, 68, 129);
+}
 .feature-div{
   padding: 0.5rem;
   border: 1px solid lightgrey;
@@ -137,15 +144,21 @@ export default{
   width: 20rem;
 }
 .col-button{
-  width: 5rem;
   border-right: 2px solid lightgray;
-  border-bottom: 2px solid lightgray;
+  border-bottom: 2px solid gray;
+  border-left: 2px solid lightgray;
   text-align: center;
+  padding: 1rem;
+  width: 5rem;
+  vertical-align:middle;  
 }
 .col-button-title{
-  border-right: 2px solid lightgray;
+  color: white;
+  background-color: rgb(95, 75, 112);
   border-top: 2px solid lightgray;
-  border-bottom: 2px solid lightgray;
+  border-right: 2px solid lightgray;
+  border-left: 2px solid lightgray;
+  height: 3rem;
 }
 .col-text-title{
   color: rgb(79, 65, 92);

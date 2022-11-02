@@ -2,7 +2,10 @@
   <div :class="{'searchComp-div': !vertical, 'searchComp-div-ver': vertical}">
     <div class="searchComp-section">
       <label>Destination:</label>
-      <input type="text" v-model="search" @input="searchDestinations()" id="des-input" autocomplete="off">
+      <div class="rel">
+        <input type="text" v-model="search" @input="searchDestinations()" id="des-input" autocomplete="off" placeholder="Search">
+        <img src="../assets/icons/free-location-pointer-icon-2961-thumb.png" class="des-icon-abs" alt="">
+      </div>
       <ul class="search-dropdown" id="dropdown" v-if="arrLength > 0" :class="{'dropdownReactive': arrLength <= 5, 'dropdownMin': arrLength > 5}">
         <li v-for="des in destinations" :key="des.des_id" class="d-flex a-center" @click="selectDestination(des.des_id, des.des_name, des.sta_name)">
           <img src="../assets/icons/free-location-pointer-icon-2961-thumb.png" alt="" class="des-icon">
@@ -37,6 +40,14 @@
           this.closeDropdown()
         }
       })
+      if(localStorage.getItem('des_name')){
+        this.selectDestination(localStorage.getItem('des_id'), localStorage.getItem('des_name'), 
+                              localStorage.getItem('sta_name'))
+        if(localStorage.getItem('check_in') && localStorage.getItem('check_out')){
+          this.checkInDate = localStorage.getItem('check_in')
+          this.checkOutDate = localStorage.getItem('check_out')
+        }
+      }
     },
     data(){
       return{
@@ -69,7 +80,10 @@
         this.arrLength = this.destinations.length
       },
       emitData(){
-        this.$emit('data', {des_id: this.destination_id, check_in: this.checkInDate, check_out: this.checkOutDate})
+        localStorage.setItem('check_in', this.checkInDate)
+        localStorage.setItem('check_out', this.checkOutDate)
+        localStorage.setItem('des_id', this.destination_id)
+        this.$emit('search')
       }
     }
   }
