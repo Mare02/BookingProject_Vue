@@ -131,7 +131,6 @@ export default {
         if(res.status !== 200) this.api_error_msg = res.response.data.msg;
         else{
           localStorage.setItem('sid', res.data.sid)
-          // console.log('session_user', res.data.data);
           this.api_error_msg = '';
           this.$router.push({name: 'home'})
         } 

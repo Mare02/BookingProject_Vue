@@ -24,8 +24,11 @@
       <img src="../assets/icons8-tag-window-100.png" alt="">
       Pet Friendly
     </div>
+    <div class="tag-button">
+      <img src="../assets/icons8-tag-window-100.png" alt="">
+      Popular
+    </div>
   </div>
-  
   <div class="section-div d-flex j-center mt-2" id="hotels-view">
       <div class="slider-menu" id="slider">
         <div class="filters">
@@ -37,7 +40,7 @@
             <div class="filters-content">
               <div class="filter-inputs-div">
                 <label class="filter-label">Price:</label>
-                <div class="d-flex j-center w-100 border-b">
+                <div class="d-flex j-center w-100">
                   <div class="d-flex f-col a-center">
                     <label>From:</label>
                     <input class="price-input" type="number" v-model="filters.start_price">
@@ -47,6 +50,13 @@
                     <input class="price-input" type="number" v-model="filters.end_price"> 
                   </div>
                 </div>
+                <div class="submit-btn">
+                  <button class="search-btn" @click="getHotels(filters.start_price, filters.end_price)"
+                  >Submit</button>
+                </div>
+                <div class="border-b w-100">
+
+                </div>
                 <div class="mt-1">
                   <label class="filter-label">Features</label>
                 </div>
@@ -55,10 +65,6 @@
                     <input type="checkbox" class="checkbox" :value="fea.fea_id" @change="getCheckedFeatures()">
                     <label>{{fea.fea_name}}</label>
                   </div>
-                </div>
-                <div class="submit-btn">
-                  <button class="search-btn" @click="getHotels(filters.start_price, filters.end_price)"
-                  >Submit</button>
                 </div>
               </div>
             </div>
@@ -174,7 +180,7 @@ export default{
 </script>
 <style>
 .tag-button{
-  padding: 0.5rem;
+  padding: 0.4rem;
   margin: 0.5rem;
   cursor: pointer;
   color: gray;
@@ -206,6 +212,7 @@ export default{
   flex-direction: column;
   align-items: flex-start;
   padding-left: 1rem;
+  padding-bottom: 0.5rem;
 }
 .features-item{
   display: flex;
