@@ -27,16 +27,15 @@
   </div>
   
   <div class="section-div d-flex j-center mt-2" id="hotels-view">
-    <div style="max-width: 30%; margin-right: 2rem;" class="d-flex f-col a a-center">
-      <Search :vertical="showVerSearch" @search="getHotels()" v-if="true"/>
       <div class="slider-menu" id="slider">
         <div class="filters">
+          <Search :vertical="true" @search="getHotels()"/>
           <div class="filter-search-div">
             <div class="filters-title">
               <span class="title">Filters</span>
             </div>
             <div class="filters-content">
-              <div class="filter-inputs-div border-b">
+              <div class="filter-inputs-div">
                 <label class="filter-label">Price:</label>
                 <div class="d-flex j-center w-100 border-b">
                   <div class="d-flex f-col a-center">
@@ -57,7 +56,7 @@
                     <label>{{fea.fea_name}}</label>
                   </div>
                 </div>
-                <div class="mt-1">
+                <div class="submit-btn">
                   <button class="search-btn" @click="getHotels(filters.start_price, filters.end_price)"
                   >Submit</button>
                 </div>
@@ -67,8 +66,6 @@
         </div>
         <img @click="showSlider()" class="slider-btn" src="../assets/arrow.png" alt="" id="slider-btn">
       </div>
-    </div>
-    
     <div class="hot-list-container">
       <HotelsList :hotels="hotels" @loaded='this.isLoadedList = true'/>
     </div>
@@ -87,9 +84,23 @@ export default{
   components:{
     HotelsList, Search
   },
+  computed: {
+
+  },
   mounted(){
     this.getHotels()
     this.getFeatures()
+
+    window.addEventListener('resize', () => {
+      if(window.innerWidth <= 850){
+        this.showVerSearch = false
+        console.log(this.showVerSearch);
+      }
+      else{
+        this.showVerSearch = true
+        console.log(this.showVerSearch);
+      }
+    })
 
     x.addEventListener('change', () => {
       let slider = document.getElementById('slider')
@@ -100,7 +111,7 @@ export default{
         btn.style.transform = "rotateZ(0deg)"
       }
       else if(xMax.matches && slider.style.transform == "translateX(0rem)"){
-        slider.style.transform = "translateX(-17rem)"
+        slider.style.transform = "translateX(-17.2rem)"
         btn.style.transform = "rotateZ(0deg)"
       }
     })
@@ -154,7 +165,7 @@ export default{
         btn.style.transform = "rotateZ(180deg)"
       }
       else{
-        el.style.transform = "translateX(-17rem)"
+        el.style.transform = "translateX(-17.2rem)"
         btn.style.transform = "rotateZ(0deg)"
       }
     }
@@ -182,6 +193,10 @@ export default{
   background-color: rgb(110, 109, 175);
   color: white;
   border: 2px solid rgb(187, 187, 152);
+}
+.submit-btn{
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 
