@@ -199,7 +199,6 @@ export default{
   margin-top: 0.5rem;
 }
 
-
 .features-div{
   margin-top: 1rem;
   width: 100%;
