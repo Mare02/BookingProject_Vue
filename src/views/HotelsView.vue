@@ -20,7 +20,16 @@
               </div>
             </div>
           </div>
+        </div >
+        <div class="d-flex f-col a-center">
+          <label>Features:</label>
         </div>
+         <div class="d-flex j-center w-100">
+          <ul role="listbox">
+            <input type="checkbox" name="Parking" value="Parking" v-model="Parking">
+          </ul>
+
+         </div>
       </div>
     </div>
     <div class="hot-list-container">
@@ -45,7 +54,8 @@ export default{
     return{
       route_data: {},
 
-      hotels: []
+      hotels: [],
+      Parking:false
     }
   },
   methods:{

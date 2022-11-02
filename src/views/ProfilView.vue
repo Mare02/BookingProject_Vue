@@ -2,7 +2,7 @@
 <div class="profile_page">
   <div class="user_info">
     <div class="profil_image">
-
+      
     </div>
     
   </div>
