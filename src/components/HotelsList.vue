@@ -23,8 +23,10 @@
           <div class="card-horizontal-header">
             <div class="hot-header">
               <a class="hot-name" @click="redirectToHotel(hot.hot_id)">{{hot.hot_name}}</a>
+              <div class="hot-stars-div">
+                <img class="hot-star" v-for="star in hot.hot_stars" :key="star" src="../assets/Plain_Yellow_Star.png" alt=""/>
+              </div>
               <div class="hot-rating">
-                [RATING]
               </div>
             </div>
           </div>
@@ -78,5 +80,13 @@ export default{
 </script>
 
 <style>
-
+.hot-star{
+  width: 1.3rem;
+}
+.hot-stars-div{
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  filter: brightness(80%);
+}
 </style>

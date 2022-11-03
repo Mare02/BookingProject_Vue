@@ -452,7 +452,6 @@ label{
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 1rem;
 }
 .hot-header .hot-name{
@@ -486,10 +485,12 @@ label{
   min-width: 13rem;
 }
 .filters-holder{
+  position: fixed;
   max-width: 30%;
   margin-right: 2rem;
 }
 .slider-menu{
+  
   display: flex;
   flex-direction: column;
   align-items: center;

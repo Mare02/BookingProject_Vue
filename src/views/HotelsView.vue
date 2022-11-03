@@ -142,7 +142,8 @@ export default{
                                         localStorage.getItem('check_out') || null,
                                         this.filters.start_price || null,
                                         this.filters.end_price || null,
-                                        JSON.stringify(this.filters.featuresArr.toString().replace("[", "").replace("]", "")))
+                                        JSON.stringify(this.filters.featuresArr.toString().replace("[", "").replace("]", "")),
+                                        null)
       this.hotels = res
       console.log(res);
       localStorage.setItem('des_name', res[0].des_name)
