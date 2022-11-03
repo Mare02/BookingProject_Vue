@@ -13,6 +13,6 @@ export default{
 }
 </script>
 
-<style src="../public/booking.css">
+<style src="../public/css/booking.css">
 
 </style>

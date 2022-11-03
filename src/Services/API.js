@@ -60,6 +60,15 @@ const utils = {
       return error
     }
   },
+  "checkSession": async function(sid){
+    try {
+      const res = await axios.get(`${api_url + 'auth/checkSession' }`, {params: {sid: sid}})
+      return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
   "searchDestinations": async function(search){
     try {
       let res = await axios.get(`${api_url + 'destinations/search'}`, {

@@ -29,8 +29,11 @@ export default {
   components: {
     Search
   },
+  computed: {
+    
+  },
   mounted(){
-    // this.getDestinations()
+    
   },
   data(){
     return{
@@ -44,7 +47,7 @@ export default {
     },
     redirect(){
       this.$router.push({name: "hotels"}) 
-    }
+    },
   }
 }
 </script>
