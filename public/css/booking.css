@@ -121,13 +121,11 @@ input{
   font-weight: 500;
   outline: none;
   border-radius: 5px;
+  transition: all 0.2s;
 }
 input:focus{
   border: 2px solid var(--nav-bg-color);
 }
-/* .inputs-wrapper .inputs .input-div input:invalid{
-  border: 2px solid red;
-} */
 label{
   margin-bottom: 5px;
   color: rgb(83, 83, 83);
@@ -176,11 +174,10 @@ label{
  color: var(--link-color);
 }
 
-
 .searchComp-div{
   border: 2px solid lightgrey;
   padding: 1rem;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: white;
   height: auto;
   display: flex;
@@ -302,13 +299,89 @@ label{
   position: absolute;
   right: 1rem;
 }
-.rel{
+
+
+.tag-button{
+  padding: 0.3rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  color: gray;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+  border: 2px solid lightgray;
+  border-radius: 10px;
+  background-color: white;
+  font-size: 1rem;
+}
+.tag-button img{
+  width: 1.5rem;
+  margin-right: 0.5rem;
+}
+.tag-button:hover{
+  background-color: rgb(110, 109, 175);
+  color: white;
+  border: 2px solid rgb(187, 187, 152);
+}
+.submit-btn{
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+
+.filter-sort-div{
+  display: none;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-top: 1rem;
+  justify-content: space-evenly;
+}
+.filter-btn{
+  width: 55%;
+}
+.sort-btn{
+  width: 35%;
+}
+.filter-btn, .sort-btn{
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: var(--nav-bg-color);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn:hover, .sort-btn:hover{
+  background-color: var(--btn-color-hover);
+}
+
+.features-div{
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 1rem;
+  padding-bottom: 0.5rem;
+}
+.features-item{
+  display: flex;
+  align-items: center;
+  margin: 0.5rem;
+}
+.features-item input{
+  width: 1.3rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 0 3px 1px wheat;
+}
+/* .rel{
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .home-container{
   display: flex;
@@ -483,22 +556,13 @@ label{
   flex-direction: column;
   align-items: center;
   min-width: 13rem;
+  margin-right: 2rem;
+  max-width: 18rem;
 }
 .filters-holder{
   position: fixed;
   max-width: 30%;
   margin-right: 2rem;
-}
-.slider-menu{
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 2rem;
-  padding: 0;
-  width: 100%;
-  height: auto;
-  max-width: 18rem;
 }
 .slider-btn{
   display: none;
