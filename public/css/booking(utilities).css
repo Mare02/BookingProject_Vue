@@ -40,6 +40,9 @@
 .m-2{
   margin: 2rem;
 }
+.pr-1{
+  padding-right: 1rem;
+}
 .c-pointer{
   cursor: pointer;
 }

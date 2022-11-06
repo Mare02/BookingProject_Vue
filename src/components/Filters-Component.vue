@@ -1,5 +1,6 @@
 <template>
   <div class="filters">
+    <img class="filters-close-btn" src="https://cdn.icon-icons.com/icons2/1674/PNG/512/close_111152.png" alt="" @click="emitShowFilters()">
     <div class="filter-search-div">
       <div class="filters-title">
         <span class="title">Filters</span>
@@ -73,11 +74,14 @@
       emitFilters(){
         this.$emit('filters_emit', {'filters_arr': this.filters.featuresArr,
                                     'start_price': this.filters.start_price, 'end_price': this.filters.end_price})
+      },
+      emitShowFilters(){
+        this.$emit('emitShowFilters')
       }
     }
   }
 </script>
 
 <style>
-
+  
 </style>

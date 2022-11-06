@@ -104,6 +104,7 @@ export default{
     makeReservation(usr_id, apa_id, cat_id, hot_id, check_in, check_out){
       const res = service.makeReservation(usr_id, apa_id, cat_id, hot_id, check_in, check_out)
       console.log(res);
+      this.$router.push({name: 'hotels'})
     }
   }
 }
@@ -147,6 +148,7 @@ export default{
   height: 3rem;
 }
 .col-text{
+  background-color: white;
   border-right: 2px solid lightgray;
   border-bottom: 2px solid gray;
   border-left: 2px solid lightgray;
@@ -155,6 +157,7 @@ export default{
   width: 20rem;
 }
 .col-button{
+  background-color: white;
   border-right: 2px solid lightgray;
   border-bottom: 2px solid gray;
   border-left: 2px solid lightgray;

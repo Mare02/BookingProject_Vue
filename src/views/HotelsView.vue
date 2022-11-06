@@ -1,4 +1,7 @@
 <template>
+  <div class="filters-mobile" v-if="filters_responsive && showFiltersComp">
+    <Filters @filters_emit="getEmitFilters" @emitShowFilters="showFilters()"/>
+  </div>
   <div class="d-flex j-center w-100 mt-3">
     <Search @search="getHotels()"/>
   </div>
@@ -33,11 +36,11 @@
     </div>
   </div>
   <div class="filter-sort-div">
-    <button class="filter-btn">Filters</button>
+    <button class="filter-btn" @click="showFilters()">Filters</button>
     <button class="sort-btn">Sort by</button>    
   </div>
   <div class="section-div d-flex j-center mt-2" id="hotels-view">
-    <Filters @filters_emit="getEmitFilters"/>
+    <Filters @filters_emit="getEmitFilters" v-if="!filters_responsive"/>
     <div class="hot-list-container">
       <HotelsList :hotels="hotels" @loaded='this.isLoadedList = true'/>
     </div>
@@ -50,15 +53,25 @@ import HotelsList from '../components/HotelsList.vue'
 import Search from '../components/Search-Component.vue'
 import Filters from '../components/Filters-Component.vue'
 
+var x = window.matchMedia("(max-width: 850px)")
+
 export default{
   components:{
     HotelsList, Search, Filters
   },
-  computed: {
-
-  },
   mounted(){
     this.getHotels()
+    if(x.matches){
+      this.filters_responsive = true
+    }
+    window.addEventListener('resize', () => {
+      if(x.matches){
+        this.filters_responsive = true
+      }
+      else{
+        this.filters_responsive = false
+      }
+    })
   },
   data(){
     return{
@@ -70,6 +83,8 @@ export default{
         featuresArr: []
       },
       isLoadedList: false,
+      filters_responsive: false,
+      showFiltersComp: false
     }
   },
   methods:{
@@ -100,6 +115,9 @@ export default{
       this.filters.end_price = data.end_price
       this.filters.featuresArr = data.filters_arr
       this.getHotels()
+    },
+    showFilters(){
+      this.showFiltersComp = !this.showFiltersComp
     }
   },
 }

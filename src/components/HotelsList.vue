@@ -19,7 +19,7 @@
             </div>
           </Slide>
         </Carousel>
-        <div class="hot-list-details">
+        <div class="hot-list-details pr-1">
           <div class="card-horizontal-header">
             <div class="hot-header">
               <div class="d-flex a-center">
