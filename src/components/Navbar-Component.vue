@@ -7,6 +7,8 @@
     </div>
     <div class="d-flex a-center">
       <nav class="nav-links">
+        <a class="link">Profile</a>
+        <a class="link">List your property</a>
         <button class="link-signin" v-if="$route.path !== '/auth'" @click="redirectToAuth()">Sign In</button>
       </nav>
     </div>
