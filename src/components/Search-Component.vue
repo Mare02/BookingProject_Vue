@@ -1,6 +1,6 @@
 <template>
   <div :class="{'searchComp-div': !vertical, 'searchComp-div-ver': vertical}">
-    <div class="searchComp-section">
+    <div class="searchComp-section" id="des-input-section">
       <label>Destination:</label>
       <div class="rel">
         <input type="text" v-model="search" @input="searchDestinations()" id="des-input" autocomplete="off" placeholder="Search">
@@ -16,16 +16,20 @@
         </li>
       </ul>
     </div>
-    <div class="searchComp-section">
-      <label>Check in:</label>
-      <input type="date" v-model="checkInDate" id="date-input">
-    </div>
-    <div class="searchComp-section">
-      <label>Check out:</label>
-      <input type="date" v-model="checkOutDate" id="date-input">
-    </div>
-    <div class="searchComp-section" id="search-sec">
-      <button @click="emitData()" class="search-btn">Search</button>
+    <div id="dates-div">
+      <div class="dates-sec">
+        <div class="searchComp-section" id="date-div-margin">
+          <label>Check in:</label>
+          <input type="date" v-model="checkInDate" id="date-input">
+        </div>
+        <div class="searchComp-section">
+          <label>Check out:</label>
+          <input type="date" v-model="checkOutDate" id="date-input">
+        </div>
+      </div>
+      <div class="searchComp-section" id="search-sec">
+        <button @click="emitData()" class="search-btn">Search</button>
+      </div>
     </div>
   </div>
 </template>
@@ -80,8 +84,12 @@
         this.arrLength = this.destinations.length
       },
       emitData(){
-        localStorage.setItem('check_in', this.checkInDate)
-        localStorage.setItem('check_out', this.checkOutDate)
+        if(this.checkInDate){
+          localStorage.setItem('check_in', this.checkInDate)
+        }
+        if(this.checkOutDate){
+          localStorage.setItem('check_out', this.checkOutDate)
+        }        
         localStorage.setItem('des_id', this.destination_id)
         this.$emit('search')
       }

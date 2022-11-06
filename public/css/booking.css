@@ -23,6 +23,15 @@ body{
   overflow-x: hidden;
 }
 
+.bg-img{
+  z-index: -2;
+  position: fixed;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.3;
+}
+
 .navbar{
   height: 2.5rem;
   position: sticky;
@@ -38,7 +47,7 @@ body{
 }
 
 .logo-span-part{
-  color: rgb(187, 187, 152);
+  color: rgb(205, 218, 221);
 }
 .logo-span{
   font-size: 1.5rem;
@@ -73,7 +82,7 @@ body{
   border: none;
   color: var(--nav-bg-color);
   cursor: pointer;
-  margin: 1rem;
+  margin: 0.5rem;
   transition: all 0.3s;
 }
 .link-signin:hover{
@@ -185,6 +194,16 @@ label{
   max-height: 5rem;
   max-width: 45rem;
 }
+.dates-sec{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.dates-sec #date-input{
+  max-width: 80%;
+}
+
 .searchComp-div-ver{
   border: 2px solid lightgrey;
   border-radius: 10px;
@@ -295,7 +314,7 @@ label{
 }
 .des-icon-abs{
   width: 1.3rem;
-  margin: 0.9rem;
+  margin: 0.8rem;
   position: absolute;
   right: 1rem;
 }
@@ -332,14 +351,32 @@ label{
   display: none;
   padding-left: 2rem;
   padding-right: 2rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   justify-content: space-evenly;
+}
+.filter-sort-div .select{
+  padding: 0.5rem;
+  padding-right: 1rem;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: var(--nav-bg-color);
+  display: flex;
+  justify-content: center;
 }
 .filter-btn{
   width: 55%;
 }
-.sort-btn{
+.sort-btn, .select{
   width: 35%;
+}
+.select select{
+  font-size: 1.1rem;
+  background-color: var(--nav-bg-color);
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 .filter-btn, .sort-btn{
   padding: 0.5rem;
@@ -362,7 +399,6 @@ label{
   flex-direction: column;
   align-items: flex-start;
   padding-left: 1rem;
-  padding-bottom: 0.5rem;
 }
 .features-item{
   display: flex;
@@ -375,13 +411,6 @@ label{
   cursor: pointer;
   box-shadow: 0 0 3px 1px wheat;
 }
-/* .rel{
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
 
 .home-container{
   display: flex;
@@ -395,6 +424,8 @@ label{
 
 
 .section-div{
+  position: relative;
+
   padding-left: 15rem;
   padding-right: 15rem;
 }
@@ -440,6 +471,7 @@ label{
   height: 70%;
   display: flex;
   flex-direction: column;
+  color: rgb(68, 68, 68);
 }
 .card-horizontal-footer{
   height: 10%;
@@ -454,7 +486,6 @@ label{
   width: 100%;
 }
 .hot-list .hot-list-item{
-  /* border: 1px solid lightgray; */
   border-radius: 10px;
   width: 100%;
   height: 18rem;
@@ -524,8 +555,26 @@ label{
 .hot-header{
   width: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.hot-header .hot-rating{
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+.hot-header .hot-rating .rating-text{
+  margin-right: 0.3rem;
+  color: var(--nav-bg-color);
+}
+.hot-header .hot-rating .rating-number{
+  font-size: 1.1rem;
+  color: white;
+  padding: 0.4rem;
+  background-color: rgb(133, 97, 150);
+  border-radius: 5px;
 }
 .hot-header .hot-name{
   text-decoration: none;
@@ -538,14 +587,14 @@ label{
 }
 .hot-price{
   display: flex;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   align-self: flex-end;
   margin-top: 2rem;
   color: rgb(149, 121, 161);
 }
 .hot-price .price-label{
   opacity: 1;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   color: var(--nav-bg-color);
 }
 

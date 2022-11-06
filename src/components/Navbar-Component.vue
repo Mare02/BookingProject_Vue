@@ -1,7 +1,9 @@
 <template>
   <div class="navbar">
     <div class="nav-title">
-      <span @click="redirectHome()" class="logo-span"><span class="logo-span-part">INN</span>OVA</span>
+      <div @click="redirectHome()" class="logo-span">
+        <span class="logo-span-part">INN</span>OVA
+      </div>
     </div>
     <div class="d-flex a-center">
       <nav class="nav-links">
