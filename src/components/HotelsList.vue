@@ -19,12 +19,18 @@
             </div>
           </Slide>
         </Carousel>
-        <div class="hot-list-details">
+        <div class="hot-list-details pr-1">
           <div class="card-horizontal-header">
             <div class="hot-header">
-              <a class="hot-name" @click="redirectToHotel(hot.hot_id)">{{hot.hot_name}}</a>
-              <div class="hot-rating">
-                [RATING]
+              <div class="d-flex a-center">
+                <a class="hot-name" @click="redirectToHotel(hot.hot_id)">{{hot.hot_name}}</a>
+                <div class="hot-stars-div">
+                  <img class="hot-star" v-for="star in hot.hot_stars" :key="star" src="../assets/Plain_Yellow_Star.png" alt=""/>
+                </div>
+              </div>
+              <div class="hot-rating d-flex">
+                <span class="rating-text">Rating: </span>
+                <span class="rating-number" v-if="hot.hot_rating">{{hot.hot_rating.toFixed(1)}}</span>
               </div>
             </div>
           </div>
@@ -48,6 +54,7 @@
     </ul>
   </div>
 </template>
+
 <script>
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
@@ -75,6 +82,15 @@ export default{
   }
 }
 </script>
-<style>
 
+<style>
+.hot-star{
+  width: 1.3rem;
+}
+.hot-stars-div{
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  filter: brightness(80%);
+}
 </style>

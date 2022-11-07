@@ -45,9 +45,12 @@
                 </label>
               </div>
             </td>
-            <td class="col-text col-price">{{apa.price_per_day.toLocaleString("en-US")}} RSD</td>
+            <td v-if="apa.price_per_day" class="col-text col-price">{{apa.price_per_day.toLocaleString("en-US")}} RSD</td>
             <td class="col-button">
-              <button class="reserve-button">Select</button>
+              <button @click="makeReservation(
+                getUserId, apa.apartments[0].apa_id, apa.cat_id, apa.hot_id, 
+                localStorage.getItem('check_in'), localStorage.getItem('check_out')
+              )" class="reserve-button">Select</button>
             </td>
           </tr>
         </table>
@@ -58,43 +61,52 @@
 
 <script>
 import service from '../services/API'
+import { mapGetters } from 'vuex'
 
 export default{
   mounted(){
-      this.getHotelById()
-      this.getApartments()
-    },
-    components:{
-      
-    },
-    data(){
-      return{
-        route_data: {},
-        hotel: [],
-        apartments: [],
-        selectedUrl: null
+    this.getHotelById()
+    this.getApartments()
+  },
+  computed: {
+    ...mapGetters(['getUserId'])
+  },
+  components:{
+    
+  },
+  data(){
+    return{
+      route_data: {},
+      hotel: [],
+      apartments: [],
+      selectedUrl: null,
+    }
+  },
+  methods:{
+    async getHotelById(){
+      const hot_id = this.$route.params.hot_id
+      const res = await service.getHotelById(hot_id)
+      this.hotel = res[0]
+      if(this.hotel.images){
+        this.selectedUrl = this.hotel.images[0].image_url
       }
     },
-    methods:{
-      async getHotelById(){
-        const hot_id = this.$route.params.hot_id
-        const res = await service.getHotelById(hot_id)
-        this.hotel = res[0]
-        if(this.hotel.images){
-          this.selectedUrl = this.hotel.images[0].image_url
-        }
-      },
-      async getApartments(){
-        const hot_id = this.$route.params.hot_id
-        const res = await service.getApartments(hot_id, localStorage.getItem('check_in'), 
-                                                localStorage.getItem('check_out'))
-        console.log(res);
-        this.apartments = res
-      },
-      changeImg(src){
-        this.selectedUrl = src
-      },
+    async getApartments(){
+      const hot_id = this.$route.params.hot_id
+      const res = await service.getApartments(hot_id, localStorage.getItem('check_in') || null, 
+                                              localStorage.getItem('check_out')) || null
+      console.log(res);
+      this.apartments = res
+    },
+    changeImg(src){
+      this.selectedUrl = src
+    },
+    makeReservation(usr_id, apa_id, cat_id, hot_id, check_in, check_out){
+      const res = service.makeReservation(usr_id, apa_id, cat_id, hot_id, check_in, check_out)
+      console.log(res);
+      this.$router.push({name: 'hotels'})
     }
+  }
 }
 </script>
 <style>
@@ -136,6 +148,7 @@ export default{
   height: 3rem;
 }
 .col-text{
+  background-color: white;
   border-right: 2px solid lightgray;
   border-bottom: 2px solid gray;
   border-left: 2px solid lightgray;
@@ -144,6 +157,7 @@ export default{
   width: 20rem;
 }
 .col-button{
+  background-color: white;
   border-right: 2px solid lightgray;
   border-bottom: 2px solid gray;
   border-left: 2px solid lightgray;

@@ -1,4 +1,5 @@
 <template>
+  <img class="bg-img" src="./assets/3b806816-cfbd-4777-8ce3-236d94ef2e7c.png" alt="">
   <Navbar/>
   <router-view/>
 </template>
@@ -13,6 +14,6 @@ export default{
 }
 </script>
 
-<style src="../public/booking.css">
+<style src="../public/css/booking.css">
 
 </style>
