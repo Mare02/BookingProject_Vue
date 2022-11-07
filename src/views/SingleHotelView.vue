@@ -16,6 +16,14 @@
           </div>
         </div>
       </div>
+      <div>
+        <!-- <div class="mapouter">
+          <div class="gmap_canvas">
+            <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+            </iframe>
+          </div>
+        </div> -->
+      </div>
       <div class="d-flex j-center mt-3">
         <span class="section-title">Features</span>
       </div>
@@ -69,10 +77,14 @@ export default{
     this.getApartments()
   },
   computed: {
-    ...mapGetters(['getUserId'])
+    ...mapGetters(['getUserId']),
+
+    src(){
+      const position = `44.8134029+,+20.4340126`
+      return `https://maps.google.com/maps?q=+` + position + `+&hl=en&z=14&amp;output=embed`
+    }
   },
   components:{
-    
   },
   data(){
     return{
@@ -80,6 +92,10 @@ export default{
       hotel: [],
       apartments: [],
       selectedUrl: null,
+      center: {
+        lat: 44.8134029,
+        lng: 20.4340126,
+      }
     }
   },
   methods:{
