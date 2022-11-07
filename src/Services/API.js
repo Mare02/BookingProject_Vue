@@ -98,11 +98,9 @@ const utils = {
       let res = await axios.get(`${api_url + 'destinations'}`, {
         params:{sta_id: sta_id}
       })
-      console.log(res);
-      return res
+      return res.data.data
     } 
     catch (error) {
-      console.log(error);
       return error  
     }
   },

@@ -7,7 +7,7 @@
         <img src="../assets/icons/free-location-pointer-icon-2961-thumb.png" class="des-icon-abs" alt="">
       </div>
       <ul class="search-dropdown" id="dropdown" v-if="arrLength > 0" :class="{'dropdownReactive': arrLength <= 5, 'dropdownMin': arrLength > 5}">
-        <li v-for="des in destinations" :key="des.des_id" class="d-flex a-center" @click="selectDestination(des.des_id, des.des_name, des.sta_name)">
+        <li v-for="des in destinations" :key="des.des_id" class="d-flex a-center" @click="selectDestination(des.des_id, des.des_name, des.sta_name, des.des_sta_id)">
           <img src="../assets/icons/free-location-pointer-icon-2961-thumb.png" alt="" class="des-icon">
           <div class="loc-name">
             <span>{{des.des_name}}</span>
@@ -46,7 +46,7 @@
       })
       if(localStorage.getItem('des_name')){
         this.selectDestination(localStorage.getItem('des_id'), localStorage.getItem('des_name'), 
-                              localStorage.getItem('sta_name'))
+                              localStorage.getItem('sta_name'), localStorage.getItem('sta_id'))
         if(localStorage.getItem('check_in') && localStorage.getItem('check_out')){
           this.checkInDate = localStorage.getItem('check_in')
           this.checkOutDate = localStorage.getItem('check_out')
@@ -75,9 +75,11 @@
           this.arrLength = this.destinations.length
         }
       },
-      selectDestination(id, des_name, sta_name){
+      selectDestination(id, des_name, sta_name, sta_id){
+        localStorage.setItem('sta_id', sta_id)
         this.destination_id = id
         this.search = `${des_name}, ${sta_name}`
+        this.$emit('selected')
       },
       closeDropdown(){
         this.destinations = []
