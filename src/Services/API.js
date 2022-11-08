@@ -42,7 +42,7 @@ const utils = {
         usr_id: usr_id, apa_id: apa_id, hot_id: hot_id, check_in: check_in, 
         check_out: check_out, cat_id: cat_id
       })  
-      return res.data.data
+      return res
     } 
     catch (error) {
       return error

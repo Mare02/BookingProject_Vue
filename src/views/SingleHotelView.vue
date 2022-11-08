@@ -6,23 +6,18 @@
           <span class="hotel-title">{{hotel.hot_name}}</span>
         </div>
       </div>
-      <div class="d-flex a-center f-col w-100 mt-1">
-        <div class="big-card">
-          <img :src="selectedUrl" alt="" id="showing-img" v-if="selectedUrl">
-        </div>
-        <div class="gallery-selector">
-          <div class="small-card" v-for="img in hotel.images" :key="img.file_id" @click="changeImg(img.image_url)">
-            <img :src="img.image_url" alt="">
+      <div class="d-flex a-center j-center w-100 mt-1">
+        <div>
+          <div class="big-card">
+            <img :src="selectedUrl" alt="" id="showing-img" v-if="selectedUrl">
           </div>
         </div>
-      </div>
-      <div>
-        <!-- <div class="mapouter">
+        <div class="mapouter m-1">
           <div class="gmap_canvas">
-            <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+            <iframe width="370" height="370" id="gmap_canvas" src="https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
             </iframe>
           </div>
-        </div> -->
+        </div>
       </div>
       <div class="d-flex j-center mt-3">
         <span class="section-title">Features</span>
@@ -35,33 +30,14 @@
       <div class="d-flex mt-3">
         <span class="section-desc">{{hotel.hot_description_long}}</span>
       </div>
-      <div class="mt-3 d-flex j-center">
-        <table class="table">
-          <tr class="table-section">
-            <th class="col-title-small">Room Type</th>
-            <th class="col-title">Price Per Day</th>
-            <th class="col-button-title">Reserve</th>
-          </tr>
-          <tr v-for="apa in apartments" :key="apa.apa_id" class="table-section">
-            <td class="col-text d-flex f-col">
-              <span class="col-text-title">{{apa.cat_name}}</span>
-              <span class="mt-1">Features:</span>
-              <hr>
-              <div>
-                <label v-for="fea in apa.features" :key="fea.fea_id">
-                  {{fea.fea_name}}
-                </label>
-              </div>
-            </td>
-            <td v-if="apa.price_per_day" class="col-text col-price">{{apa.price_per_day.toLocaleString("en-US")}} RSD</td>
-            <td class="col-button">
-              <button @click="makeReservation(
-                getUserId, apa.apartments[0].apa_id, apa.cat_id, apa.hot_id, 
-                localStorage.getItem('check_in'), localStorage.getItem('check_out')
-              )" class="reserve-button">Select</button>
-            </td>
-          </tr>
-        </table>
+      <div class="d-flex j-center mt-3">
+        <Search :only_date_mode="true"/>
+      </div> 
+      <div class="mt-2 d-flex j-center f-wrap">
+        <ApartmentCard v-for="apa in apartments" :key="apa.cat_id" :apartment="apa"/>
+      </div>
+      <div class="mt-3">
+
       </div>
     </div>
   </div>
@@ -69,7 +45,11 @@
 
 <script>
 import service from '../services/API'
+import Search from '../components/Search-Component.vue'
+import ApartmentCard from '../components/Apartment-Card.vue'
 import { mapGetters } from 'vuex'
+import {useToast } from "vue-toastification";
+import {POSITION} from "vue-toastification";
 
 export default{
   mounted(){
@@ -85,6 +65,7 @@ export default{
     }
   },
   components:{
+    Search, ApartmentCard
   },
   data(){
     return{
@@ -111,8 +92,8 @@ export default{
       const hot_id = this.$route.params.hot_id
       const res = await service.getApartments(hot_id, localStorage.getItem('check_in') || null, 
                                               localStorage.getItem('check_out')) || null
-      console.log(res);
       this.apartments = res
+      console.log(this.apartments[0].full_price);
     },
     changeImg(src){
       this.selectedUrl = src
@@ -120,20 +101,29 @@ export default{
     makeReservation(usr_id, apa_id, cat_id, hot_id, check_in, check_out){
       const res = service.makeReservation(usr_id, apa_id, cat_id, hot_id, check_in, check_out)
       console.log(res);
-      this.$router.push({name: 'hotels'})
+      if(res.status === 200){
+        const toast = useToast()
+        toast.success('Apartment reserved! Enjoy your stay.', {position: POSITION.TOP_CENTER})
+        this.$router.push({name: 'hotels'})
+      }
     }
   }
 }
 </script>
+
 <style>
+.search-cont{
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 .hotel-title{
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin: 1.5rem;
   color: rgb(99, 68, 129);
 }
 .feature-div{
   padding: 0.5rem;
-  border: 1px solid lightgrey;
+  border: 2px solid rgb(151, 151, 151);
   border-radius: 5px;
   margin: 0.5rem;
   color: rgb(75, 75, 75);
@@ -196,7 +186,7 @@ export default{
   border-bottom: 2px solid rgb(79, 65, 92);
 }
 .col-price{
-  width: 5rem;
-  text-align: center;
+  width: auto !important;
+  text-align: left;
 }
 </style>

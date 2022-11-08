@@ -1,6 +1,6 @@
 <template>
-  <div :class="{'searchComp-div': !vertical, 'searchComp-div-ver': vertical}">
-    <div class="searchComp-section" id="des-input-section">
+  <div class="searchComp-div">
+    <div class="searchComp-section" id="des-input-section" v-if="!only_date_mode">
       <label>Destination:</label>
       <div class="rel">
         <input type="text" v-model="search" @input="searchDestinations()" id="des-input" autocomplete="off" placeholder="Search">
@@ -28,7 +28,8 @@
         </div>
       </div>
       <div class="searchComp-section" id="search-sec">
-        <button @click="emitData()" class="search-btn">Search</button>
+        <button @click="emitData()" class="search-btn" v-if="!only_date_mode">Search</button>
+        <button @click="selectDate()" class="search-btn" v-if="only_date_mode">Submit</button>
       </div>
     </div>
   </div>
@@ -37,7 +38,7 @@
   import service from '../services/API'
   
   export default{
-    props:['vertical'],
+    props:['vertical', 'only_date_mode'],
     mounted(){
       document.addEventListener('click', (event) => {
         if(event.target.id != 'des-input' && event.target.id != 'dropdown'){
@@ -80,6 +81,10 @@
         this.destination_id = id
         this.search = `${des_name}, ${sta_name}`
         this.$emit('selected')
+      },
+      selectDate(){
+        localStorage.setItem('check_in', this.checkInDate)
+        localStorage.setItem('check_out', this.checkOutDate)
       },
       closeDropdown(){
         this.destinations = []

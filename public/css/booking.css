@@ -520,8 +520,8 @@ label{
   opacity: 0.7;
 }
 .big-card{
-  height: 25rem;
-  width: 40rem;
+  height: 23rem;
+  width: 35rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -534,7 +534,7 @@ label{
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40rem;
+  width: 35rem;
   overflow-x: scroll;
   cursor: grab;
 }
