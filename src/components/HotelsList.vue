@@ -78,6 +78,7 @@ export default{
     redirectToHotel(hot_id){
       console.log(hot_id);
       this.$router.push({name: 'hotel', params:{hot_id: hot_id}})
+      localStorage.setItem('hot_id', hot_id)
     },
   }
 }

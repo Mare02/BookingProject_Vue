@@ -132,7 +132,12 @@ export default {
         else{
           localStorage.setItem('sid', res.data.sid)
           this.api_error_msg = '';
-          this.$router.push({name: 'home'})
+          if(localStorage.getItem('log_error')){
+            this.$router.push({name: 'hotel', params:{hot_id: parseInt(localStorage.getItem('hot_id'))}})
+          }
+          else{
+            this.$router.push({name: 'home'})
+          }
         } 
       }
     },

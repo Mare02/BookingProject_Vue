@@ -22,10 +22,9 @@
           <span class="span-small">for 1 night</span>
           <span class="span-small span-red" v-if="apartment.available_rooms_count < 3">We have {{apartment.available_rooms_count}} left</span>
         </div>
-        
       </div>
       <div class="card-ver-btn"> 
-        <button class="link-signin border-2">Reserve</button>
+        <button @click="emitReserve()">Book</button>
       </div>
     </div>
   </div>
@@ -34,12 +33,17 @@
 <script>
   export default{
     props: ['apartment'],
+    methods:{
+      emitReserve(){
+        this.$emit('reserve')
+      }
+    }
   }
 </script>
 
 <style>
   .card-ver-container{
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     min-width: 20rem;
     max-width: 20rem;
     width: 20rem;
@@ -71,15 +75,14 @@
   }
   .card-ver-header{
     text-align: left;
-    width: 100%;
-    padding: 0.5rem;
+    padding: 1rem;
   }
   .card-ver-header span{
     font-size: 1.2rem;
   }
   .card-ver-body{
-    padding: 0.5rem;
-    height: 60%;
+    padding: 1rem;
+    height: 40%;
     font-size: 1.05rem;
   }
   .card-ver-list{
@@ -99,7 +102,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem;
+    padding: 1rem;
+    padding-top: 0;
   }
   .card-ver-price{
     text-align: left;
@@ -124,6 +128,19 @@
     margin-top: 0.4rem;
     display: flex;
     flex-direction: column;
+  }
+  .card-ver-btn button{
+    border-radius: 5px;
+    background-color: rgb(77, 76, 125);
+    color: white;
+    border: none;
+    padding: 0.5em;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .card-ver-btn button:hover{
+    background-color: rgb(77, 76, 125, 0.7);
   }
 
 </style>

@@ -1,6 +1,7 @@
 <template>
 <div class="d-flex f-col a-center w-100">
-  <span class="home-title">Where do you want to go?</span>
+  <img class="home-bg" src="https://wallpaperaccess.com/full/2690549.jpg" alt="">
+  <span class="home-title margin">Where would you like to go?</span>
   <div class="d-flex j-center w-100">
     <Search @search="redirect" @selected="getDestinations()"/>
   </div>
@@ -33,7 +34,6 @@ export default {
     Search
   },
   computed: {
-    
   },
   mounted(){
     if(localStorage.getItem('sta_id')){
@@ -58,3 +58,24 @@ export default {
   }
 }
 </script>
+
+<style>
+  .home-bg{
+    position: absolute;
+    top: -20.5rem;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: brightness(0.7);
+    border-radius: 80px;
+  }
+  .margin{
+    margin-top: 20rem;
+  }
+  .home-title{
+    color: white;
+    text-shadow: 0 0 10px black;
+    font-size: 3rem;
+  }
+</style>

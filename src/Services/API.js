@@ -75,7 +75,7 @@ const utils = {
   "checkSession": async function(sid){
     try {
       const res = await axios.get(`${api_url + 'auth/checkSession' }`, {params: {sid: sid}})
-      return res.data.data
+      return res
     } 
     catch (error) {
       return error
