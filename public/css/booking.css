@@ -21,7 +21,7 @@
 body{
   /* background-color: var(--bg-color); */
   background: rgb(167,159,190);
-  background: linear-gradient(90deg, rgba(167,159,190,1) 0%, rgba(218,217,222,1) 50%, rgba(167,159,190,1) 100%);
+  background: linear-gradient(90deg, rgba(167,159,190,0.6) 0%, rgba(218,217,222,1) 50%, rgba(167,159,190,0.6) 100%);
   overflow-x: hidden;
 }
 
@@ -421,7 +421,6 @@ label{
 
 .section-div{
   position: relative;
-
   padding-left: 15rem;
   padding-right: 15rem;
 }

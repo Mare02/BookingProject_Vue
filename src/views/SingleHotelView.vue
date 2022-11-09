@@ -1,27 +1,11 @@
 <template>
-  <div class="d-flex f-col a-center">
+  <div class="d-flex f-col mt-2">
     <div class="section-div">
-      <div class="card-horizontal-header">
-        <div class="d-flex j-center">  
-          <span class="hotel-title">{{hotel.hot_name}}</span>
-        </div>
-      </div>
       <div class="gallery-loc-wrap">
         <div class="hotel-gallery">
-          <Carousel class="carousel-big" :wrapAround="true" v-if="images">
-            <Slide v-for="img in images" :key="img.file_id" class="carousel-slide">
-              <div class="hot-card-img-big">
-                <img :src="img.image_url" alt="">
-              </div>
-            </Slide>
-            <template #addons>
-              <Navigation v-if="images.length > 1"/>
-            </template>
-          </Carousel>
+          <grid-images :items="images_arr" :cells="5" />
         </div>
-        <iframe 
-          width="400" 
-          height="100%" 
+        <iframe class="map"
           frameborder="0" 
           scrolling="yes" 
           marginheight="0" 
@@ -29,15 +13,18 @@
           :src="'https://maps.google.com/maps?q='+lat+','+lng+'&hl=en&z=14&z=17&amp;output=embed'">
         </iframe>
       </div>
-      <div class="d-flex j-center mt-3">
-        <span class="section-title">Features</span>
-      </div>
-      <div class="d-flex a-center j-center f-wrap mt-1">
-        <div v-for="fea in hotel.features" :key="fea.fea_id" class="feature-div">
-          {{fea.fea_name}}
+      <div class="sec-white mt-1">
+        <div class="sec-title-fea">
+          <div class="d-flex a-center">
+            <span class="hotel-title">{{hotel.hot_name}}</span>
+            <div class="hot-stars-div">
+              <img class="hot-star" v-for="star in hotel.hot_stars" :key="star" src="../assets/Plain_Yellow_Star.png" alt=""/>
+            </div>
+          </div>
+          <span class="section-title-small">Features</span>
         </div>
       </div>
-      <div class="d-flex mt-3">
+      <div class="sec-white mt-1">
         <span class="section-desc">{{hotel.hot_description_long}}</span>
       </div>
       <div class="d-flex j-center mt-3">
@@ -48,7 +35,7 @@
           getUserId, apa.apartments[0].apa_id, apa.cat_id
         )"/>
       </div>
-      <div class="mt-3"></div>
+      
     </div>
   </div>
 </template>
@@ -57,7 +44,6 @@
 import service from '../services/API'
 import Search from '../components/Search-Component.vue'
 import ApartmentCard from '../components/Apartment-Card.vue'
-import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 import { mapGetters } from 'vuex'
 import {useToast } from "vue-toastification";
@@ -77,7 +63,7 @@ export default{
     }
   },
   components:{
-    Search, ApartmentCard, Carousel, Slide, Navigation,
+    Search, ApartmentCard
   },
   data(){
     return{
@@ -85,6 +71,7 @@ export default{
       hotel: [],
       apartments: [],
       images: [],
+      images_arr: [],
       lat: null,
       lng: null,
     }
@@ -97,6 +84,10 @@ export default{
       this.images = this.hotel.images
       this.lat = this.hotel.hot_map_lat
       this.lng = this.hotel.hot_map_lng
+      for(let el in res[0].images){
+        this.images_arr.push(res[0].images[el].image_url)
+      }
+      console.log(this.images_arr);
     },
     async getApartments(){
       const hot_id = this.$route.params.hot_id
@@ -138,15 +129,38 @@ export default{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 25rem;
   width: 100%;
+  height: 30rem;
 }
+.map{
+  border-radius: 10px;
+  height: 100%;
+  width: 35%;
+}
+.sec-white{
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.sec-title-fea{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.section-title-small{
+  font-size: 1.3rem;
+}
+
 .carousel-big{
   width: 35rem;
   height: 100%;
 }
 .hotel-gallery{
   height: 100%;
+  width: 65%;
+}
+.hotel-gallery .gi-item{
+  border: 5px solid white;
 }
 .hot-card-img-big{
   height: 25rem;
@@ -169,7 +183,6 @@ export default{
 }
 .hotel-title{
   font-size: 1.8rem;
-  margin: 1.5rem;
   color: rgb(99, 68, 129);
 }
 .feature-div{
@@ -184,60 +197,5 @@ export default{
   flex-direction: column;
   align-content: center;
   background-color: wheat;
-}
-.table{
-  border-radius: 10px;
-}
-.col-title{
-  border-top: 2px solid lightgray;
-  background-color: rgb(95, 75, 112);
-  border-right: 2px solid lightgray;
-  border-left: 2px solid lightgray;
-  height: 3rem;
-  color: white;
-}
-.col-title-small{
-  color: white;
-  background-color: rgb(95, 75, 112);
-  border-top: 2px solid lightgray;
-  border-right: 2px solid lightgray;
-  border-left: 2px solid lightgray;
-  height: 3rem;
-}
-.col-text{
-  background-color: white;
-  border-right: 2px solid lightgray;
-  border-bottom: 2px solid gray;
-  border-left: 2px solid lightgray;
-  text-align: left;
-  padding: 1rem;
-  width: 20rem;
-}
-.col-button{
-  background-color: white;
-  border-right: 2px solid lightgray;
-  border-bottom: 2px solid gray;
-  border-left: 2px solid lightgray;
-  text-align: center;
-  padding: 1rem;
-  width: 5rem;
-  vertical-align:middle;  
-}
-.col-button-title{
-  color: white;
-  background-color: rgb(95, 75, 112);
-  border-top: 2px solid lightgray;
-  border-right: 2px solid lightgray;
-  border-left: 2px solid lightgray;
-  height: 3rem;
-}
-.col-text-title{
-  color: rgb(79, 65, 92);
-  font-size: 1.1rem;
-  border-bottom: 2px solid rgb(79, 65, 92);
-}
-.col-price{
-  width: auto !important;
-  text-align: left;
 }
 </style>
