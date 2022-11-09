@@ -9,7 +9,8 @@
       <nav class="nav-links">
         <a class="link" v-if="getUserId">Profile</a>
         <a class="link" v-if="getUserId">List your property</a>
-        <button class="link-signin" v-if="$route.path !== '/auth'" @click="redirectToAuth()">Sign In</button>
+        <button class="link-signin" v-if="$route.path !== '/auth' && !getUserId" @click="redirectToAuth()">Sign In</button>
+        <button class="link-signin" v-if="getUserId" @click="logOut()">Sign Out</button>
       </nav>
     </div>
   </div>
@@ -17,6 +18,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import service from '../services/API'
 
 export default{
   name: 'Navbar-Component',
@@ -29,6 +31,15 @@ export default{
     },
     redirectHome(){
       this.$router.push({name: 'home'})
+    },
+    async logOut(){
+      const res = await service.logOut(localStorage.getItem('sid'))
+      console.log(res);
+      if(res.status === 200){
+        localStorage.clear()
+        this.$router.push({name: 'home'})
+        location.reload()
+      }
     }
   }
 }

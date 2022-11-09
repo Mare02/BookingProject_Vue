@@ -35,15 +35,18 @@ const router = createRouter({
 })
 
 router.beforeEach(async () => {
-  const res = await service.checkSession(localStorage.getItem('sid'))
-  console.log(res);
-  if(res.status === 200){
-    store.state.user.usr_id = res.data.data[0].usr_id
-    store.state.user.usr_email = res.data.data[0].usr_email
-    store.state.user.rol_id = res.data.data[0].fk_rol_id
-    store.state.user.rol_name = res.data.data[0].rol_name
-    store.state.user.usr_firstname = res.data.data[0].usr_firstname
-    store.state.user.usr_lastname = res.data.data[0].usr_lastname
+  const sid = localStorage.getItem('sid')
+  if(sid !== 'null' && sid){
+    const res = await service.checkSession(sid)
+    console.log(res.data.data[0]);
+    if(res.status === 200){
+      store.state.user.usr_id = res.data.data[0].usr_id
+      store.state.user.usr_email = res.data.data[0].usr_email
+      store.state.user.rol_id = res.data.data[0].fk_rol_id
+      store.state.user.rol_name = res.data.data[0].rol_name
+      store.state.user.usr_firstname = res.data.data[0].usr_firstname
+      store.state.user.usr_lastname = res.data.data[0].usr_lastname
+    }
   }
 })
 

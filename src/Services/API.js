@@ -72,6 +72,17 @@ const utils = {
       return error
     }
   },
+  async logOut(sid){
+    try {
+      let res = await axios.post(`${api_url + 'auth/logout'}`,{
+        sid: sid
+      })
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
   "checkSession": async function(sid){
     try {
       const res = await axios.get(`${api_url + 'auth/checkSession' }`, {params: {sid: sid}})

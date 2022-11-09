@@ -48,7 +48,7 @@
           </div>
         </div>
       </li>
-      <li class="hot-list-error-div" v-if="hotels.length === 0">
+      <li class="hot-list-error-div" v-if="hotels.length === 0 && errorLoaded">
         <span class="search-error-msg">Sorry, there are no properties that match your search parameters.</span>
       </li>
     </ul>
@@ -68,10 +68,13 @@ export default{
   },
   mounted(){
     this.$emit('loaded')
+    setTimeout(() => {
+      this.errorLoaded = true
+    }, 500)
   },
   data(){
     return{
-      
+      errorLoaded: false
     }
   },
   methods:{

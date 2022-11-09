@@ -722,7 +722,24 @@ label{
 
 
 
-/*transition-tag*/
+/*animations*/
+.fade-scale{
+  animation-name: fade-scale;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes fade-scale{
+  from{
+    scale: 0;
+    opacity: 0;
+  }
+  to{
+    scale: 1;
+    opacity: 1;
+  }
+}
+
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
@@ -737,6 +754,8 @@ label{
 /*scrollbar*/
 ::-webkit-scrollbar{
   width: 7px;
+  position: relative;
+  right: 5rem;
 }
 ::-webkit-scrollbar-thumb{
   background-color: rgb(91, 75, 119);

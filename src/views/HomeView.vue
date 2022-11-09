@@ -1,7 +1,7 @@
 <template>
 <div class="d-flex f-col a-center w-100">
   <img class="home-bg" src="https://wallpaperaccess.com/full/2690549.jpg" alt="">
-  <span class="home-title margin">Where would you like to go?</span>
+  <span class="home-title margin fade-scale">Where would you like to go?</span>
   <div class="d-flex j-center w-100">
     <Search @search="redirect" @selected="getDestinations()"/>
   </div>

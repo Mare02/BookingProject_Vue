@@ -109,8 +109,8 @@ export default{
       console.log(usr_id, apa_id, cat_id);
       let check_in = localStorage.getItem('check_in')
       let check_out = localStorage.getItem('check_out')
-      console.log(check_in, check_out);
-      if(check_in === 'null' || check_out === 'null'){
+      console.log(typeof(check_in), typeof(check_out));
+      if(check_in === null || check_out === null){
         toast.warning('Please choose desired date of stay', {position: POSITION.TOP_CENTER})
       }
       else if(!usr_id){
