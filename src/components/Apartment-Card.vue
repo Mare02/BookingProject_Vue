@@ -17,7 +17,7 @@
     <div class="card-ver-footer">
       <div class="card-ver-price">
         <span>Price: </span>
-        <span class="price">{{apartment.price_per_day.toLocaleString('en-US')}} RSD</span>
+        <span class="price" v-if="apartment.price_per_day">{{apartment.price_per_day.toLocaleString('en-US')}} RSD</span>
         <div class="d-flex a-center j-between">
           <span class="span-small">for 1 night</span>
           <span class="span-small span-red" v-if="apartment.available_rooms_count < 3">We have {{apartment.available_rooms_count}} left</span>
@@ -82,7 +82,7 @@
   }
   .card-ver-body{
     padding: 1rem;
-    height: 60%;
+    height: 70%;
     font-size: 1.05rem;
   }
   .card-ver-list{

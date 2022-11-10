@@ -13,15 +13,14 @@ const utils = {
       return error
     }
   },
-  "getHotels": async function(des_id, check_in, check_out, start_price, end_price, features, luxury){
+  "getHotels": async function(des_id, check_in, check_out, start_price, end_price, features, luxury, page){
     try {
       const res = await axios.get(`${api_url + 'hotels'}`, {params:{
         des_id: des_id, check_in: check_in, check_out: check_out, 
         start_price: start_price, end_price: end_price, features: features,
-        luxury: luxury
+        luxury: luxury, page: page
       }})
-      console.log(res.data);
-      return res.data.data
+      return res.data
     } 
     catch (error) {
       return error

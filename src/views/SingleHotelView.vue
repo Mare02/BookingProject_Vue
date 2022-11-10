@@ -1,11 +1,6 @@
 <template>
   <div class="d-flex f-col mt-1">
     <div class="section-div">
-      <div class="gallery-loc-wrap">
-        <div class="hotel-gallery">
-          <grid-images :items="images_arr" :cells="3" />
-        </div>
-      </div>
       <div class="sec-white mt-1 d-flex j-between shadow">
         <div class="sec-title-fea">
           <div class="d-flex a-center">
@@ -14,7 +9,7 @@
               <img class="hot-star" v-for="star in hotel.hot_stars" :key="star" src="../assets/Plain_Yellow_Star.png" alt=""/>
             </div>
           </div>
-          <span class="mt-1">{{hotel.hot_description}}</span>
+          <span class="mt-1 section-desc">{{hotel.hot_description}}</span>
           <div class="d-flex a-center mt-1">
             <span>User rating: </span>&nbsp;
             <span class="section-title">{{Number(hotel.rating).toFixed(1)}}</span>
@@ -28,8 +23,11 @@
           :src="'https://maps.google.com/maps?q='+lat+','+lng+'&hl=en&z=14&z=17&amp;output=embed'">
         </iframe>
       </div>
-      <div class="sec-white mt-1">
-        <span class="section-desc">{{hotel.hot_description_long}}</span>
+      <div class="gallery-loc-wrap mt-1 d-flex shadow">
+        <div class="hotel-gallery">
+          <grid-images :items="images_arr" :cells="3" />
+        </div>
+        <span class="section-desc-big">{{hotel.hot_description_long}}</span>
       </div>
       <div class="sec-white d-flex j-center mt-1 shadow">
         <Search :only_date_mode="true"/>
@@ -130,11 +128,11 @@ export default{
 <style>
 .gallery-loc-wrap{
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 28rem;
+  height: 30rem;
   background-color: white;
   border-radius: 10px;
+  padding: 1rem;
 }
 .map{
   border-radius: 10px;
@@ -156,8 +154,17 @@ export default{
   font-size: 1.3rem;
 }
 .hotel-gallery{
-  height: 90%;
-  width: 90%;
+  height: 100%;
+  width: 65%;
+  border-radius: 10px;
+}
+.section-desc-big{
+  font-size: 1.2rem;
+  color: rgb(58, 58, 58);
+  width: 35%;
+  height: 100%;
+  overflow-y: scroll;
+  margin-left: 1rem;
 }
 .hotel-gallery .gi-item{
   border: 5px solid white;

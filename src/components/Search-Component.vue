@@ -1,5 +1,5 @@
 <template>
-  <div class="searchComp-div">
+  <div class="searchComp-div shadow">
     <div class="searchComp-section" id="des-input-section" v-if="!only_date_mode">
       <label>Destination:</label>
       <div class="rel">

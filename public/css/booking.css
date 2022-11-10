@@ -15,13 +15,13 @@
   --btn-color: rgb(77, 76, 125);
   --btn-color-hover: rgb(77, 76, 125, 0.7);
   --link-color: rgb(110, 109, 175);
-  --bg-color: rgb(249, 245, 235);
+  --bg-color: rgb(219, 219, 219);
 }
 
 body{
-  /* background-color: var(--bg-color); */
-  background: rgb(167,159,190);
-  background: linear-gradient(90deg, rgba(167,159,190,0.8) 0%, rgba(218,217,222,1) 50%, rgba(167,159,190,0.8) 100%);
+  background-color: var(--bg-color);
+  /* background: rgb(167,159,190);
+  background: linear-gradient(90deg, rgba(167,159,190,0.8) 0%, rgba(218,217,222,1) 50%, rgba(167,159,190,0.8) 100%); */
   overflow-x: hidden;
 }
 
@@ -36,8 +36,9 @@ body{
 
 .navbar{
   height: 2.5rem;
+  position: sticky;
   background-color: var(--nav-bg-color);
-  border-bottom: 2px solid rgb(190, 190, 190);
+  border-bottom: 2px solid rgb(255, 255, 255);
   color: white;
   font-weight: bold;
   top: 0;
@@ -325,13 +326,14 @@ label{
   padding: 0.3rem;
   margin: 0.5rem;
   cursor: pointer;
-  color: gray;
+  color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   transition: all 0.2s;
   border: 2px solid lightgray;
   border-radius: 10px;
-  background-color: white;
+  backdrop-filter: blur(20px);
+  background-color: rgb(77, 76, 125, 0.5);
   font-size: 1rem;
 }
 .tag-button img{
@@ -414,7 +416,7 @@ label{
 }
 .home-title{
   font-size: 2.3rem;
-  padding: 4rem;
+  padding: 3rem;
 }
 
 
@@ -599,13 +601,14 @@ label{
 
 .filters{
   width: 100%;
-  height: 30rem;
+  height: min-content;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 13rem;
   margin-right: 2rem;
-  max-width: 18rem;
+  max-width: 23rem;
+  border-radius: 10px;
 }
 .filters-close-btn{
   display: none;
@@ -623,7 +626,7 @@ label{
 
 .hot-list-container{
   min-width: 35rem;
-  max-width: 50rem;
+  /* max-width: 50rem; */
 }
 .filter-search-div{
   display: flex;

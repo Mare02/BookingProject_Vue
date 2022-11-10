@@ -5,8 +5,8 @@
   <div class="d-flex j-center w-100">
     <Search @search="redirect" @selected="getDestinations()"/>
   </div>
-  <section class="w-100 mt-5">
-    <div class="section-div d-flex f-col a-center">
+  <section class="mt-5 section-div">
+    <div class="sec-white w-100 d-flex f-col shadow">
       <div class="section-header" v-if="sta_name">
         <span class="section-title">Popular destinations in {{sta_name}}</span>
         <span class="section-desc">Here are some popular destinations to explore</span>
@@ -21,6 +21,7 @@
       </div>
     </div>
   </section>
+  <div class="mt-3"></div>
 </div>
 </template>
 
@@ -67,11 +68,18 @@ export default {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    filter: brightness(0.7);
-    border-radius: 80px;
+    filter: brightness(.7);
+    border-radius: 50px;
+    border-bottom: 5px solid white;
+    box-shadow: 0 5px 10px 1px rgb(3, 3, 3, .5);
+  }
+  .bg-des{
+    background-image: url('https://bookaweb.s3.eu-central-1.amazonaws.com/media/29726/Beograd-%281%29.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .margin{
-    margin-top: 20rem;
+    margin-top: 23rem;
   }
   .home-title{
     color: white;

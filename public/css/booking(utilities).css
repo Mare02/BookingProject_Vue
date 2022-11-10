@@ -55,6 +55,9 @@
 .pr-1{
   padding-right: 1rem;
 }
+.p-0{
+  padding: 0 !important;
+}
 .c-pointer{
   cursor: pointer;
 }
