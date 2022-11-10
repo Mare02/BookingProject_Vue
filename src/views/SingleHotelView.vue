@@ -1,11 +1,26 @@
 <template>
-  <div class="d-flex f-col mt-2">
+  <div class="d-flex f-col mt-1">
     <div class="section-div">
       <div class="gallery-loc-wrap">
         <div class="hotel-gallery">
-          <grid-images :items="images_arr" :cells="5" />
+          <grid-images :items="images_arr" :cells="3" />
         </div>
-        <iframe class="map"
+      </div>
+      <div class="sec-white mt-1 d-flex j-between shadow">
+        <div class="sec-title-fea">
+          <div class="d-flex a-center">
+            <span class="hotel-title">{{hotel.hot_name}}</span>
+            <div class="hot-stars-div">
+              <img class="hot-star" v-for="star in hotel.hot_stars" :key="star" src="../assets/Plain_Yellow_Star.png" alt=""/>
+            </div>
+          </div>
+          <span class="mt-1">{{hotel.hot_description}}</span>
+          <div class="d-flex a-center mt-1">
+            <span>User rating: </span>&nbsp;
+            <span class="section-title">{{Number(hotel.rating).toFixed(1)}}</span>
+          </div>
+        </div>
+        <iframe class="map shadow"
           frameborder="0" 
           scrolling="yes" 
           marginheight="0" 
@@ -14,28 +29,17 @@
         </iframe>
       </div>
       <div class="sec-white mt-1">
-        <div class="sec-title-fea">
-          <div class="d-flex a-center">
-            <span class="hotel-title">{{hotel.hot_name}}</span>
-            <div class="hot-stars-div">
-              <img class="hot-star" v-for="star in hotel.hot_stars" :key="star" src="../assets/Plain_Yellow_Star.png" alt=""/>
-            </div>
-          </div>
-          <span class="section-title-small">Features</span>
-        </div>
-      </div>
-      <div class="sec-white mt-1">
         <span class="section-desc">{{hotel.hot_description_long}}</span>
       </div>
-      <div class="d-flex j-center mt-3">
+      <div class="sec-white d-flex j-center mt-1 shadow">
         <Search :only_date_mode="true"/>
       </div> 
-      <div class="mt-2 d-flex j-center f-wrap">
+      <div class="mt-1 d-flex j-center f-wrap">
         <ApartmentCard v-for="apa in apartments" :key="apa.cat_id" :apartment="apa" @reserve="makeReservation(
           getUserId, apa.apartments[0].apa_id, apa.cat_id
         )"/>
       </div>
-      
+      <div class="mt-3"></div>
     </div>
   </div>
 </template>
@@ -87,7 +91,6 @@ export default{
       for(let el in res[0].images){
         this.images_arr.push(res[0].images[el].image_url)
       }
-      console.log(this.images_arr);
     },
     async getApartments(){
       const hot_id = this.$route.params.hot_id
@@ -129,13 +132,15 @@ export default{
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 30rem;
+  height: 28rem;
+  background-color: white;
+  border-radius: 10px;
 }
 .map{
   border-radius: 10px;
-  height: 100%;
-  width: 35%;
+  height: 20rem;
+  width: 20rem;
+  margin-left: 1rem;
 }
 .sec-white{
   background-color: white;
@@ -150,32 +155,15 @@ export default{
 .section-title-small{
   font-size: 1.3rem;
 }
-
-.carousel-big{
-  width: 35rem;
-  height: 100%;
-}
 .hotel-gallery{
-  height: 100%;
-  width: 65%;
+  height: 90%;
+  width: 90%;
 }
 .hotel-gallery .gi-item{
   border: 5px solid white;
 }
-.hot-card-img-big{
-  height: 25rem;
-  width: 35rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.hotel-gallery .gi-grid{
   overflow: hidden;
-  border-radius: 10px;
-  cursor: pointer;
-}
-.hot-card-img-big img{
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
 }
 .search-cont{
   padding-left: 1rem;
