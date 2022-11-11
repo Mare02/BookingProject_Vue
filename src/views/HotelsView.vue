@@ -2,7 +2,7 @@
   <div class="filters-mobile" v-if="filters_responsive && showFiltersComp">
     <Filters @filters_emit="getEmitFilters" @emitShowFilters="showFilters()"/>
   </div>
-  <div class="section-div mt-2">
+  <div class="section-div mt-nav">
     <div class="sec-white shadow bg-des">
       <div class="d-flex j-center w-100 mt-3">
         <Search @search="getHotels()"/>
@@ -39,11 +39,13 @@
       </div>
     </div>
   </div>
-  <div class="filter-sort-div">
-    <button class="filter-btn" @click="showFilters()">Filters</button>
-    <button class="sort-btn">Sort by</button>    
+  <div class="filter-sort-div section-div">
+    <div class="sec-white w-100 d-flex j-evenly shadow">
+      <button class="filter-btn shadow" @click="showFilters()">Filters</button>
+      <button class="sort-btn shadow">Sort by</button>    
+    </div>
   </div>
-  <div class="section-div d-flex mt-2" id="hotels-view">
+  <div class="section-div d-flex mt-1 mb-2" id="hotels-view">
     <Filters @filters_emit="getEmitFilters" v-if="!filters_responsive"/>
     <div class="hot-list-container">
       <div class="sec-white p-0 d-flex j-center a-center shadow">
@@ -141,10 +143,13 @@ export default{
   .page-span{
     padding: 0.3rem;
     border-radius: 5px;
-    margin: 0.5rem;
+    margin: 0.4rem;
     background-color: var(--btn-color-hover);
-    width: 1.2rem;
-    text-align: center;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     transition: all 0.2s;
     color: white;

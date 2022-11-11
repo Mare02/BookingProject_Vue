@@ -41,6 +41,13 @@
   #hotels-view{
     flex-direction: column;
   }
+  .auth-img{
+    display: none !important;
+    width: 0%;
+  }
+  .auth-content{
+    width: 100%;
+  }
   .filters{
     position: fixed;
     z-index: 10;
@@ -123,6 +130,14 @@
   }
   .searchComp-div .search-btn{
     margin: 0;
+  }
+  .home-bg{
+    border-bottom: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .home-title{
+    font-size: 2.5rem !important;
   }
 }
 @media(max-width: 500px){

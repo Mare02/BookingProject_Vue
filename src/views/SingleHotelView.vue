@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex f-col mt-1">
+  <div class="d-flex f-col mt-nav">
     <div class="section-div">
       <div class="sec-white mt-1 d-flex j-between shadow">
         <div class="sec-title-fea">
@@ -11,8 +11,8 @@
           </div>
           <span class="mt-1 section-desc">{{hotel.hot_description}}</span>
           <div class="d-flex a-center mt-1">
-            <span>User rating: </span>&nbsp;
-            <span class="section-title">{{Number(hotel.rating).toFixed(1)}}</span>
+            <span class="section-desc-dark">User rating: </span>&nbsp;
+            <span class="rating-number-big">{{Number(hotel.rating).toFixed(1)}} / 10</span>
           </div>
         </div>
         <iframe class="map shadow"
@@ -28,6 +28,25 @@
           <grid-images :items="images_arr" :cells="3" />
         </div>
         <span class="section-desc-big">{{hotel.hot_description_long}}</span>
+      </div>
+      <div class="sec-white shadow mt-1">
+        <span class="section-desc-dark">Comments: </span>
+        <div class="comments-div">
+          <div class="d-flex f-col">
+            <div class="d-flex mt-1" v-for="com in hotel.comments" :key="com">
+              <div class="profile-img">
+                <img :src="com.usr_image" alt="">
+              </div>
+              <div class="d-flex f-col">
+                <span class="comment-name">{{com.usr_firstname}} {{com.usr_lastname}}</span>
+                <div class="d-flex a-center">
+                  <span class="section-desc border-light">{{com.com_text}}</span>
+                  <span class="ml-05 rating-number">{{com.usr_rating}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="sec-white d-flex j-center mt-1 shadow">
         <Search :only_date_mode="true"/>
@@ -126,6 +145,38 @@ export default{
 </script>
 
 <style>
+.comments-div{
+  max-height: 18rem;
+  overflow-y: scroll;
+  border-radius: 10px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.profile-img{
+  overflow: hidden;
+  min-width: 3.2rem;
+  min-height: 3.2rem;
+  max-width: 3.2rem;
+  max-height: 3.2rem;
+  border-radius: 50%;
+  margin-right: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile-img img{
+  height: 100%;
+  object-fit: cover;
+}
+.comment-wrap{
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+}
+.comment-name{
+  margin-bottom: 0.2rem;
+  font-size: 1.05rem;
+}
 .gallery-loc-wrap{
   display: flex;
   justify-content: center;
@@ -159,7 +210,7 @@ export default{
   border-radius: 10px;
 }
 .section-desc-big{
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: rgb(58, 58, 58);
   width: 35%;
   height: 100%;
@@ -177,7 +228,7 @@ export default{
   padding-right: 1rem;
 }
 .hotel-title{
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   color: rgb(99, 68, 129);
 }
 .feature-div{

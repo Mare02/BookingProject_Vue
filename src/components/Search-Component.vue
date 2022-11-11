@@ -77,7 +77,9 @@
         }
       },
       selectDestination(id, des_name, sta_name, sta_id){
+        console.log(sta_name);
         localStorage.setItem('sta_id', sta_id)
+        localStorage.setItem('sta_name', sta_name)
         this.destination_id = id
         this.search = `${des_name}, ${sta_name}`
         this.$emit('selected')

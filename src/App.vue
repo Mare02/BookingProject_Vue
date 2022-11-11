@@ -1,5 +1,5 @@
 <template>
-  <Navbar/>
+  <Navbar v-if="this.$route.path !== '/auth'"/>
   <router-view/>
 </template>
 

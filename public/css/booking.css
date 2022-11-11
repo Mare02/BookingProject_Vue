@@ -16,6 +16,8 @@
   --btn-color-hover: rgb(77, 76, 125, 0.7);
   --link-color: rgb(110, 109, 175);
   --bg-color: rgb(219, 219, 219);
+  --nav-padding: 10px;
+  --nav-height: 2.2rem;
 }
 
 body{
@@ -27,17 +29,34 @@ body{
 
 .bg-img{
   z-index: -5;
-  position: fixed;
+  position: absolute;
   left: 0;
   height: 100%;
   width: 100%;
-  opacity: 0.5;
+  object-fit: cover;
+  filter: brightness(.5);
+}
+.home-bg{
+  position: absolute;
+  top: -20.5rem;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: brightness(.7);
+  border-radius: 50px;
+  border-bottom: 5px solid white;
+  box-shadow: 0 5px 10px 1px rgb(3, 3, 3, .5);
 }
 
 .navbar{
-  height: 2.5rem;
-  position: sticky;
-  background-color: var(--nav-bg-color);
+  height: var(--nav-height);
+  position: fixed;
+  right: 0;
+  left: 0;
+  /* background-color: var(--nav-bg-color); */
+  background-color: rgb(77, 76, 125, 0.6);
+  backdrop-filter: blur(20px);
   border-bottom: 2px solid rgb(255, 255, 255);
   color: white;
   font-weight: bold;
@@ -45,15 +64,18 @@ body{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: var(--nav-padding);
   z-index: 10;
 }
-
 .logo-span-part{
-  color: rgb(205, 218, 221);
+  color: rgb(188, 188, 255);
 }
 .logo-span{
   font-size: 1.5rem;
+  font-family: 'Montserrat', sans-serif;
+}
+.logo{
+  font-size: 6rem;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -84,7 +106,6 @@ body{
   border: none;
   color: var(--nav-bg-color);
   cursor: pointer;
-  margin: 0.5rem;
   transition: all 0.3s;
 }
 .link-signin:hover{
@@ -99,12 +120,39 @@ body{
 .auth-container{
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
-  
+  overflow: hidden;
 }
+.auth-img{
+  height: 100vh;
+  width: 60%;
+  color: white;
+  /* background-image: url(../../src/assets/auth_img.jpg); */
+  /* background-image: url(../../src/assets/hotel_room.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.auth-content{
+  width: 40%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+}
+/* .auth-img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+} */
 .inputs-wrapper{
   width: 35rem;
-  height: 40rem;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -112,7 +160,6 @@ body{
 }
 .inputs-wrapper .title{
   font-size: 1.5rem;
-  padding-top: 3rem;
 }
 .inputs-wrapper .inputs{
   width: 80%;
@@ -125,7 +172,7 @@ body{
   margin-top: 1rem;
 }
 input{
-  border: 2px solid rgb(234, 227, 210);
+  border: 2px solid rgb(192, 192, 192);
   height: 1.5rem;
   padding: 0.5rem;
   font-size: 1.1rem;
@@ -186,7 +233,7 @@ label{
 }
 
 .searchComp-div{
-  border: 2px solid lightgrey;
+  /* border: 2px solid lightgrey; */
   padding: 1rem;
   border-radius: 10px;
   background-color: white;
@@ -434,7 +481,11 @@ label{
 }
 .section-desc{
   opacity: 0.8;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+}
+.section-desc-dark{
+  opacity: 1;
+  font-size: 1.1rem;
 }
 
 .card{
@@ -560,18 +611,25 @@ label{
   margin-bottom: 1rem;
   flex-wrap: wrap;
 }
-.hot-header .hot-rating{
+.hot-rating{
   pointer-events: none;
   display: flex;
   align-items: center;
 }
-.hot-header .hot-rating .rating-text{
+.rating-text{
   margin-right: 0.3rem;
   color: var(--nav-bg-color);
   font-size: 1.1rem;
 }
-.hot-header .hot-rating .rating-number{
+.rating-number{
   font-size: 1.1rem;
+  color: white;
+  padding: 0.4rem;
+  background-color: rgb(133, 97, 150);
+  border-radius: 5px;
+}
+.rating-number-big{
+  font-size: 1.3rem;
   color: white;
   padding: 0.4rem;
   background-color: rgb(133, 97, 150);
@@ -606,7 +664,7 @@ label{
   flex-direction: column;
   align-items: center;
   min-width: 13rem;
-  margin-right: 2rem;
+  margin-right: 1rem;
   max-width: 23rem;
   border-radius: 10px;
 }
