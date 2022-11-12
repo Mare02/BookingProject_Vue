@@ -30,15 +30,15 @@
         <span class="section-desc-big">{{hotel.hot_description_long}}</span>
       </div>
       <div class="sec-white shadow mt-1">
-        <span class="section-desc-dark">Comments: </span>
+        <span class="section-desc-dark">Reviews: </span>
         <div class="comments-div">
           <div class="d-flex f-col">
             <div class="d-flex mt-1" v-for="com in hotel.comments" :key="com">
-              <div class="profile-img">
+              <!-- <div class="profile-img">
                 <img :src="com.usr_image" alt="">
-              </div>
+              </div> -->
               <div class="d-flex f-col">
-                <span class="comment-name">{{com.usr_firstname}} {{com.usr_lastname}}</span>
+                <span class="comment-name">{{com.usr_firstname}}</span>
                 <div class="d-flex a-center">
                   <span class="section-desc border-light">{{com.com_text}}</span>
                   <span class="ml-05 rating-number">{{com.usr_rating}}</span>
@@ -154,10 +154,10 @@ export default{
 }
 .profile-img{
   overflow: hidden;
-  min-width: 3.2rem;
-  min-height: 3.2rem;
-  max-width: 3.2rem;
-  max-height: 3.2rem;
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+  max-width: 3.5rem;
+  max-height: 3.5rem;
   border-radius: 50%;
   margin-right: 1rem;
   display: flex;

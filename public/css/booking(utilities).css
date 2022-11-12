@@ -16,11 +16,23 @@
 .j-evenly{
   justify-content: space-evenly;
 }
+.j-left{
+  justify-content: left;
+}
+.g-1{
+  gap: 1rem;
+}
+.g-05{
+  gap: 0.5rem;
+}
 .a-center{
   align-items: center;
 }
 .a-top{
   align-items: flex-start;
+}
+.a-end{
+  align-items: flex-end;
 }
 .ac-center{
   align-content: center;
@@ -100,4 +112,11 @@
 }
 .shadow-center{
   box-shadow: 0 0px 5px 3px rgba(0, 0, 0, 0.3);
+}
+.p-rel{
+  position: relative;
+}
+.disabled{
+  opacity: 0.7;
+  pointer-events: none;
 }

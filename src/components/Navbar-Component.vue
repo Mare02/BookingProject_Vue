@@ -7,9 +7,11 @@
     </div>
     <div class="d-flex a-center">
       <nav class="nav-links">
-        <a class="link" v-if="getUserId">Profile</a>
-        <a class="link" v-if="getUserId">List your property</a>
-        <button class="link-signin" v-if="this.$route.path !== '/auth' && !getUserId" @click="redirectToAuth()">Sign In</button>
+        <!-- <router-link class="link" :to="{name: 'profile'}">Profile</router-link> -->
+        <button class="link">Profile</button>
+        <router-link class="link" :to="{name: 'add_new_property'}">List your property</router-link>
+        <!-- <button class="link-signin" v-if="this.$route.path !== '/auth' && !getUserId" @click="redirectToAuth()">Sign In</button> -->
+        <router-link class="link-signin" :to="{name: 'auth'}">Sign In</router-link>
         <button class="link-signin" v-if="getUserId" @click="logOut()">Sign Out</button>
       </nav>
     </div>

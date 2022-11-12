@@ -1,5 +1,6 @@
-import axios from 'axios'
-const api_url = 'http://908q122.e2.mars-hosting.com/booking/'
+import axios from 'axios';
+const api_url = 'http://908q122.e2.mars-hosting.com/booking/';
+const bing_maps_key = 'AgHPai2_f_uHB1ftS5vQLzvSRcP7qgGW-lxFGSof_AULvD3eRtywQLjFgB-DYU8F';
 
 const utils = {
   "getApartments": async function(hot_id, check_in_date, check_out_date){
@@ -116,13 +117,31 @@ const utils = {
   },
   "getFeatures": async function(){
     try {
-      let res = await axios.get('http://908q122.e2.mars-hosting.com/booking/features')
+      let res = await axios.get(`${api_url + 'features'}`)
       return res.data.data
     } 
     catch (error) {
       return error
     }
-  }
+  },
+  "getTypes": async function(){
+    try {
+      let res = await axios.get(`${api_url + 'hotels/types'}`)
+      return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getLocations": async function(query){
+    try {
+      let res = await axios.get(`http://dev.virtualearth.net/REST/v1/Locations?query=${query}&key=${bing_maps_key}`)
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
 }
 
 export default utils 

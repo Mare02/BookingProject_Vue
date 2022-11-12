@@ -4,6 +4,8 @@ import HomeView from '../views/HomeView.vue'
 import AuthView from '../views/AuthView.vue'
 import HotelsView from '../views/HotelsView.vue'
 import SingleHotelView from '../views/SingleHotelView.vue'
+import AddProperty from '../views/AddNewProperty.vue'
+
 import store from '@/store'
 
 const routes = [
@@ -26,6 +28,11 @@ const routes = [
     path: '/hotels/:hot_id',
     name: 'hotel',
     component: SingleHotelView,
+  },
+  {
+    path: '/add_new_property',
+    name: 'add_new_property',
+    component: AddProperty,
   },
 ]
 
