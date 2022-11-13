@@ -48,13 +48,13 @@
   <div class="section-div d-flex mt-1 mb-2" id="hotels-view">
     <Filters @filters_emit="getEmitFilters" v-if="!filters_responsive"/>
     <div class="hot-list-container">
-      <div class="sec-white p-0 d-flex j-center a-center shadow">
+      <div class="sec-white p-0 d-flex j-center a-center shadow" v-if="hotels_length > 0">
         <div class="page-span" v-for="page in pages" :key="page" :class="{pageSelected: page === selected_page + 1}" @click="selectPage(page - 1)">
           {{page}}
         </div>
       </div>
       <HotelsList class="mt-1" :hotels="hotels" @loaded='this.isLoadedList = true'/>
-      <div class="sec-white p-0 d-flex j-center a-center shadow">
+      <div class="sec-white p-0 d-flex j-center a-center shadow" v-if="hotels_length > 0">
         <div class="page-span" v-for="page in pages" :key="page" :class="{pageSelected: page === selected_page + 1}" @click="selectPage(page - 1)">
           {{page}}
         </div>
@@ -74,6 +74,11 @@ var x = window.matchMedia("(max-width: 850px)")
 export default{
   components:{
     HotelsList, Search, Filters
+  },
+  computed: {
+    hotels_length(){
+      return this.hotels.length
+    }
   },
   mounted(){
     this.getHotels()

@@ -1,7 +1,8 @@
 <template>
 <div class="d-flex f-col a-center w-100">
   <img class="home-bg" src="https://wallpaperaccess.com/full/2690549.jpg" alt="">
-  <span class="home-title margin fade-scale">Where would you like to go?</span>
+  <span v-if="getName" class="home-title margin fade-scale">Welcome {{getName}}, where would you like to go?</span>
+  <span v-else class="home-title margin fade-scale">Where would you like to go?</span>
   <div class="d-flex j-center w-100">
     <Search @search="redirect" @selected="getDestinations()"/>
   </div>
@@ -16,7 +17,6 @@
           <div class="card-img">
             <img :src="d.images[0].image_url" alt="" v-if="d.images">
           </div>
-          <label class="card-label">{{d.des_name}}</label>
         </div>
       </div>
     </div>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Search from '../components/Search-Component.vue'
 import service from '../services/API'
 
@@ -35,6 +36,7 @@ export default {
     Search
   },
   computed: {
+    ...mapGetters(['getName'])
   },
   mounted(){
     if(localStorage.getItem('sta_id')){

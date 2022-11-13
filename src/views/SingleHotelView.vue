@@ -25,7 +25,7 @@
       </div>
       <div class="gallery-loc-wrap mt-1 d-flex shadow">
         <div class="hotel-gallery">
-          <grid-images :items="images_arr" :cells="3" />
+          <grid-images :items="images_arr" :cells="3"/>
         </div>
         <span class="section-desc-big">{{hotel.hot_description_long}}</span>
       </div>
@@ -65,7 +65,6 @@
 import service from '../services/API'
 import Search from '../components/Search-Component.vue'
 import ApartmentCard from '../components/Apartment-Card.vue'
-import 'vue3-carousel/dist/carousel.css'
 import { mapGetters } from 'vuex'
 import {useToast } from "vue-toastification";
 import {POSITION} from "vue-toastification";

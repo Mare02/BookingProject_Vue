@@ -1,15 +1,38 @@
 <template>
   <div class="d-flex f-col j-center a-center w-100 h-100">
+    <!-- <img class="bg-img" src="https://wallpapercrafter.com/desktop/28050-interior-style-design-home-hotel-living-room-4k.jpg" alt=""> -->
     <div class="section-div d-flex f-col j-center">
-      <span class="step-info">Step {{step}} of {{totalSteps}}</span>
+      <span class="step-info">Step {{step}} of {{total_steps}}</span>
+      
       <section v-if="step === 1">
-        <h2>Where is your property located?</h2>
+        <h2>What is the type of your property?</h2>
+        <div class="sec-white shadow mt-1">
+          <div class="d-flex a-center j-evenly">
+            <div class="d-flex f-col a-center sec-white type-item c-pointer m-1" v-for="typ in prop_types" :key="typ.typ_id"
+                                                                                :class="{'selected-typ': typ.typ_id === input_data.type}">
+              <img class="type-img" :src="typ.typ_image" alt="" @click="input_data.type = typ.typ_id">
+              <span class="section-desc">{{typ.typ_name}}</span>
+            </div>
+          </div>
+          <div class="sec-white">
+            <div class="inputs-wrapper">
+              <div class="d-flex f-col w-100">
+                <label>Number of units:</label>
+                <input type="number" spellcheck="false" v-model="input_data.number_of_units">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section v-if="step === 2">
+        <h2>Where is your {{property_type}} located?</h2>
         <span class="section-desc">Please enter the full address</span>
         <div class="sec-white shadow mt-1">
           <div class="inputs-wrapper">
             <div class="d-flex f-col w-100 p-rel">
               <label>Location:</label>
-              <input type="text" v-model="location_query" @input="getLocations()">
+              <input type="text" spellcheck="false" v-model="location_query" @input="getLocations()">
               <div class="loc-dropdown shadow d-flex f-col" v-if="map_resources.length > 0">
                 <div class="loc-item" v-for="res in map_resources" :key="res" @click="selectAddress(res, res.point.coordinates)">
                   <span class="section-desc" v-if="res.address.addressLine">{{res.address.addressLine}}</span>
@@ -28,28 +51,49 @@
         </iframe>
       </section>
 
-      <section class="sec-white shadow-center" v-if="step === 2">
-        <div class="inputs-wrapper">
-          <div class="d-flex f-col w-100">
-            <label>Property name:</label>
-            <input type="text">
+      <section v-if="step === 3">
+        <h2>Tells us more about your {{property_type}}.</h2>
+        <div class="sec-white shadow mt-1">
+          <div class="inputs-wrapper">
+            <div class="d-flex f-col w-100">
+              <label>Property name:</label>
+              <input type="text" spellcheck="false" v-model="input_data.name">
+            </div>
+            <div class="d-flex f-col w-100 mt-1">
+              <label>Short description:</label>
+              <textarea name="" id="" cols="30" rows="5"></textarea>
+            </div>
+            <div class="d-flex f-col w-100 mt-1">
+              <label>Long description:</label>
+              <textarea name="" id="" cols="30" rows="10"></textarea>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="sec-white shadow" v-if="step === 3">
-        
+      <section v-if="step === 4">
+        <h2>Add image so others can see your {{property_type}}.</h2>
+        <div class="sec-white shadow mt-1">
+          <div class="inputs-wrapper">
+            <div class="d-flex f-col w-100">
+              <label>Image:</label>
+              <input type="file" @change="getImages">
+            </div>
+          </div>
+        </div>
+        <div class="sec-white shadow mt-1 d-flex a-center j-center">
+          <img src="" alt="preview" id="preview">
+        </div>
       </section>
 
-      <section class="sec-white shadow" v-if="step === 4">
-        
+      <section class="sec-white shadow" v-if="step === 5">
       </section>
     </div>
     <div class="d-flex a-center g-1 mt-5">
-      <button class="search-btn " v-if="step !== 1" @click="previousStep()">Previous step</button>
+      <button class="search-btn" v-if="step !== 1" @click="previousStep()">Back</button>
       <button 
-        class="search-btn" 
-        :class="{'disabled': false}" v-if="step !== totalSteps" 
+        class="search-btn"  
+        v-if="step !== total_steps" 
         @click="nextStep()">Continue
       </button>
     </div>
@@ -60,19 +104,27 @@
 import service from '../services/API'
 export default {
   computed:{
-
+    property_type(){
+      if(this.input_data.type === 1) return 'hotel'
+      else return 'apartment'
+    }
   },
   mounted(){
     this.getTypes()
   },
   data(){
     return{
-      totalSteps: 4,
-      step: 1,
+      total_steps: 5,
+      step: 4,
 
       prop_types: [],
       input_data: {
         type: null,
+        number_of_units: null,
+        name: "",
+        description: "",
+        description_long: "",
+        image: null
       },
       map_resources: [],
       location_query: '',
@@ -93,10 +145,9 @@ export default {
       this.prop_types = res
     },
     async getLocations(){
-      if(this.location_query.length > 1){
+      if(this.location_query.length > 2){
         let res = await service.getLocations(this.location_query)
         this.map_resources = res.data.resourceSets[0].resources
-        console.log(res.data.resourceSets[0]);
       }
       else{
         this.map_resources = []
@@ -104,8 +155,6 @@ export default {
       }
     },
     selectAddress(data, coord){
-      console.log(data);
-      console.log(coord);
       this.location_query = data.address.addressLine || data.name
       this.selected_address.destination = data.address.locality
       this.selected_address.state = data.address.countryRegion
@@ -113,6 +162,18 @@ export default {
       this.selected_coord.lat = coord[0]
       this.selected_coord.lng = coord[1]
       this.map_resources = []
+    },
+    getImages(e){
+      let img = e.target.files[0]
+      this.input_data.image = img
+      const imgElem = document.getElementById('preview')
+      
+      const reader = new FileReader()
+      reader.readAsDataURL(img)
+      reader.addEventListener('load', () => {
+        const img_url = reader.result
+        imgElem.src = img_url
+      })
     },
     nextStep(){
       this.step ++
@@ -125,6 +186,18 @@ export default {
 </script>
 
 <style> 
+#preview{
+  width: 20rem;
+}
+.type-img{
+  width: 15rem;
+}
+.type-item:hover{
+  background-color: rgb(230, 222, 238);
+}
+.selected-typ{
+  background-color: rgb(211, 200, 221);
+}
 .loc-item{
   cursor: pointer;
   height: 2rem;
@@ -159,4 +232,5 @@ export default {
   opacity: 0.7;
   margin-bottom: 1rem;
 }
+
 </style>

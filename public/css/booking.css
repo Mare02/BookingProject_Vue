@@ -23,6 +23,7 @@
 body{
   background-color: var(--bg-color);
   overflow-x: hidden;
+  user-select: none;
 }
 
 .bg-img{
@@ -172,12 +173,23 @@ input{
   border-radius: 5px;
   transition: all 0.2s;
 }
-input:focus{
+input:focus, textarea:focus{
   border: 2px solid var(--nav-bg-color);
 }
 label{
   margin-bottom: 5px;
   color: rgb(83, 83, 83);
+}
+
+textarea{
+  border: 2px solid rgb(192, 192, 192);
+  padding: 0.5rem;
+  border-radius: 5px;
+  outline: none;
+  transition: all 0.2s;
+  resize: none;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 .show-pass-div{
@@ -282,6 +294,17 @@ label{
   color: white;
   transition: all 0.3s;
 }
+.search-btn-small{
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  background-color: var(--btn-color);
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s;
+}
 .searchComp-div .search-btn{
   font-size: 1rem;
   padding: 0.8rem;
@@ -295,7 +318,7 @@ label{
   color: white;
   transition: all 0.3s;
 }
-.search-btn:hover{
+.search-btn:hover, .search-btn-small:hover{
   background-color: var(--btn-color-hover);
 }
 .searchComp-div #des-input{

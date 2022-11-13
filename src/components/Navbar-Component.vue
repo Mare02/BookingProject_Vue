@@ -11,7 +11,7 @@
         <button class="link">Profile</button>
         <router-link class="link" :to="{name: 'add_new_property'}">List your property</router-link>
         <!-- <button class="link-signin" v-if="this.$route.path !== '/auth' && !getUserId" @click="redirectToAuth()">Sign In</button> -->
-        <router-link class="link-signin" :to="{name: 'auth'}">Sign In</router-link>
+        <router-link v-if="this.$route.path !== '/auth' && !getUserId" class="link-signin" :to="{name: 'auth'}">Sign In</router-link>
         <button class="link-signin" v-if="getUserId" @click="logOut()">Sign Out</button>
       </nav>
     </div>
