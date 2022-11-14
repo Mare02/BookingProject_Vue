@@ -14,8 +14,8 @@ export default createStore({
     getEmail(state){
       return state.user.usr_email
     },
-    getFullName(state){
-      return `${state.user.usr_firstname + ' ' + state.user.usr_lastname}`
+    getName(state){
+      return state.user.usr_firstname
     },
     getUserId(state){
       return state.user.usr_id

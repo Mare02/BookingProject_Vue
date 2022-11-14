@@ -1,5 +1,5 @@
 <template>
-  <div class="filters">
+  <div class="filters shadow">
     <img class="filters-close-btn" src="https://cdn.icon-icons.com/icons2/1674/PNG/512/close_111152.png" alt="" @click="emitShowFilters()">
     <div class="filter-search-div">
       <div class="filters-title">

@@ -1,6 +1,5 @@
 <template>
-  <img class="bg-img" src="./assets/3b806816-cfbd-4777-8ce3-236d94ef2e7c.png" alt="">
-  <Navbar/>
+  <Navbar v-if="this.$route.path !== '/auth'"/>
   <router-view/>
 </template>
 
