@@ -1,12 +1,14 @@
 <template>
 <div class="d-flex f-col a-center w-100">
-  <span class="home-title">Where do you want to go?</span>
+  <img class="home-bg" src="https://wallpaperaccess.com/full/2690549.jpg" alt="">
+  <span v-if="getName" class="home-title margin fade-scale">Welcome {{getName}}, where would you like to go?</span>
+  <span v-else class="home-title margin fade-scale">Where would you like to go?</span>
   <div class="d-flex j-center w-100">
     <Search @search="redirect" @selected="getDestinations()"/>
   </div>
-  <section class="w-100 mt-5">
-    <div class="section-div d-flex f-col a-center">
-      <div class="section-header" v-if="sta_name">
+  <section class="mt-5 section-div">
+    <div class="sec-white d-flex f-col shadow" v-if="sta_name">
+      <div class="section-header">
         <span class="section-title">Popular destinations in {{sta_name}}</span>
         <span class="section-desc">Here are some popular destinations to explore</span>
       </div>
@@ -15,15 +17,16 @@
           <div class="card-img">
             <img :src="d.images[0].image_url" alt="" v-if="d.images">
           </div>
-          <label class="card-label">{{d.des_name}}</label>
         </div>
       </div>
     </div>
   </section>
+  <div class="mt-3"></div>
 </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Search from '../components/Search-Component.vue'
 import service from '../services/API'
 
@@ -33,13 +36,12 @@ export default {
     Search
   },
   computed: {
-    
+    ...mapGetters(['getName'])
   },
   mounted(){
     if(localStorage.getItem('sta_id')){
       this.getDestinations()
     }
-    this.sta_name = localStorage.getItem('sta_name')
   },
   data(){
     return{
@@ -51,6 +53,7 @@ export default {
     async getDestinations(){
       let res = await service.getDestinationsById(localStorage.getItem('sta_id'))
       this.destinations = res
+      this.sta_name = localStorage.getItem('sta_name')
     },
     redirect(){
       this.$router.push({name: "hotels"}) 
@@ -58,3 +61,20 @@ export default {
   }
 }
 </script>
+
+<style>
+
+  .bg-des{
+    background-image: url('https://bookaweb.s3.eu-central-1.amazonaws.com/media/29726/Beograd-%281%29.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .margin{
+    margin-top: 25rem;
+  }
+  .home-title{
+    color: white;
+    text-shadow: 0 0 10px black;
+    font-size: 3rem;
+  }
+</style>

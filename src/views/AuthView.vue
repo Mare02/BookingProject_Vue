@@ -1,60 +1,69 @@
 <template>
 <div class="auth-container">
-  <div class="inputs-wrapper">
-    <span class="title" v-if="!showRegister">Sign In</span>
-    <span class="title" v-if="showRegister">Sign Up</span>
-    <div class="inputs">
-      <transition>
-        <div class="input-div" v-if="showRegister">
-          <label>First name:</label>
-          <input type="text" v-model="inputs.first_name"
-            :class="{error: v$.inputs.first_name.$errors.length}">
-          <span v-for="error in v$.inputs.first_name.$errors" :key="error" class="error-msg">{{error.$message}}</span>
+  <div class="auth-content">
+    <div class="inputs-wrapper">
+      <span class="title" v-if="!showRegister">Sign In</span>
+      <span class="title" v-if="showRegister">Sign Up</span>
+      <div class="inputs">
+        <transition>
+          <div class="input-div" v-if="showRegister">
+            <label>First name:</label>
+            <input type="text" v-model="inputs.first_name"
+              :class="{error: v$.inputs.first_name.$errors.length}">
+            <span v-for="error in v$.inputs.first_name.$errors" :key="error" class="error-msg">{{error.$message}}</span>
+          </div>
+        </transition>
+        <transition>
+          <div class="input-div" v-if="showRegister">
+            <label>Last name:</label>
+            <input type="text" v-model="inputs.last_name"
+              :class="{error: v$.inputs.last_name.$errors.length}">
+            <span v-for="error in v$.inputs.last_name.$errors" :key="error" class="error-msg">{{error.$message}}</span>
+          </div>
+        </transition>
+        <div class="input-div">
+          <label>Email:</label>
+          <input type="text" v-model="inputs.email"
+            :class="{error: v$.inputs.email.$errors.length}">
+          <span v-for="error in v$.inputs.email.$errors" :key="error" class="error-msg">{{error.$message}}</span>
         </div>
-      </transition>
-      <transition>
-        <div class="input-div" v-if="showRegister">
-          <label>Last name:</label>
-          <input type="text" v-model="inputs.last_name"
-            :class="{error: v$.inputs.last_name.$errors.length}">
-          <span v-for="error in v$.inputs.last_name.$errors" :key="error" class="error-msg">{{error.$message}}</span>
+        <div class="input-div">
+          <label>Password: </label>
+          <input type="password" v-model="inputs.password" id="password"
+            :class="{error: v$.inputs.password.$errors.length}">
+          <div class="show-pass-div">
+            <input type="checkbox" @click="showPass()">
+            <span>show password</span>
+          </div>
+          <span v-for="error in v$.inputs.password.$errors" :key="error" class="error-msg">{{error.$message}}</span>
         </div>
-      </transition>
-      <div class="input-div">
-        <label>Email:</label>
-        <input type="text" v-model="inputs.email"
-          :class="{error: v$.inputs.email.$errors.length}">
-        <span v-for="error in v$.inputs.email.$errors" :key="error" class="error-msg">{{error.$message}}</span>
+        <transition>
+          <div class="input-div" v-if="showRegister">
+            <label>Confirm password:</label>
+            <input type="password" v-model="inputs.c_password" id="password-co"
+              :class="{error: v$.inputs.c_password.$errors.length}">
+            <span v-for="error in v$.inputs.c_password.$errors" :key="error" class="error-msg">{{error.$message}}</span>
+          </div>
+        </transition>
       </div>
-      <div class="input-div">
-        <label>Password: </label>
-        <input type="password" v-model="inputs.password" id="password" 
-          :class="{error: v$.inputs.password.$errors.length}">
-        <div class="show-pass-div">
-          <input type="checkbox" @click="showPass()">
-          <span>show password</span>
-        </div>
-        <span v-for="error in v$.inputs.password.$errors" :key="error" class="error-msg">{{error.$message}}</span>
+      <span class="error-msg">{{api_error_msg}}</span>
+      <button  class="login-btn" v-if="!showRegister" @click="logIn()">Sign In</button>
+      <button type="submit" class="register-btn" v-if="showRegister" @click="signUp()">Submit</button>
+      <div class="reg-option" v-if="!showRegister">
+        <span>Dont't have an account?</span>
+        <button @click="changeReg()">Sign Up</button>
       </div>
-      <transition>
-        <div class="input-div" v-if="showRegister">
-          <label>Confirm password:</label>
-          <input type="password" v-model="inputs.c_password" id="password-co"
-            :class="{error: v$.inputs.c_password.$errors.length}">
-          <span v-for="error in v$.inputs.c_password.$errors" :key="error" class="error-msg">{{error.$message}}</span>
-        </div>
-      </transition>
+      <div class="log-option" v-if="showRegister">
+        <span>Already have an account?</span>
+        <button @click="changeReg()">Sign In</button>
+      </div>
     </div>
-    <span class="error-msg">{{api_error_msg}}</span>
-    <button  class="login-btn" v-if="!showRegister" @click="logIn()">Sign In</button>
-    <button type="submit" class="register-btn" v-if="showRegister" @click="signUp()">Submit</button>
-    <div class="reg-option" v-if="!showRegister">
-      <span>Dont't have an account?</span>
-      <button @click="changeReg()">Sign Up</button>
-    </div>
-    <div class="log-option" v-if="showRegister">
-      <span>Already have an account?</span>
-      <button @click="changeReg()">Sign In</button>
+  </div>
+  <div class="auth-img d-flex a-center j-center">
+    <img class="bg-img" src="../assets/hotel_room.jpg" alt="">
+    <div class="d-flex f-col">
+      <span class="logo"><span class="logo-span-part">INN</span>OVA</span>
+      <span class="section-title">Find your perfect <span class="logo-span-part">INN</span>.</span>
     </div>
   </div>
 </div>
@@ -138,7 +147,12 @@ export default {
         else{
           localStorage.setItem('sid', res.data.sid)
           this.api_error_msg = '';
-          this.$router.push({name: 'home'})
+          if(localStorage.getItem('log_error')){
+            this.$router.push({name: 'hotel', params:{hot_id: parseInt(localStorage.getItem('hot_id'))}})
+          }
+          else{
+            this.$router.push({name: 'home'})
+          }
         } 
       }
     },
