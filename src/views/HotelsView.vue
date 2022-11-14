@@ -118,7 +118,7 @@ export default{
                                         localStorage.getItem('check_out'),
                                         this.filters.start_price || null,
                                         this.filters.end_price || null,
-                                        JSON.stringify(this.filters.featuresArr.toString().replace("[", "").replace("]", "")) || null,
+                                        JSON.stringify(this.filters.featuresArr) || null,
                                         null, this.selected_page)
       console.log(res.data);
       this.hotels = res.data

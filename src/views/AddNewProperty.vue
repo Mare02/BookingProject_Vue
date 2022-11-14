@@ -77,12 +77,12 @@
           <div class="inputs-wrapper">
             <div class="d-flex f-col w-100">
               <label>Image:</label>
-              <input type="file" @change="getImages">
+              <input type="file" multiple @change="getImages">
             </div>
           </div>
         </div>
         <div class="sec-white shadow mt-1 d-flex a-center j-center">
-          <img src="" alt="preview" id="preview">
+          <!-- <img v-for="index in url_arr" :key="index" :src="url_arr[index]" alt="preview" id="preview"> -->
         </div>
       </section>
 
@@ -115,9 +115,11 @@ export default {
   data(){
     return{
       total_steps: 5,
-      step: 4,
+      step: 1,
 
       prop_types: [],
+      input_images: [],
+      url_arr: [],
       input_data: {
         type: null,
         number_of_units: null,
@@ -164,16 +166,17 @@ export default {
       this.map_resources = []
     },
     getImages(e){
-      let img = e.target.files[0]
-      this.input_data.image = img
-      const imgElem = document.getElementById('preview')
-      
-      const reader = new FileReader()
-      reader.readAsDataURL(img)
-      reader.addEventListener('load', () => {
-        const img_url = reader.result
-        imgElem.src = img_url
-      })
+      console.log(e.target.files)
+      let files = e.target.files
+
+      for(let file of files){
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.addEventListener('load', () => {
+          this.url_arr.push(reader.result)
+        })
+      }
+      console.log(this.url_arr);
     },
     nextStep(){
       this.step ++
