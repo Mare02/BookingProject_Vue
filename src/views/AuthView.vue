@@ -138,11 +138,6 @@ export default {
           this.inputs[el].trim()
         }
         const res = await service.logIn(this.inputs.email, this.inputs.password)
-<<<<<<< HEAD
-        console.log(res);
-        
-=======
->>>>>>> 6319c8bb2e9d918722b4b433251224eb74418adc
         if(res.status !== 200) this.api_error_msg = res.response.data.msg;
         else{
           localStorage.setItem('sid', res.data.sid)

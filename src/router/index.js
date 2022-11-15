@@ -5,6 +5,7 @@ import AuthView from '../views/AuthView.vue'
 import HotelsView from '../views/HotelsView.vue'
 import SingleHotelView from '../views/SingleHotelView.vue'
 import AddProperty from '../views/AddNewProperty.vue'
+import ProfilView from '../views/ProfilView.vue'
 
 import store from '@/store'
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/add_new_property',
     name: 'add_new_property',
     component: AddProperty,
+  },
+  {
+    path: '/profil/:usr_id',
+    name: 'ProfileView',
+    component: ProfilView,
   },
 ]
 

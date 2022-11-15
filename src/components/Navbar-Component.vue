@@ -7,8 +7,7 @@
     </div>
     <div class="d-flex a-center">
       <nav class="nav-links">
-        <!-- <router-link class="link" :to="{name: 'profile'}">Profile</router-link> -->
-        <button class="link">Profile</button>
+        <router-link class="link" :to="{name: 'ProfileView', params:{usr_id:25}}">Profile</router-link>
         <router-link class="link" :to="{name: 'add_new_property'}">List your property</router-link>
         <!-- <button class="link-signin" v-if="this.$route.path !== '/auth' && !getUserId" @click="redirectToAuth()">Sign In</button> -->
         <router-link v-if="this.$route.path !== '/auth' && !getUserId" class="link-signin" :to="{name: 'auth'}">Sign In</router-link>
