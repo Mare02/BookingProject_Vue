@@ -1,124 +1,96 @@
 <template>
-  <div class="section-div d-flex j-center a-center f-wrap mt-2">
-    <div class="tag-button d-flex a-center">
-      <img src="../assets/icons8-tag-window-100.png" alt="">
-      Family
-    </div>
-    <div class="tag-button">
-      <img src="../assets/icons8-tag-window-100.png" alt="">
-      Couple
-    </div>
-    <div class="tag-button">
-      <img src="../assets/icons8-tag-window-100.png" alt="">
-      Highest Rated
-    </div>
-    <div class="tag-button">
-      <img src="../assets/icons8-tag-window-100.png" alt="">
-      Luxury
-    </div>
-    <div class="tag-button">
-      <img src="../assets/icons8-tag-window-100.png" alt="">
-      Best Deals
-    </div>
-    <div class="tag-button">
-      <img src="../assets/icons8-tag-window-100.png" alt="">
-      Pet Friendly
-    </div>
-    <div class="tag-button">
-      <img src="../assets/icons8-tag-window-100.png" alt="">
-      Popular
+  <div class="filters-mobile" v-if="filters_responsive && showFiltersComp">
+    <Filters @filters_emit="getEmitFilters" @emitShowFilters="showFilters()"/>
+  </div>
+  <div class="section-div mt-nav">
+    <div class="sec-white shadow bg-des">
+      <div class="d-flex j-center w-100 mt-3">
+        <Search @search="getHotels()"/>
+      </div>
+      <div class="section-div d-flex a-center j-center f-wrap mt-2">
+        <div class="tag-button">
+          <img src="../assets/icons8-tag-window-100.png" alt="">
+          Family
+        </div>
+        <div class="tag-button">
+          <img src="../assets/icons8-tag-window-100.png" alt="">
+          Couple
+        </div>
+        <div class="tag-button">
+          <img src="../assets/icons8-tag-window-100.png" alt="">
+          Highest Rated
+        </div>
+        <div class="tag-button">
+          <img src="../assets/icons8-tag-window-100.png" alt="">
+          Luxury
+        </div>
+        <div class="tag-button">
+          <img src="../assets/icons8-tag-window-100.png" alt="">
+          Best Deals
+        </div>
+        <div class="tag-button">
+          <img src="../assets/icons8-tag-window-100.png" alt="">
+          Pet Friendly
+        </div>
+        <div class="tag-button">
+          <img src="../assets/icons8-tag-window-100.png" alt="">
+          Popular
+        </div>
+      </div>
     </div>
   </div>
-  <div class="section-div d-flex j-center mt-2" id="hotels-view">
-      <div class="slider-menu" id="slider">
-        <div class="filters">
-          <Search :vertical="true" @search="getHotels()"/>
-          <div class="filter-search-div">
-            <div class="filters-title">
-              <span class="title">Filters</span>
-            </div>
-            <div class="filters-content">
-              <div class="filter-inputs-div">
-                <label class="filter-label">Price:</label>
-                <div class="d-flex j-center w-100">
-                  <div class="d-flex f-col a-center">
-                    <label>From:</label>
-                    <input class="price-input" type="number" v-model="filters.start_price">
-                  </div>
-                  <div class="d-flex f-col a-center">
-                    <label>To:</label>
-                    <input class="price-input" type="number" v-model="filters.end_price"> 
-                  </div>
-                </div>
-                <div class="submit-btn">
-                  <button class="search-btn" @click="getHotels(filters.start_price, filters.end_price)"
-                  >Submit</button>
-                </div>
-                <div class="border-b w-100">
-
-                </div>
-                <div class="mt-1">
-                  <label class="filter-label">Features</label>
-                </div>
-                <div class="features-div">
-                  <div class="features-item" v-for="fea in featuresDb" :key="fea.fea_id">
-                    <input type="checkbox" class="checkbox" :value="fea.fea_id" @change="getCheckedFeatures()">
-                    <label>{{fea.fea_name}}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <img @click="showSlider()" class="slider-btn" src="../assets/arrow.png" alt="" id="slider-btn">
-      </div>
+  <div class="filter-sort-div section-div">
+    <div class="sec-white w-100 d-flex j-evenly shadow">
+      <button class="filter-btn shadow" @click="showFilters()">Filters</button>
+      <button class="sort-btn shadow">Sort by</button>    
+    </div>
+  </div>
+  <div class="section-div d-flex mt-1 mb-2" id="hotels-view">
+    <Filters @filters_emit="getEmitFilters" v-if="!filters_responsive"/>
     <div class="hot-list-container">
-      <HotelsList :hotels="hotels" @loaded='this.isLoadedList = true'/>
+      <div class="sec-white p-0 d-flex j-center a-center shadow" v-if="hotels_length > 0">
+        <div class="page-span" v-for="page in pages" :key="page" :class="{pageSelected: page === selected_page + 1}" @click="selectPage(page - 1)">
+          {{page}}
+        </div>
+      </div>
+      <HotelsList class="mt-1" :hotels="hotels" @loaded='this.isLoadedList = true'/>
+      <div class="sec-white p-0 d-flex j-center a-center shadow" v-if="hotels_length > 0">
+        <div class="page-span" v-for="page in pages" :key="page" :class="{pageSelected: page === selected_page + 1}" @click="selectPage(page - 1)">
+          {{page}}
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-const x = window.matchMedia("(min-width: 850px)")
-const xMax = window.matchMedia("(max-width: 850px)")
-
 import service from '../services/API'
 import HotelsList from '../components/HotelsList.vue'
 import Search from '../components/Search-Component.vue'
+import Filters from '../components/Filters-Component.vue'
+
+var x = window.matchMedia("(max-width: 850px)")
 
 export default{
   components:{
-    HotelsList, Search
+    HotelsList, Search, Filters
   },
   computed: {
-
+    hotels_length(){
+      return this.hotels.length
+    }
   },
   mounted(){
     this.getHotels()
-    this.getFeatures()
-
+    if(x.matches){
+      this.filters_responsive = true
+    }
     window.addEventListener('resize', () => {
-      if(window.innerWidth <= 850){
-        this.showVerSearch = false
-        console.log(this.showVerSearch);
+      if(x.matches){
+        this.filters_responsive = true
       }
       else{
-        this.showVerSearch = true
-        console.log(this.showVerSearch);
-      }
-    })
-
-    x.addEventListener('change', () => {
-      let slider = document.getElementById('slider')
-      let btn = document.getElementById('slider-btn')
-      
-      if(x.matches && slider.style.transform !== "translateX(0rem)"){
-        slider.style.transform = "translateX(0rem)"
-        btn.style.transform = "rotateZ(0deg)"
-      }
-      else if(xMax.matches && slider.style.transform == "translateX(0rem)"){
-        slider.style.transform = "translateX(-17.2rem)"
-        btn.style.transform = "rotateZ(0deg)"
+        this.filters_responsive = false
       }
     })
   },
@@ -126,103 +98,71 @@ export default{
     return{
       hotels: [],
       featuresDb: [],
+      pages: null,
+      selected_page: 0,
       filters: {
         start_price: null,
         end_price: null,
-        featuresArr: []
+        featuresArr: [],
       },
       isLoadedList: false,
-      showVerSearch: true
+      filters_responsive: false,
+      showFiltersComp: false
     }
   },
   methods:{
     async getHotels(){
+      console.log(this.selected_page);
       let res = await service.getHotels(localStorage.getItem('des_id'), 
-                                        localStorage.getItem('check_in') || null, 
-                                        localStorage.getItem('check_out') || null,
+                                        localStorage.getItem('check_in'), 
+                                        localStorage.getItem('check_out'),
                                         this.filters.start_price || null,
                                         this.filters.end_price || null,
-                                        JSON.stringify(this.filters.featuresArr.toString().replace("[", "").replace("]", "")))
-      this.hotels = res
-      console.log(res);
-      localStorage.setItem('des_name', res[0].des_name)
-      localStorage.setItem('sta_name', res[0].sta_name)
+                                        JSON.stringify(this.filters.featuresArr) || null,
+                                        null, this.selected_page)
+      console.log(res.data);
+      this.hotels = res.data
+      this.pages = res.pages[0].pages
+      localStorage.setItem('des_name', res.data[0].des_name)
+      localStorage.setItem('sta_name', res.data[0].sta_name)
     },
-    async getFeatures(){
-      let res = await service.getFeatures()
-      this.featuresDb = res
-    },
-    getCheckedFeatures(){
-      this.filters.featuresArr = []
-      let values = document.querySelectorAll('.checkbox:checked')
-      for(let val in values){
-        if(values[val].value !== null && values[val].value !== undefined){
-          this.filters.featuresArr.push(Number(values[val].value))
-        }        
-      }
-      console.log(this.filters.featuresArr);
+    getEmitFilters(data){
+      this.filters.start_price = data.start_price
+      this.filters.end_price = data.end_price
+      this.filters.featuresArr = data.filters_arr
+      this.selected_page = 0;
       this.getHotels()
     },
-    showSlider(){
-      let btn = document.getElementById('slider-btn')
-      let el = document.getElementById('slider')
-      if(el.style.transform !== "translateX(0rem)"){
-        el.style.transform = "translateX(0rem)"
-        btn.style.transform = "rotateZ(180deg)"
-      }
-      else{
-        el.style.transform = "translateX(-17.2rem)"
-        btn.style.transform = "rotateZ(0deg)"
-      }
+    showFilters(){
+      this.showFiltersComp = !this.showFiltersComp
+    },
+    selectPage(value){
+      this.selected_page = value
+      this.getHotels()
     }
   },
 }
 </script>
-<style>
-.tag-button{
-  padding: 0.4rem;
-  margin: 0.5rem;
-  cursor: pointer;
-  color: gray;
-  display: flex;
-  align-items: center;
-  transition: all 0.2s;
-  border: 2px solid lightgray;
-  border-radius: 10px;
-  background-color: white;
-}
-.tag-button img{
-  width: 1.5rem;
-  margin-right: 0.5rem;
-}
-.tag-button:hover{
-  background-color: rgb(110, 109, 175);
-  color: white;
-  border: 2px solid rgb(187, 187, 152);
-}
-.submit-btn{
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
-}
 
-.features-div{
-  margin-top: 1rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-left: 1rem;
-  padding-bottom: 0.5rem;
-}
-.features-item{
-  display: flex;
-  align-items: center;
-  margin: 0.5rem;
-}
-.features-item input{
-  width: 1.3rem;
-  margin-right: 0.5rem;
-  cursor: pointer;
-  box-shadow: 0 0 3px 1px wheat;
-}
+<style>
+  .page-span{
+    padding: 0.3rem;
+    border-radius: 5px;
+    margin: 0.4rem;
+    background-color: var(--btn-color-hover);
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: white;
+  }
+  .pageSelected{
+    background-color: var(--btn-color) !important;
+  }
+  .page-span:hover{
+    background-color: var(--btn-color);
+  }
 </style>

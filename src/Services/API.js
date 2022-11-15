@@ -1,5 +1,6 @@
-import axios from 'axios'
-const api_url = 'http://908q122.e2.mars-hosting.com/booking/'
+import axios from 'axios';
+const api_url = 'http://908q122.e2.mars-hosting.com/booking/';
+const bing_maps_key = 'AgHPai2_f_uHB1ftS5vQLzvSRcP7qgGW-lxFGSof_AULvD3eRtywQLjFgB-DYU8F';
 
 const utils = {
   "getApartments": async function(hot_id, check_in_date, check_out_date){
@@ -13,14 +14,14 @@ const utils = {
       return error
     }
   },
-  "getHotels": async function(des_id, check_in, check_out, start_price, end_price, features){
+  "getHotels": async function(des_id, check_in, check_out, start_price, end_price, features, luxury, page){
     try {
       const res = await axios.get(`${api_url + 'hotels'}`, {params:{
         des_id: des_id, check_in: check_in, check_out: check_out, 
-        start_price: start_price, end_price: end_price, features: features
+        start_price: start_price, end_price: end_price, features: features,
+        luxury: luxury, page: page
       }})
-      console.log(res.data);
-      return res.data.data
+      return res.data
     } 
     catch (error) {
       return error
@@ -35,10 +36,21 @@ const utils = {
       return error
     }
   },
+  "makeReservation": async function(usr_id, apa_id, cat_id, hot_id, check_in, check_out){
+    try {
+      let res = await axios.post(`${api_url + 'reservations'}`, {
+        usr_id: usr_id, apa_id: apa_id, hot_id: hot_id, check_in: check_in, 
+        check_out: check_out, cat_id: cat_id
+      })  
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
   "signUp": async function(firstName, lastName, email, password, confirm_password){
     console.log(arguments);
     try {
-      
       let res = await axios.post(`${api_url + 'auth/signup'}`, {
         firstname: firstName, lastname: lastName, email: email, password: password, c_password: confirm_password
       })
@@ -60,10 +72,21 @@ const utils = {
       return error
     }
   },
+  async logOut(sid){
+    try {
+      let res = await axios.post(`${api_url + 'auth/logout'}`,{
+        sid: sid
+      })
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
   "checkSession": async function(sid){
     try {
       const res = await axios.get(`${api_url + 'auth/checkSession' }`, {params: {sid: sid}})
-      return res.data.data
+      return res
     } 
     catch (error) {
       return error
@@ -86,23 +109,39 @@ const utils = {
       let res = await axios.get(`${api_url + 'destinations'}`, {
         params:{sta_id: sta_id}
       })
-      console.log(res);
-      return res
+      return res.data.data
     } 
     catch (error) {
-      console.log(error);
       return error  
     }
   },
   "getFeatures": async function(){
     try {
-      let res = await axios.get('http://908q122.e2.mars-hosting.com/booking/features')
+      let res = await axios.get(`${api_url + 'features'}`)
       return res.data.data
     } 
     catch (error) {
       return error
     }
-  }
+  },
+  "getTypes": async function(){
+    try {
+      let res = await axios.get(`${api_url + 'hotels/types'}`)
+      return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getLocations": async function(query){
+    try {
+      let res = await axios.get(`http://dev.virtualearth.net/REST/v1/Locations?query=${query}&key=${bing_maps_key}`)
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
 }
 
 export default utils 
