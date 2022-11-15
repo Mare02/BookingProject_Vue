@@ -94,7 +94,8 @@
       </section>
 
       <section v-if="step === 4" id="step-section">
-        <div class="sec-white">
+        <h2>Add your hotel's apartment details.</h2>
+        <div class="sec-white mt-1">
           <div class="inputs-wrapper">
             <div class="d-flex f-col w-100">
               <label>Apartment category:</label>
@@ -104,34 +105,44 @@
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Number of units:</label>
-              <input type="number" spellcheck="false">
+              <input type="number" spellcheck="false" v-model="input_data.number_of_units">
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Select features:</label>
-              <select class="select">
-                <option v-for="fea in apa_features" :key="fea.fea_id" :value="fea.fea_id">{{fea.fea_name}}</option>
-              </select>
+              <VueMultiselect class="border-gray c-pointer"
+                v-model="input_data.apa_features_selected"
+                :options="apa_features"
+                :multiple="true"
+                :searchable="false"
+                :show-labels="true"
+                :close-on-select="false"
+                label="fea_name"
+                track-by="fea_name"
+                placeholder="Select">
+              </VueMultiselect>
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Price per night (RSD):</label>
-              <input type="number" spellcheck="false">
+              <input type="number" spellcheck="false" v-model="input_data.apa_price">
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Apartment size (square meters):</label>
-              <input type="number" spellcheck="false">
+              <input type="number" spellcheck="false" v-model="input_data.apa_size">
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Choose a picture:</label>
-              <input type="file" multiple @change="getImages">
+              <input type="file" multiple @change="getApaImage">
             </div>
           </div>
         </div>
       </section>
     </div>
-    <div class="d-flex a-center g-1 mt-5">
-      <button class="link-signin shadow" v-if="step > 0" @click="previousStep()">Back</button>
+    <div class="d-flex a-center g-1 mt-3">
+      <div class="back-btn shadow border-light" v-if="step > 0" @click="previousStep()">
+        <img src="../assets/icons/back-icon.png" alt="">
+      </div>
       <button 
-        class="link-signin shadow"  
+        class="continue-btn border-light shadow"  
         v-if="step !== total_steps" 
         @click="nextStep()">Continue
       </button>
@@ -141,6 +152,8 @@
 
 <script>
 import service from '../services/API'
+import VueMultiselect from 'vue-multiselect'
+
 export default {
   computed:{
     property_type(){
@@ -148,6 +161,7 @@ export default {
       else return 'apartment'
     },
   },
+  components:{ VueMultiselect },
   mounted(){
     this.getTypes()
     this.getCategories()
@@ -161,7 +175,7 @@ export default {
   },
   data(){
     return{
-      total_steps: 5,
+      total_steps: 4,
       step: 0,
 
       prop_types: [],
@@ -175,13 +189,15 @@ export default {
       input_data: {
         type: null,
         apa_category: null,
-        apa_features: [],
+        apa_features_selected: [],
         number_of_units: null,
+        apa_price: null,
+        apa_size: null,
         name: "",
         description: "",
         description_long: "",
         image: null,
-        listofapartmants:[]
+        list_of_apartments:[]
       },
       location_query: '',
       selected_address: {
@@ -239,6 +255,9 @@ export default {
       }
       console.log(this.url_arr);
     },
+    getApaImage(e){
+      this.input_data.image = e.target.files[0]
+    },
     nextStep(){
       this.step ++
     },
@@ -249,13 +268,41 @@ export default {
 }
 </script>
 
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <style> 
+.back-btn img{
+  width: 1.1rem;
+  filter: invert();
+}
+.back-btn{
+  cursor: pointer;
+  background-color: var(--btn-color);
+  border-radius: 5px;
+  padding: .5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .2s;
+}
+.continue-btn{
+  background-color: var(--btn-color);
+  border-radius: 5px;
+  padding: 0.83rem 2rem; 
+  color: white;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all .2s;
+}
+.continue-btn:hover, .back-btn:hover{
+  background-color: var(--link-color);
+}
 .select{
   width: 100%;
   padding: .3rem;
   font-size: 1.1rem;
   cursor: pointer;
   height: 2.5rem;
+  border-radius: 5px;
 }
 #preview{
   width: 20rem;

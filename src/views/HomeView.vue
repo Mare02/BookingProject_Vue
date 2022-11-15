@@ -77,7 +77,7 @@ export default {
     background-size: cover;
   }
   .margin{
-    margin-top: 22rem;
+    margin-top: 21rem;
   }
   .home-title{
     color: white;

@@ -53,7 +53,7 @@ body{
   position: fixed;
   right: 0;
   left: 0;
-  background-color: rgb(77, 76, 125, 0.8);
+  background-color: rgb(77, 76, 125);
   backdrop-filter: blur(20px);
   border-bottom: 2px solid rgb(255, 255, 255);
   color: white;
@@ -82,6 +82,9 @@ body{
 .nav-links{
   width: auto;
   font-size: 1.2rem;
+  gap: 1rem;
+  display: flex;
+  align-items: center;
 }
 .nav-links .link{
   font-size: 1.1rem;
@@ -90,7 +93,7 @@ body{
   background: none;
   border-radius: 5px;
   cursor: pointer;
-  margin: 0.5rem;
+  /* margin: 0.5rem; */
   text-decoration: none;
   color: white;
   transition: all 0.3s;
