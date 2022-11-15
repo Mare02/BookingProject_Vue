@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex f-col j-center a-center w-100 h-100">
-    <!-- <img class="bg-img" src="https://wallpapercrafter.com/desktop/28050-interior-style-design-home-hotel-living-room-4k.jpg" alt=""> -->
+    <!-- <img class="bg-img" src="https://img1.10bestmedia.com/Images/Photos/378649/Park-Hyatt-New-York-Manhattan-Sky-Suite-Master-Bedroom-low-res_54_990x660.jpg" alt=""> -->
     <div class="section-div d-flex f-col j-center">
       <span class="step-info">Step {{step}} of {{total_steps}}</span>
       
-      <section v-if="step === 1">
+      <section v-if="step === 1" id="step-section">
         <h2>What is the type of your property?</h2>
         <div class="sec-white shadow mt-1">
           <div class="d-flex a-center j-evenly">
@@ -25,7 +25,7 @@
         </div>
       </section>
 
-      <section v-if="step === 2">
+      <section v-if="step === 2" id="step-section">
         <h2>Where is your {{property_type}} located?</h2>
         <span class="section-desc">Please enter the full address</span>
         <div class="sec-white shadow mt-1">
@@ -51,7 +51,7 @@
         </iframe>
       </section>
 
-      <section v-if="step === 3">
+      <section v-if="step === 3" id="step-section">
         <h2>Tells us more about your {{property_type}}.</h2>
         <div class="sec-white shadow mt-1">
           <div class="inputs-wrapper">
@@ -61,17 +61,17 @@
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Short description:</label>
-              <textarea name="" id="" cols="30" rows="5"></textarea>
+              <textarea name="" id="" cols="30" rows="5" v-model="input_data.description"></textarea>
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Long description:</label>
-              <textarea name="" id="" cols="30" rows="10"></textarea>
+              <textarea name="" id="" cols="30" rows="10" v-model="input_data.description_long"></textarea>
             </div>
           </div>
         </div>
       </section>
 
-      <section v-if="step === 4">
+      <section v-if="step === 4" id="step-section">
         <h2>Add image so others can see your {{property_type}}.</h2>
         <div class="sec-white shadow mt-1">
           <div class="inputs-wrapper">
@@ -81,16 +81,16 @@
             </div>
           </div>
         </div>
-        <div class="sec-white shadow mt-1 d-flex a-center j-center">
-          <!-- <img v-for="index in url_arr" :key="index" :src="url_arr[index]" alt="preview" id="preview"> -->
+        <div class="sec-white shadow mt-1 d-flex a-center j-center" v-if="url_arr.length > 0">
+          <grid-images style="width: 30rem; height: 20rem" :items="url_arr" :cells="3"/>
         </div>
       </section>
 
-      <section class="sec-white shadow" v-if="step === 5">
+      <section class="sec-white shadow" v-if="step === 5" id="step-section">
       </section>
     </div>
     <div class="d-flex a-center g-1 mt-5">
-      <button class="search-btn" v-if="step !== 1" @click="previousStep()">Back</button>
+      <button class="search-btn" v-if="step > 1" @click="previousStep()">Back</button>
       <button 
         class="search-btn"  
         v-if="step !== total_steps" 
@@ -107,7 +107,7 @@ export default {
     property_type(){
       if(this.input_data.type === 1) return 'hotel'
       else return 'apartment'
-    }
+    },
   },
   mounted(){
     this.getTypes()
@@ -115,7 +115,7 @@ export default {
   data(){
     return{
       total_steps: 5,
-      step: 1,
+      step: 4,
 
       prop_types: [],
       input_images: [],
@@ -166,10 +166,8 @@ export default {
       this.map_resources = []
     },
     getImages(e){
-      console.log(e.target.files)
-      let files = e.target.files
-
-      for(let file of files){
+      for(let file of e.target.files){
+        this.input_images.push(file)
         const reader = new FileReader()
         reader.readAsDataURL(file)
         reader.addEventListener('load', () => {
