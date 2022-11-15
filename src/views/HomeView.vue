@@ -13,10 +13,11 @@
         <span class="section-desc">Here are some popular destinations to explore</span>
       </div>
       <div class="d-flex a-center j-center f-wrap mt-1">
-        <div class="card" v-for="d in destinations" :key="d.des_id">
+        <div class="card" v-for="d in destinations" :key="d.des_id" @click="redirectToHotels(d.des_id, d.des_name, d.sta_name)">
           <div class="card-img">
             <img :src="d.images[0].image_url" alt="" v-if="d.images">
           </div>
+          <span class="section-desc">{{d.des_name}}</span>
         </div>
       </div>
     </div>
@@ -58,6 +59,12 @@ export default {
     redirect(){
       this.$router.push({name: "hotels"}) 
     },
+    redirectToHotels(des_id, des_name, sta_name){
+      localStorage.setItem('des_id', des_id)
+      localStorage.setItem('des_name', des_name)
+      localStorage.setItem('sta_name', sta_name)
+      this.$router.push({name: 'hotels'})
+    }
   }
 }
 </script>
@@ -70,7 +77,7 @@ export default {
     background-size: cover;
   }
   .margin{
-    margin-top: 25rem;
+    margin-top: 22rem;
   }
   .home-title{
     color: white;

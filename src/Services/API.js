@@ -8,6 +8,7 @@ const utils = {
       const res = await axios.get(`${api_url + 'apartments'}`, 
         {params:{hot_id: hot_id, check_in: check_in_date, check_out: check_out_date}}
       )
+      console.log(res.data.data);
       return res.data.data
     } 
     catch (error) {
@@ -115,7 +116,16 @@ const utils = {
       return error  
     }
   },
-  "getFeatures": async function(){
+  "getHotelFeatures": async function(){
+    try {
+      let res = await axios.get(`${api_url + 'features'}`)
+      return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getApaFeatures": async function(){
     try {
       let res = await axios.get(`${api_url + 'features'}`)
       return res.data.data
@@ -127,6 +137,15 @@ const utils = {
   "getTypes": async function(){
     try {
       let res = await axios.get(`${api_url + 'hotels/types'}`)
+      return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getCategories": async function(){
+    try {
+      let res = await axios.get(`${api_url + 'apartments/categories'}`)
       return res.data.data
     } 
     catch (error) {

@@ -37,6 +37,9 @@
 .ac-center{
   align-content: center;
 }
+.a-self-start{
+  align-self: flex-start;
+}
 .w-100{
   width: 100%;
 }
@@ -131,4 +134,8 @@
 }
 .white{
   color: white;
+}
+
+.bg-nav{
+  background-color: var(--link-color);
 }

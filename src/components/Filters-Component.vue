@@ -54,7 +54,7 @@
       }
     },
     mounted(){
-      this.getFeatures()
+      this.getHotelFeatures()
     },
     methods: {
       getCheckedFeatures(){
@@ -67,8 +67,8 @@
         }
         this.emitFilters()
       },
-      async getFeatures(){
-        let res = await service.getFeatures()
+      async getHotelFeatures(){
+        let res = await service.getHotelFeatures()
         this.featuresDb = res
       },
       emitFilters(){

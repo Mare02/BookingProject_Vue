@@ -53,7 +53,7 @@
       </div> 
       <div class="mt-1 d-flex j-center f-wrap">
         <ApartmentCard v-for="apa in apartments" :key="apa.cat_id" :apartment="apa" @reserve="makeReservation(
-          getUserId, apa.apartments[0].apa_id, apa.cat_id
+          getUserId, apa.apartments.apa_id, apa.cat_id
         )"/>
       </div>
       <div class="mt-3"></div>

@@ -65,7 +65,7 @@
       }
     },
     methods:{
-      async searchDestinations(){
+       async searchDestinations(){
         if(this.search !== ''){
           const res = await service.searchDestinations(this.search.trim())
           this.destinations = res.data.data
