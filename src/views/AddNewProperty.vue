@@ -146,6 +146,7 @@
         v-if="step !== total_steps" 
         @click="nextStep()">Continue
       </button>
+      <button class="continue-btn border-light shadow" v-if="step === total_steps">Finish</button>
     </div>
   </div>
 </template>
