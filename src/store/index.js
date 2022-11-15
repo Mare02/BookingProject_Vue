@@ -4,6 +4,7 @@ export default createStore({
   state: {
     user: {
       rol_id: null,
+      usr_id: null,
       usr_email: 'testEmail',
       usr_firstname: null,
       usr_lastname: null
@@ -16,6 +17,9 @@ export default createStore({
     getFullName(state){
       return `${state.user.usr_firstname + ' ' + state.user.usr_lastname}`
     },
+    getUserId(state){
+      return state.user.usr_id
+    }
   },
   mutations: {
   },
@@ -29,6 +33,9 @@ export default createStore({
     },
     setRole(role_param){
       this.state.user.rol_id = role_param;
+    },
+    setUserId(usr_id){
+      this.state.user.usr_id = usr_id
     }
   },
   modules: {

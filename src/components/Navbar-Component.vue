@@ -10,8 +10,8 @@
       </nav>
       <div v-if="showDropdown" class="dropdown">
         <ul>
-          <li>
-            <a href="">Menu item</a>
+          <li @click="viewProfile()">
+            <a href="">Profile</a>
           </li>
           <li>
             <a href="">Menu item</a>
@@ -45,7 +45,13 @@ export default{
     },
     showMenu(){
       this.showDropdown = !this.showDropdown
+    },
+    viewProfile(){
+      const usr_id = this.$store.state.user.usr_id
+      console.log(usr_id);
+      this.$router.push({name: 'profile', params: {id: usr_id}})
     }
+
   }
 }
 </script>
