@@ -839,11 +839,11 @@ textarea{
   right: 5rem;
 }
 ::-webkit-scrollbar-thumb{
-  background-color: rgb(91, 75, 119);
-  border-radius: 2px;
+  /* background-color: rgb(91, 75, 119); */
+  background-color: rgb(49, 48, 78);
 }
 ::-webkit-scrollbar-track{
-  /* background-color: rgb(180, 180, 180); */
+  /* background-color: rgb(168, 168, 168); */
 }
 ::-webkit-scrollbar-button{
   display: none;

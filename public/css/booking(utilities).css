@@ -25,6 +25,9 @@
 .g-05{
   gap: 0.5rem;
 }
+.g-2{
+  gap: 2rem;
+}
 .a-center{
   align-items: center;
 }
@@ -70,6 +73,9 @@
 .mb-1{
   margin-bottom: 1rem;
 }
+.mb-05{
+  margin-bottom: .5rem;
+}
 .mt-nav{
   margin-top: calc(var(--nav-height) + 22px) ;
 }
@@ -90,6 +96,9 @@
 }
 .pr-1{
   padding-right: 1rem;
+}
+.pl-1{
+  padding-left: 1rem;
 }
 .p-0{
   padding: 0 !important;
@@ -151,4 +160,13 @@
 
 .bg-nav{
   background-color: var(--link-color);
+}
+
+.after-line::after{
+  content: "";
+  height: 1.5px;
+  width: 80%;
+  background-color: rgb(196, 196, 196);
+  position: absolute;
+  bottom: 3.2rem;
 }

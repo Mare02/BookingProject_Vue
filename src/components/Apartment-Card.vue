@@ -1,7 +1,7 @@
 <template>
   <div class="card-ver-container">
     <div class="card-ver-img">
-      <img :src="apartment.apa_image" alt="">
+      <img class="apa-card-image" :src="apartment.apa_image" alt="">
     </div>
     <div class="card-ver-header">
       <span>{{apartment.cat_name}}</span>
@@ -9,8 +9,12 @@
     <div class="card-ver-body">
       <span>Features:</span>
       <ul class="card-ver-list">
-        <li v-for="fea in apartment.features" :key="fea.fea_id">
-          <span>- {{fea.fea_name}}</span>
+        <li v-for="fea in apartment.apa_features" :key="fea.fea_id">
+          <div class="d-flex a-center g-05">
+            <img class="fea_image" :src="fea.fea_image" alt="">
+            <span>{{fea.fea_name}}</span>
+          </div>
+          
         </li>
       </ul>
     </div>
@@ -42,12 +46,15 @@
 </script>
 
 <style>
+  .fea_image{
+    width: 1.3rem;
+  }
   .card-ver-container{
     background-color: white;
     min-width: 20rem;
     max-width: 20rem;
     width: 20rem;
-    margin: 0.5rem;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -56,8 +63,8 @@
     overflow: hidden;
   }
   .card-ver-img{
-    min-height: 11rem;
-    max-height: 15rem;
+    min-height: 10rem;
+    max-height: 10rem;
     background-color: gray;
     width: 100%;
     overflow: hidden;
@@ -65,12 +72,12 @@
     justify-content: center;
     align-items: center;
   }
-  .card-ver-img img{
+  .card-ver-img .apa-card-image{
     object-fit: cover;
     width: 100%;
     transition: scale 0.2s ease-in-out;
   }
-  .card-ver-container:hover img{
+  .card-ver-container:hover .apa-card-image{
     scale: 1.05;
   }
   .card-ver-header{
@@ -82,11 +89,17 @@
   }
   .card-ver-body{
     padding: 1rem;
-    height: 70%;
     font-size: 1.05rem;
+
   }
   .card-ver-list{
     list-style: none;
+    height: 10.5rem;
+    padding: .5rem;
+    overflow-y: scroll;
+    box-shadow: 0 5px 10px 1px rgb(0, 0, 0, .2);
+    border-radius: 10px;
+    margin-top: .5rem;
   }
   .card-ver-list li{
     margin: 0.3rem;
@@ -97,13 +110,13 @@
     color: rgb(48, 48, 48);
   }
   .card-ver-footer{
-    height: 9rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 1rem;
     padding-top: 0;
+    margin-top: 1rem;
   }
   .card-ver-price{
     text-align: left;

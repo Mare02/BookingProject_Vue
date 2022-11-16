@@ -159,13 +159,13 @@
 
     </div>
     <div class="d-flex a-center g-1 mt-3">
-      <div class="back-btn shadow border-light" v-if="step > 0" @click="previousStep()">
+      <div class="back-btn shadow border-light" v-if="step > 0" @click="step--">
         <img src="../assets/icons/back-icon.png" alt="">
       </div>
       <button 
         class="continue-btn border-light shadow"  
         v-if="step !== total_steps" 
-        @click="nextStep()">Continue
+        @click="step++">Continue
       </button>
       <button class="continue-btn border-light shadow" v-if="step === total_steps" @click="addNewHotel()">Finish</button>
     </div>
@@ -310,13 +310,6 @@ export default {
       }
 
       await service.addNewHotel(formdata)
-    },
-
-    nextStep(){
-      this.step ++
-    },
-    previousStep(){
-      this.step --
     }
   }
 }

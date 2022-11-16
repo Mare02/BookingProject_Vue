@@ -14,6 +14,11 @@
             <span class="section-desc-dark">User rating: </span>&nbsp;
             <span class="rating-number-big">{{Number(hotel.rating).toFixed(1)}} / 10</span>
           </div>
+          <div class="d-flex f-col">
+            <div v-for="fea in hotel.features" :key="fea.fea_id">
+              {{fea.fea_name}}
+            </div>
+          </div>
         </div>
         <iframe class="map shadow"
           frameborder="0" 

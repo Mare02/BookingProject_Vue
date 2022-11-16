@@ -17,7 +17,7 @@
           <div class="card-img">
             <img :src="d.images[0].image_url" alt="" v-if="d.images">
           </div>
-          <span class="section-desc">{{d.des_name}}</span>
+          <span class="section-desc mt-1">{{d.des_name}}</span>
         </div>
       </div>
     </div>
