@@ -161,6 +161,17 @@ const utils = {
       return error
     }
   },
+
+  "addNewHotel": async function(params_obj){
+    try {
+      let res = await axios.post(`${api_url + 'hotels'}`, params_obj)
+      console.log(res);
+      return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  }
 }
 
 export default utils 

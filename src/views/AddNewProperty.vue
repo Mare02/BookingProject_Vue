@@ -2,7 +2,7 @@
   <div class="d-flex f-col j-center a-center w-100 h-100">
     <img class="bg-img" src="https://img1.10bestmedia.com/Images/Photos/378649/Park-Hyatt-New-York-Manhattan-Sky-Suite-Master-Bedroom-low-res_54_990x660.jpg" alt="">
     <div class="section-div d-flex f-col j-center sec-white shadow">
-      <div class="mb-1 bg-nav p-05 border-radius-10 white a-self-start" v-if="input_data.type && step !== 0">
+      <div class="mb-1 bg-nav p-05 border-radius-10 white a-self-start" v-if="hotel_input_data.type && step !== 0">
         <span class="step-info">Step {{step}} of {{total_steps}}</span>
       </div>
       
@@ -11,8 +11,8 @@
         <div class="sec-white mt-1">
           <div class="d-flex a-center j-evenly">
             <div class="d-flex f-col a-center sec-white type-item c-pointer m-1" v-for="typ in prop_types" :key="typ.typ_id"
-                                                                                :class="{'selected-typ': typ.typ_id === input_data.type}">
-              <img class="type-img" :src="typ.typ_image" alt="" @click="input_data.type = typ.typ_id">
+                                                                                :class="{'selected-typ': typ.typ_id === hotel_input_data.type}">
+              <img class="type-img" :src="typ.typ_image" alt="" @click="hotel_input_data.type = typ.typ_id">
               <span class="section-desc">{{typ.typ_name}}</span>
             </div>
           </div>
@@ -63,27 +63,44 @@
         <div class="sec-white mt-1">
           <div class="inputs-wrapper">
             <div class="d-flex f-col w-100">
-              <label>Property name:</label>
-              <input type="text" spellcheck="false" v-model="input_data.name">
+              <label>Hotel name:</label>
+              <input type="text" spellcheck="false" v-model="hotel_input_data.name">
+            </div>
+            <div class="d-flex f-col w-100 mt-1">
+              <label>Hotel stars:</label>
+              <input type="number" v-model="hotel_input_data.hotel_stars">
+            </div>
+            <div class="d-flex f-col w-100 mt-1">
+              <label>Select features</label>
+              <VueMultiselect class="border-gray c-pointer"
+                v-model="hotel_input_data.hotel_features_selected"
+                :options="apa_features"
+                :multiple="true"
+                :searchable="false"
+                :show-labels="true"
+                :close-on-select="false"
+                label="fea_name"
+                track-by="fea_name"
+                placeholder="Select">
+              </VueMultiselect>
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Short description:</label>
-              <textarea name="" id="" cols="30" rows="5" v-model="input_data.description"></textarea>
+              <textarea name="" id="" cols="30" rows="3" v-model="hotel_input_data.description"></textarea>
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Long description:</label>
-              <textarea name="" id="" cols="30" rows="10" v-model="input_data.description_long"></textarea>
+              <textarea name="" id="" cols="30" rows="5" v-model="hotel_input_data.description_long"></textarea>
             </div>
           </div>
         </div>
       </section>
 
       <section v-if="step === 3" id="step-section">
-        <h2>Add image so others can see your {{property_type}}.</h2>
+        <h2>Add images so others can see your {{property_type}}.</h2>
         <div class="sec-white mt-1">
           <div class="inputs-wrapper">
             <div class="d-flex f-col w-100">
-              <label>Image:</label>
               <input type="file" multiple @change="getImages">
             </div>
           </div>
@@ -99,18 +116,18 @@
           <div class="inputs-wrapper">
             <div class="d-flex f-col w-100">
               <label>Apartment category:</label>
-              <select class="select" v-model="input_data.apa_category">
+              <select class="select" v-model="apa_input_data.apa_category">
                 <option v-for="cat in apa_categories" :key="cat.cat_id" :value="cat.cat_id">{{cat.cat_name}}</option>
               </select>
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Number of units:</label>
-              <input type="number" spellcheck="false" v-model="input_data.number_of_units">
+              <input type="number" spellcheck="false" v-model="apa_input_data.number_of_units">
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Select features:</label>
               <VueMultiselect class="border-gray c-pointer"
-                v-model="input_data.apa_features_selected"
+                v-model="apa_input_data.apa_features_selected"
                 :options="apa_features"
                 :multiple="true"
                 :searchable="false"
@@ -123,19 +140,23 @@
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Price per night (RSD):</label>
-              <input type="number" spellcheck="false" v-model="input_data.apa_price">
+              <input type="number" spellcheck="false" v-model="apa_input_data.apa_price">
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Apartment size (square meters):</label>
-              <input type="number" spellcheck="false" v-model="input_data.apa_size">
+              <input type="number" spellcheck="false" v-model="apa_input_data.apa_size">
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Choose a picture:</label>
-              <input type="file" multiple @change="getApaImage">
+              <input type="file" @change="getApaImage">
             </div>
           </div>
         </div>
+        <div class="d-flex w-100 a-center j-center g-1">
+          <button class="search-btn">Add apartment</button>
+        </div>
       </section>
+
     </div>
     <div class="d-flex a-center g-1 mt-3">
       <div class="back-btn shadow border-light" v-if="step > 0" @click="previousStep()">
@@ -146,7 +167,7 @@
         v-if="step !== total_steps" 
         @click="nextStep()">Continue
       </button>
-      <button class="continue-btn border-light shadow" v-if="step === total_steps">Finish</button>
+      <button class="continue-btn border-light shadow" v-if="step === total_steps" @click="addNewHotel()">Finish</button>
     </div>
   </div>
 </template>
@@ -158,7 +179,7 @@ import VueMultiselect from 'vue-multiselect'
 export default {
   computed:{
     property_type(){
-      if(this.input_data.type === 1) return 'hotel'
+      if(this.hotel_input_data.type === 1) return 'hotel'
       else return 'apartment'
     },
   },
@@ -183,23 +204,28 @@ export default {
       map_resources: [],
       apa_categories: [],
       apa_features: [],
-      input_images: [],
+      hotel_images: [],
       url_arr: [],
       hotel_data_mode: 'new',
 
-      input_data: {
+      hotel_input_data: {
         type: null,
+        name: "",
+        description: "",
+        description_long: "",
+        hotel_features_selected: [],
+        hotel_stars: null,
+      },
+
+      apa_input_data: {
         apa_category: null,
         apa_features_selected: [],
         number_of_units: null,
         apa_price: null,
         apa_size: null,
-        name: "",
-        description: "",
-        description_long: "",
-        image: null,
-        list_of_apartments:[]
+        apa_image: null,
       },
+
       location_query: '',
       selected_address: {
         state: null,
@@ -223,7 +249,6 @@ export default {
     },
     async getCategories(){
       let res = await service.getCategories()
-      console.log(res);
       this.apa_categories = res
     },
     async getLocations(){
@@ -247,18 +272,46 @@ export default {
     },
     getImages(e){
       for(let file of e.target.files){
-        this.input_images.push(file)
+        this.hotel_images.push(file)
         const reader = new FileReader()
         reader.readAsDataURL(file)
         reader.addEventListener('load', () => {
           this.url_arr.push(reader.result)
         })
       }
-      console.log(this.url_arr);
     },
     getApaImage(e){
-      this.input_data.image = e.target.files[0]
+      this.hotel_input_data.image = e.target.files[0]
     },
+
+    async addNewHotel(){
+      let hotel_params = {
+        "hot_name": this.hotel_input_data.name,
+        "state_name": this.selected_address.state,
+        "des_name": this.selected_address.destination,
+        "street": this.selected_address.street,
+        "hot_description": this.hotel_input_data.description,
+        "hot_description_long": this.hotel_input_data.description_long,
+        "hot_stars": this.hotel_input_data.hotel_stars,
+        "hot_map_lat": this.selected_coord.lat,
+        "hot_map_lng": this.selected_coord.lng,
+        "type_id": this.hotel_input_data.type,
+      }
+      let formdata = new FormData()
+      for(let index in hotel_params){
+        formdata.append([index], hotel_params[index])
+      }
+      for(let file of this.hotel_images){
+        formdata.append('hotel_files', file)
+      }
+      let hot_features = this.hotel_input_data.hotel_features_selected
+      for(let el of hot_features){
+        formdata.append('hotel_features', JSON.stringify(el))
+      }
+
+      await service.addNewHotel(formdata)
+    },
+
     nextStep(){
       this.step ++
     },
