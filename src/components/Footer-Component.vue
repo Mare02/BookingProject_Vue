@@ -22,12 +22,6 @@
         <div class="footer-text">
           <span>+381600324965</span>
           <span>innovaBooking@gmail.com</span>
-          <span class="footer-title footer-title-bg mt-1">Sign-up for daily news about latest offers</span>
-          <div class="d-flex a-center">
-            <input type="text" class="w-100" spellcheck="false" placeholder="Email address">
-            <button>Sign up</button>
-          </div>
-          
         </div>
       </div>
     </div>
@@ -63,34 +57,6 @@ export default {
     font-family: 'Montserrat', sans-serif;
     font-weight: 500 !important;
     text-shadow: 0 5px 5px black;
-  }
-  .footer-container input{
-    background-color: rgb(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    text-shadow: none;
-  }
-  .footer-container input:focus{
-    border: none;
-  }
-  .footer-container input::placeholder{
-    color: white;
-    opacity: .5;
-  }
-  .footer-container button{
-    padding: .64rem;
-    font-size: 1rem;
-    text-shadow: none;
-    cursor: pointer;
-    background-color: rgb(255, 255, 255, .9);
-    border: none;
-    font-weight: 600 !important;
-    border-radius: 5px;
-    transition: all .2s;
-    width: 30%;
-  }
-  .footer-container button:hover{
-    background-color: rgb(171, 156, 211);
   }
   .footer-section{
     max-width: 40%;

@@ -130,7 +130,6 @@ export default {
       }
     },
     async logIn(){
-      console.log(this.v$);
       this.v$.$validate(this.inputs.email, this.inputs.password)
       if(!this.v$.inputs.email.$error && !this.v$.inputs.password.$error){
         for(let el in this.inputs){

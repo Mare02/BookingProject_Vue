@@ -153,7 +153,7 @@
           </div>
         </div>
         <div class="d-flex w-100 a-center j-center g-1">
-          <button class="search-btn">Add apartment</button>
+          <button class="search-btn" @click="addNewApartment()">Add apartment</button>
         </div>
       </section>
 
@@ -175,6 +175,8 @@
 <script>
 import service from '../services/API'
 import VueMultiselect from 'vue-multiselect'
+import {useToast } from "vue-toastification";
+import {POSITION} from "vue-toastification";
 
 export default {
   computed:{
@@ -281,7 +283,7 @@ export default {
       }
     },
     getApaImage(e){
-      this.hotel_input_data.image = e.target.files[0]
+      this.apa_input_data.apa_image = e.target.files[0]
     },
 
     async addNewHotel(){
@@ -309,7 +311,57 @@ export default {
         formdata.append('hotel_features', JSON.stringify(el))
       }
 
-      await service.addNewHotel(formdata)
+      let added_hotel_res = await service.addNewHotel(formdata)
+      if(added_hotel_res.status === 200){
+        localStorage.setItem('new_hot_id', added_hotel_res.data.new_hot_id)
+        const toast = useToast()
+        toast.success('Hotel added successfuly!', {position: POSITION.TOP_CENTER})
+      }
+      // let success = true
+      // for(let el in this.apa_input_data){
+      //   if(this.apa_input_data[el] === undefined || this.apa_input_data[el] === null || this.apa_input_data[el] === ""){
+      //     success = false
+      //   }
+      // }
+
+      // if(success){
+      //   await this.addNewApartment()
+      //   this.apa_input_data.apa_features_selected = []
+      //   const toast = useToast()
+      //   toast.success('Added successfuly!', {position: POSITION.TOP_CENTER})
+      // }
+    },
+
+    async addNewApartment(){
+      console.log(localStorage.getItem('new_hot_id'));
+      let apa_params = {
+        "apa_cat_id": this.apa_input_data.apa_category,
+        "apa_price": this.apa_input_data.apa_price,
+        "apa_size": this.apa_input_data.apa_size,
+        "apa_hot_id": 63,
+        "num_of_units": this.apa_input_data.number_of_units
+      }
+      //parseInt(localStorage.getItem('new_hot_id'))
+      let formdata = new FormData()
+      for(let index in apa_params){
+        formdata.append([index], apa_params[index])
+      }
+      let apa_features = this.apa_input_data.apa_features_selected
+      for(let el of apa_features){
+        formdata.append('apa_features', JSON.stringify(el))
+      }
+      formdata.append('apa_file', this.apa_input_data.apa_image)
+
+      let res = await service.addNewApartment(formdata)
+      if(res.status === 200){
+        for(let el in this.apa_input_data){
+        this.apa_input_data[el] = null
+        }
+        this.apa_input_data.apa_image = null
+
+        const toast = useToast()
+        toast.success('Apartment added successfuly!', {position: POSITION.TOP_CENTER})
+      }
     }
   }
 }

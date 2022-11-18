@@ -166,7 +166,17 @@ const utils = {
     try {
       let res = await axios.post(`${api_url + 'hotels'}`, params_obj)
       console.log(res);
-      return res.data.data
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "addNewApartment": async function(params_obj){
+    try {
+      let res = await axios.post(`${api_url + 'apartments'}`, params_obj)
+      console.log(res);
+      return res
     } 
     catch (error) {
       return error
