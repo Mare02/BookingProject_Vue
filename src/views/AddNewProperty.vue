@@ -317,19 +317,6 @@ export default {
         const toast = useToast()
         toast.success('Hotel added successfuly!', {position: POSITION.TOP_CENTER})
       }
-      // let success = true
-      // for(let el in this.apa_input_data){
-      //   if(this.apa_input_data[el] === undefined || this.apa_input_data[el] === null || this.apa_input_data[el] === ""){
-      //     success = false
-      //   }
-      // }
-
-      // if(success){
-      //   await this.addNewApartment()
-      //   this.apa_input_data.apa_features_selected = []
-      //   const toast = useToast()
-      //   toast.success('Added successfuly!', {position: POSITION.TOP_CENTER})
-      // }
     },
 
     async addNewApartment(){
@@ -338,10 +325,10 @@ export default {
         "apa_cat_id": this.apa_input_data.apa_category,
         "apa_price": this.apa_input_data.apa_price,
         "apa_size": this.apa_input_data.apa_size,
-        "apa_hot_id": 63,
+        "apa_hot_id": parseInt(localStorage.getItem('new_hot_id')),
         "num_of_units": this.apa_input_data.number_of_units
       }
-      //parseInt(localStorage.getItem('new_hot_id'))
+      
       let formdata = new FormData()
       for(let index in apa_params){
         formdata.append([index], apa_params[index])
