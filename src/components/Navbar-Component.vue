@@ -7,10 +7,10 @@
     </div>
     <div class="d-flex a-center">
       <nav class="nav-links">
-        <button class="link" v-if="getUserId">Profile</button>
+        <router-link class="link" :to="{name: 'profile'}">Profile</router-link>
         <router-link class="link" :to="{name: 'add_new_property'}" v-if="this.$route.name !== 'add_new_property'">List your property</router-link>
         <router-link v-if="!getUserId" class="link-signin" :to="{name: 'auth'}">Sign In</router-link>
-        <button class="link-signin" v-if="getUserId" @click="logOut()">Sign Out</button>
+        <a class="link-signin" v-if="getUserId" @click="logOut()">Sign Out</a>
       </nav>
     </div>
   </div>

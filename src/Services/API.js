@@ -93,6 +93,24 @@ const utils = {
       return error
     }
   },
+  "getUser": async function(user_id){
+    try {
+      const res = await axios.get(`${api_url + 'users/' + user_id}`)
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getReservations": async function(user_id){
+    try {
+      const res = await axios.get(`${api_url + 'reservations'}`, {params: {usr_id: user_id}})
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
   "searchDestinations": async function(search){
     try {
       let res = await axios.get(`${api_url + 'destinations/search'}`, {
@@ -138,6 +156,15 @@ const utils = {
     try {
       let res = await axios.get(`${api_url + 'hotels/types'}`)
       return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getSubtypes": async function(id){
+    try {
+      let res = await axios.get(`${api_url + 'hotels/types/subtypes'}`, {params:{type_id: id}})
+      return res
     } 
     catch (error) {
       return error

@@ -11,13 +11,16 @@
           </div>
           <span class="mt-1 section-desc">{{hotel.hot_description}}</span>
           <div class="d-flex a-center mt-1">
-            <span class="section-desc-dark">User rating: </span>&nbsp;
-            <span class="rating-number-big">{{Number(hotel.rating).toFixed(1)}} / 10</span>
+            <h3>User rating:</h3>
+            <span class="rating-number-big ml-05">{{Number(hotel.rating).toFixed(1)}} / 10</span>
           </div>
-          <div class="d-flex f-col">
-            <div v-for="fea in hotel.features" :key="fea.fea_id">
-              {{fea.fea_name}}
+          <div class="d-flex f-col mt-1">
+            <h3 class="mb-05">Property highlights:</h3>
+            <div class="d-flex mb-05" v-for="fea in hotel.features" :key="fea.fea_id">
+              <img class="fea_image" :src="fea.fea_image" alt="">
+              <span class="ml-05 section-desc">{{fea.fea_name}}</span>
             </div>
+            
           </div>
         </div>
         <iframe class="map shadow"

@@ -1,6 +1,6 @@
 <template>
 <div class="auth-container">
-  <div class="auth-content">
+  <div class="auth-content bg-white">
     <div class="inputs-wrapper">
       <span class="title" v-if="!showRegister">Sign In</span>
       <span class="title" v-if="showRegister">Sign Up</span>

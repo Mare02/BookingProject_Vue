@@ -1,7 +1,9 @@
 <template>
-  <Navbar v-if="this.$route.name !== 'auth'"/>
-  <router-view/>
-  <Footer v-if="this.$route.name !== 'auth' && this.$route.name !== 'add_new_property'"/>
+  <div>
+    <Navbar v-if="this.$route.name !== 'auth'"/>
+    <router-view/>
+    <Footer v-if="this.$route.name !== 'auth' && this.$route.name !== 'add_new_property' && this.$route.name !== 'profile'"/>
+  </div>
 </template>
 
 <script>

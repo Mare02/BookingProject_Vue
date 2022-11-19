@@ -14,7 +14,6 @@
             <img class="fea_image" :src="fea.fea_image" alt="">
             <span>{{fea.fea_name}}</span>
           </div>
-          
         </li>
       </ul>
     </div>
@@ -48,6 +47,7 @@
 <style>
   .fea_image{
     width: 1.3rem;
+    object-fit: contain;
   }
   .card-ver-container{
     background-color: white;
@@ -125,7 +125,7 @@
     display: flex;
     flex-direction: column;
   }
-  .card-ver-price .price{
+  .price{
     color: rgb(89, 60, 134);
     font-size: 1.45rem;
   }

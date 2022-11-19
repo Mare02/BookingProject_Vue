@@ -3,19 +3,11 @@
     <Filters @filters_emit="getEmitFilters" @emitShowFilters="showFilters()"/>
   </div>
   <div class="section-div mt-nav">
-    <div class="sec-white shadow bg-des">
+    <div class="sec-white shadow bg-des" :style="{backgroundImage: `url(${bg_des})`}">
       <div class="d-flex j-center w-100 mt-3">
         <Search @search="getHotels()"/>
       </div>
       <div class="section-div d-flex a-center j-center f-wrap mt-2">
-        <div class="tag-button">
-          <img src="../assets/icons8-tag-window-100.png" alt="">
-          Family
-        </div>
-        <div class="tag-button">
-          <img src="../assets/icons8-tag-window-100.png" alt="">
-          Couple
-        </div>
         <div class="tag-button">
           <img src="../assets/icons8-tag-window-100.png" alt="">
           Highest Rated
@@ -107,7 +99,9 @@ export default{
       },
       isLoadedList: false,
       filters_responsive: false,
-      showFiltersComp: false
+      showFiltersComp: false,
+
+      bg_des: null
     }
   },
   methods:{
@@ -123,6 +117,7 @@ export default{
       console.log(res.data);
       this.hotels = res.data
       this.pages = res.pages[0].pages
+      this.bg_des = res.data[0].des_image
       localStorage.setItem('des_name', res.data[0].des_name)
       localStorage.setItem('sta_name', res.data[0].sta_name)
     },
@@ -145,6 +140,10 @@ export default{
 </script>
 
 <style>
+  .bg-des{
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
   .page-span{
     padding: 0.3rem;
     border-radius: 5px;

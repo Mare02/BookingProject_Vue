@@ -21,7 +21,7 @@
         <span class="footer-title footer-title-bg mb-05">Contact</span>
         <div class="footer-text">
           <span>+381600324965</span>
-          <span>innovaBooking@gmail.com</span>
+          <span>innova@gmail.com</span>
         </div>
       </div>
     </div>

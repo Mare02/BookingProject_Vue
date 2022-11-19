@@ -70,12 +70,6 @@ export default {
 </script>
 
 <style>
-
-  .bg-des{
-    background-image: url('https://bookaweb.s3.eu-central-1.amazonaws.com/media/29726/Beograd-%281%29.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
   .margin{
     margin-top: 21rem;
   }

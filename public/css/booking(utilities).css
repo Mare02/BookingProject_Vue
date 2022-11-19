@@ -43,6 +43,12 @@
 .a-self-start{
   align-self: flex-start;
 }
+.a-self-end{
+  align-self: flex-end;
+}
+.a-self-center{
+  align-self: center;
+}
 .w-100{
   width: 100%;
 }
@@ -54,6 +60,9 @@
 }
 .h-100{
   height: 100vh;
+}
+.h-1{
+  height: 1rem;
 }
 .mt-5{
   margin-top: 5rem;

@@ -11,27 +11,25 @@
         <div class="sec-white mt-1">
           <div class="d-flex a-center j-evenly">
             <div class="d-flex f-col a-center sec-white type-item c-pointer m-1" v-for="typ in prop_types" :key="typ.typ_id"
-                                                                                :class="{'selected-typ': typ.typ_id === hotel_input_data.type}">
-              <img class="type-img" :src="typ.typ_image" alt="" @click="hotel_input_data.type = typ.typ_id">
-              <span class="section-desc">{{typ.typ_name}}</span>
+                                                                                :class="{'selected-typ': typ.typ_id === property_type_id}"
+                                                                                @click="{property_type_id = typ.typ_id; this.getSubtypes()}">
+              <img class="type-img" :src="typ.typ_image" alt="">
+              <span class="price mt-1">{{typ.typ_name}}</span>
+              <span class="span-small">{{typ.typ_desc}}</span>
             </div>
           </div>
-          <!-- <div class="sec-white d-flex j-center a-center g-1" v-if="property_type == 'hotel'">
-            <select name="" id="" class="select" v-model="hotel_data_mode">
-              <option value="new">Add new hotel</option>
-              <option value="existing">Add apartments to existing hotel</option>
+          <div class="sec-white d-flex f-col" v-if="property_type_id">
+            <label>Select property subtype</label>
+            <select class="select" v-model="hotel_input_data.type">
+              <option v-for="(sut, index) in prop_subtypes" :key="index" :value="sut.sut_id">{{sut.sut_name}}</option>
             </select>
-          </div> -->
+          </div>
         </div>
-      </section>
-      
-      <section v-if="step === 1">
-
       </section>
 
       <section v-if="step === 1" id="step-section">
         <div v-if="hotel_data_mode !== 'existing'">
-          <h2>Where is your {{property_type}} located?</h2>
+          <h2>Where is your property located?</h2>
           <span class="section-desc">Please enter the full address</span>
           <div class="sec-white mt-1">
             <div class="inputs-wrapper">
@@ -55,23 +53,22 @@
             :src="'https://maps.google.com/maps?q='+selected_coord.lat+','+selected_coord.lng+'&hl=en&z=14&z=17&amp;output=embed'">
           </iframe>
         </div>
-        
       </section>
 
       <section v-if="step === 2" id="step-section">
-        <h2>Tells us more about your {{property_type}}.</h2>
+        <h2>Tells us more about your property.</h2>
         <div class="sec-white mt-1">
           <div class="inputs-wrapper">
             <div class="d-flex f-col w-100">
-              <label>Hotel name:</label>
+              <label>Property name:</label>
               <input type="text" spellcheck="false" v-model="hotel_input_data.name">
             </div>
             <div class="d-flex f-col w-100 mt-1">
-              <label>Hotel stars:</label>
+              <label>Stars (optional):</label>
               <input type="number" v-model="hotel_input_data.hotel_stars">
             </div>
             <div class="d-flex f-col w-100 mt-1">
-              <label>Select features</label>
+              <label>Property features</label>
               <VueMultiselect class="border-gray c-pointer"
                 v-model="hotel_input_data.hotel_features_selected"
                 :options="apa_features"
@@ -97,7 +94,7 @@
       </section>
 
       <section v-if="step === 3" id="step-section">
-        <h2>Add images so others can see your {{property_type}}.</h2>
+        <h2>Add images so others can see your property.</h2>
         <div class="sec-white mt-1">
           <div class="inputs-wrapper">
             <div class="d-flex f-col w-100">
@@ -110,8 +107,8 @@
         </div>
       </section>
 
-      <section v-if="step === 4" id="step-section">
-        <h2>Add your hotel's apartment details.</h2>
+      <section v-if="step === 4 && property_type_id === 1" id="step-section">
+        <h2>Add apartment details.</h2>
         <div class="sec-white mt-1">
           <div class="inputs-wrapper">
             <div class="d-flex f-col w-100">
@@ -156,7 +153,7 @@
           <button class="search-btn" @click="addNewApartment()">Add apartment</button>
         </div>
       </section>
-
+      
     </div>
     <div class="d-flex a-center g-1 mt-3">
       <div class="back-btn shadow border-light" v-if="step > 0" @click="step--">
@@ -164,6 +161,7 @@
       </div>
       <button 
         class="continue-btn border-light shadow"  
+        :class="{'disabled': !hotel_input_data.type}"
         v-if="step !== total_steps" 
         @click="step++">Continue
       </button>
@@ -180,10 +178,6 @@ import {POSITION} from "vue-toastification";
 
 export default {
   computed:{
-    property_type(){
-      if(this.hotel_input_data.type === 1) return 'hotel'
-      else return 'apartment'
-    },
   },
   components:{ VueMultiselect },
   mounted(){
@@ -192,9 +186,13 @@ export default {
     this.getFeatures()
   },
   watch:{
-    hotel_data_mode(){
-      if(this.hotel_data_mode === 'existing') this.total_steps = 4
-      else this.total_steps = 5
+    property_type_id(){
+      if(this.property_type_id !== 1){
+        this.total_steps = 3
+      }
+      else{
+        this.total_steps = 4
+      }
     }
   },
   data(){
@@ -202,10 +200,15 @@ export default {
       total_steps: 4,
       step: 0,
 
+      isHotelAdded: false,
+
+      property_type_id: null,
+
       prop_types: [],
       map_resources: [],
       apa_categories: [],
       apa_features: [],
+      prop_subtypes: [],
       hotel_images: [],
       url_arr: [],
       hotel_data_mode: 'new',
@@ -244,6 +247,11 @@ export default {
     async getTypes(){
       let res = await service.getTypes()
       this.prop_types = res
+    },
+    async getSubtypes(){
+      let res = await service.getSubtypes(this.property_type_id)
+      console.log(this.property_type_id);
+      this.prop_subtypes = res.data.data
     },
     async getFeatures(){
       let res = await service.getHotelFeatures()
@@ -301,6 +309,14 @@ export default {
       }
       let formdata = new FormData()
       for(let index in hotel_params){
+        if(index !== 'hot_stars'){
+          if(hotel_params[index] === null || hotel_params[index] === '' || hotel_params[index] === []){
+            const toast = useToast()
+            toast.warning(`You didn't fill required inputs!`, {position: POSITION.TOP_CENTER})
+            console.log('greska unosa hotela');
+            return
+          }
+        }
         formdata.append([index], hotel_params[index])
       }
       for(let file of this.hotel_images){
@@ -313,6 +329,7 @@ export default {
 
       let added_hotel_res = await service.addNewHotel(formdata)
       if(added_hotel_res.status === 200){
+        this.isHotelAdded = true
         localStorage.setItem('new_hot_id', added_hotel_res.data.new_hot_id)
         const toast = useToast()
         toast.success('Hotel added successfuly!', {position: POSITION.TOP_CENTER})
@@ -320,6 +337,9 @@ export default {
     },
 
     async addNewApartment(){
+      if(!this.isHotelAdded){
+        await this.addNewHotel()
+      }
       console.log(localStorage.getItem('new_hot_id'));
       let apa_params = {
         "apa_cat_id": this.apa_input_data.apa_category,
@@ -331,6 +351,12 @@ export default {
       
       let formdata = new FormData()
       for(let index in apa_params){
+        if(apa_params[index] === null || apa_params[index] === '' || apa_params[index] === []){
+            console.log('greska unosa apartmana');
+            const toast = useToast()
+            toast.warning(`You didn't fill required inputs!`, {position: POSITION.TOP_CENTER})
+            return
+          }
         formdata.append([index], apa_params[index])
       }
       let apa_features = this.apa_input_data.apa_features_selected
@@ -394,7 +420,7 @@ export default {
   width: 20rem;
 }
 .type-img{
-  width: 15rem;
+  width: 13rem;
 }
 .type-item:hover{
   background-color: rgb(230, 222, 238);
