@@ -42,8 +42,8 @@
           <div class="card-horizontal-footer">
             <div class="hot-price">
               <label class="price-label">Starting from: </label>
-              <span class="price" v-if="hot.full_price">{{hot.full_price.toLocaleString("en-US")}} RSD</span>
-              <span class="price" v-if="!hot.full_price && hot.price_per_day">{{hot.price_per_day.toLocaleString("en-US")}} RSD / day</span>
+              <span class="price-small" v-if="hot.full_price">{{hot.full_price.toLocaleString("en-US")}} RSD</span>
+              <span class="price-small" v-if="!hot.full_price && hot.price_per_day">{{hot.price_per_day.toLocaleString("en-US")}} RSD / day</span>
             </div>
           </div>
         </div>
@@ -79,7 +79,6 @@ export default{
   },
   methods:{
     redirectToHotel(hot_id){
-      console.log(hot_id);
       this.$router.push({name: 'hotel', params:{hot_id: hot_id}})
       localStorage.setItem('hot_id', hot_id)
     },
@@ -88,6 +87,10 @@ export default{
 </script>
 
 <style>
+.price-small{
+  color: rgb(89, 60, 134);
+  font-size: 1.1rem;
+}
 .hot-star{
   width: 1.3rem;
 }

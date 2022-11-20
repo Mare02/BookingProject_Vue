@@ -22,7 +22,7 @@
 
     <section class="content-section sec-white shadow">
       <h2>Your reservations:</h2>
-      <div class="mt-1 sec-white shadow d-flex a-center" v-for="res in reservations" :key="res.res_id">
+      <div class="mt-1 p-05 border-radius-10 shadow d-flex res-item" v-for="res in reservations" :key="res.res_id">
         <div class="res-image">
           <img :src="res.apa_image" alt="">
         </div>
@@ -36,7 +36,7 @@
             <span class="section-desc ml-05">{{res.check_out}}</span>
           </div>
           <div class="d-flex"> 
-            <label class="section-desc">Hotel:</label>
+            <label class="section-desc">Property:</label>
             <span class="section-desc ml-05">{{res.hot_name}}</span>
           </div>
           <div class="d-flex"> 
@@ -44,15 +44,22 @@
             <span class="section-desc ml-05">{{res.des_name}}</span>
           </div>
         </div>
+        <span :class="{'expired': res.status === 'Expired', 
+                       'active': res.status === 'Active',
+                       'upcoming': res.status === 'Upcoming'}">{{res.status}}</span>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import service from '../services/API'
 
 export default {
+  computed:{
+    ...mapGetters(['getUserId'])
+  },
   mounted(){
     this.getUser()
     this.getReservations()
@@ -70,7 +77,7 @@ export default {
   },
   methods:{
     async getUser(){
-      let res = await service.getUser(25)
+      let res = await service.getUser(this.getUserId)
       console.log(res);
       let res_data = res.data.data[0]
       for(let index in res_data){
@@ -87,6 +94,36 @@ export default {
 </script>
 
 <style>
+.expired{
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  color: red;
+  font-size: 1.2rem;
+}
+.active{
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  color: green;
+  font-size: 1.2rem;
+}
+.upcoming{
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  color: var(--nav-bg-color);
+  font-size: 1.2rem;
+}
+.res-item{
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+}
+.res-item:hover{
+  scale: 1.02;
+  background-color: rgb(217, 211, 231);
+}
   .title-abs{
     position: absolute;
     background-color: white;

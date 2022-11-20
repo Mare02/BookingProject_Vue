@@ -35,11 +35,9 @@ export default{
     async logOut(){
       const res = await service.logOut(localStorage.getItem('sid'))
       console.log(res);
-      if(res.status === 200){
-        localStorage.clear()
-        location.reload()
-        this.$router.push({name: 'home'})
-      }
+      localStorage.clear()
+      await this.$router.push({name: 'home'})
+      location.reload()
     }
   }
 }

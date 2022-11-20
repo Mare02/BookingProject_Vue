@@ -3,12 +3,27 @@
     <div class="card-ver-img">
       <img class="apa-card-image" :src="apartment.apa_image" alt="">
     </div>
-    <div class="card-ver-header">
+    <div class="card-ver-header d-flex j-between">
       <span>{{apartment.cat_name}}</span>
+      <button class="delete-btn" @click="deleteApartments()">Remove</button>
     </div>
     <div class="card-ver-body">
       <span>Features:</span>
       <ul class="card-ver-list">
+        <li>
+          <div class="d-flex a-center g-05">
+            <img class="fea_image" src="../assets/bed.png" alt="">
+            <span>{{apartment.cb_hot_count}}</span>
+            <span v-if="apartment.cb_hot_count > 1">{{apartment.bed_name}}s</span>
+            <span v-else>{{apartment.bed_name}}</span>
+          </div>
+        </li>
+        <li>
+          <div class="d-flex a-center g-05">
+            <img class="fea_image" src="../assets/area.png" alt="">
+            <span>{{apartment.apa_squares}} sq m</span>
+          </div>
+        </li>
         <li v-for="fea in apartment.apa_features" :key="fea.fea_id">
           <div class="d-flex a-center g-05">
             <img class="fea_image" :src="fea.fea_image" alt="">
@@ -20,9 +35,11 @@
     <div class="card-ver-footer">
       <div class="card-ver-price">
         <span>Price: </span>
-        <span class="price" v-if="apartment.price_per_day">{{apartment.price_per_day.toLocaleString('en-US')}} RSD</span>
+        <span class="price" v-if="apartment.full_price">{{apartment.full_price.toLocaleString('en-US')}} RSD</span>
+        <span class="price" v-else>{{apartment.price_per_day.toLocaleString('en-US')}} RSD</span>
         <div class="d-flex a-center j-between">
-          <span class="span-small">for 1 night</span>
+          <span class="span-small" v-if="apartment.full_price">for {{apartment.num_of_days}} nights</span>
+          <span class="span-small" v-else>for 1 night</span>
           <span class="span-small span-red" v-if="apartment.available_rooms_count < 3">We have {{apartment.available_rooms_count}} left</span>
         </div>
       </div>
@@ -34,17 +51,36 @@
 </template>
 
 <script>
+  import service from '../services/API'
   export default{
     props: ['apartment'],
     methods:{
       emitReserve(){
         this.$emit('reserve')
+      },
+      async deleteApartments(){
+        service.deleteApartments(this.apartment.cat_id, this.apartment.hot_id)
+        this.$emit('reload')
       }
     }
   }
 </script>
 
 <style>
+  .delete-btn{
+    background-color: red;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 5px;
+    padding: .4rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .delete-btn:hover{
+    background-color: rgb(150, 0, 0);
+  }
   .fea_image{
     width: 1.3rem;
     object-fit: contain;

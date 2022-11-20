@@ -5,7 +5,7 @@ export default createStore({
     user: {
       rol_id: null,
       usr_id: null,
-      usr_email: 'test email',
+      usr_email: null,
       usr_firstname: null,
       usr_lastname: null
     }
@@ -16,6 +16,9 @@ export default createStore({
     },
     getName(state){
       return state.user.usr_firstname
+    },
+    getLastName(state){
+      return state.user.usr_lastname
     },
     getUserId(state){
       return state.user.usr_id

@@ -4,30 +4,8 @@
   </div>
   <div class="section-div mt-nav">
     <div class="sec-white shadow bg-des" :style="{backgroundImage: `url(${bg_des})`}">
-      <div class="d-flex j-center w-100 mt-3">
+      <div class="d-flex j-center w-100 mt-3 mb-3">
         <Search @search="getHotels()"/>
-      </div>
-      <div class="section-div d-flex a-center j-center f-wrap mt-2">
-        <div class="tag-button">
-          <img src="../assets/icons8-tag-window-100.png" alt="">
-          Highest Rated
-        </div>
-        <div class="tag-button">
-          <img src="../assets/icons8-tag-window-100.png" alt="">
-          Luxury
-        </div>
-        <div class="tag-button">
-          <img src="../assets/icons8-tag-window-100.png" alt="">
-          Best Deals
-        </div>
-        <div class="tag-button">
-          <img src="../assets/icons8-tag-window-100.png" alt="">
-          Pet Friendly
-        </div>
-        <div class="tag-button">
-          <img src="../assets/icons8-tag-window-100.png" alt="">
-          Popular
-        </div>
       </div>
     </div>
   </div>
@@ -106,7 +84,6 @@ export default{
   },
   methods:{
     async getHotels(){
-      console.log(this.selected_page);
       let res = await service.getHotels(localStorage.getItem('des_id'), 
                                         localStorage.getItem('check_in'), 
                                         localStorage.getItem('check_out'),
@@ -114,7 +91,6 @@ export default{
                                         this.filters.end_price || null,
                                         JSON.stringify(this.filters.featuresArr) || null,
                                         null, this.selected_page)
-      console.log(res.data);
       this.hotels = res.data
       this.pages = res.pages[0].pages
       this.bg_des = res.data[0].des_image

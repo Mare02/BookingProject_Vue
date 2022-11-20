@@ -22,6 +22,12 @@
 .g-1{
   gap: 1rem;
 }
+.hover-scale-up:hover{
+  scale: 1.1;
+}
+.transition-all-02{
+  transition: all 0.2s;
+}
 .g-05{
   gap: 0.5rem;
 }
@@ -102,6 +108,9 @@
 }
 .ml-05{
   margin-left: 0.5rem;
+}
+.ml-1{
+  margin-left: 1rem;
 }
 .pr-1{
   padding-right: 1rem;

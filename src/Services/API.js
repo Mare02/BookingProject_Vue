@@ -3,13 +3,23 @@ const api_url = 'http://908q122.e2.mars-hosting.com/booking/';
 const bing_maps_key = 'AgHPai2_f_uHB1ftS5vQLzvSRcP7qgGW-lxFGSof_AULvD3eRtywQLjFgB-DYU8F';
 
 const utils = {
-  "getApartments": async function(hot_id, check_in_date, check_out_date){
+  "getApartments": async function(hot_id, check_in_date, check_out_date, randQ, limitQ){
     try {
       const res = await axios.get(`${api_url + 'apartments'}`, 
-        {params:{hot_id: hot_id, check_in: check_in_date, check_out: check_out_date}}
+        {params:{hot_id: hot_id, check_in: check_in_date, check_out: check_out_date, randQ: randQ, limitQ: limitQ}}
       )
-      console.log(res.data.data);
       return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "deleteApartments": async function(cat_id, hot_id){
+    try {
+      const res = await axios.delete(`${api_url + 'apartments'}`, 
+        {params:{cat_id: cat_id, hot_id: hot_id}}
+      )
+      return res
     } 
     catch (error) {
       return error
@@ -123,12 +133,12 @@ const utils = {
       return error  
     }
   },
-  "getDestinationsById": async function(sta_id){
+  "getDestinationsById": async function(sta_id, randQ){
     try {
       let res = await axios.get(`${api_url + 'destinations'}`, {
-        params:{sta_id: sta_id}
+        params:{sta_id: sta_id, randQ: randQ}
       })
-      return res.data.data
+      return res
     } 
     catch (error) {
       return error  

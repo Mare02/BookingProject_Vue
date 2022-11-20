@@ -86,6 +86,7 @@
       selectDate(){
         localStorage.setItem('check_in', this.checkInDate)
         localStorage.setItem('check_out', this.checkOutDate)
+        this.$emit('selected_date')
       },
       closeDropdown(){
         this.destinations = []

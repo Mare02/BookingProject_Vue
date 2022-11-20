@@ -7,9 +7,9 @@
     <Search @search="redirect" @selected="getDestinations()"/>
   </div>
   <section class="mt-5 section-div">
-    <div class="sec-white d-flex f-col shadow" v-if="sta_name">
-      <div class="section-header">
-        <span class="section-title">Popular destinations in {{sta_name}}</span>
+    <div class="d-flex f-col a-center sec-white">
+      <div class="section-header d-flex a-center">
+        <span class="section-title">Popular destinations</span>
         <span class="section-desc">Here are some popular destinations to explore</span>
       </div>
       <div class="d-flex a-center j-center f-wrap mt-1">
@@ -21,6 +21,12 @@
         </div>
       </div>
     </div>
+    <div class="mt-5 sec-white d-flex f-col a-center">
+      <h2>Hotel apartments you might like</h2>
+      <div class="mt-1 d-flex j-center f-wrap">
+        <ApartmentCard v-for="apa in home_apartments" :key="apa.cat_id" :apartment="apa"/>
+      </div>
+    </div>
   </section>
   <div class="mt-3"></div>
 </div>
@@ -30,31 +36,32 @@
 import { mapGetters } from 'vuex'
 import Search from '../components/Search-Component.vue'
 import service from '../services/API'
+import ApartmentCard from '../components/Apartment-Card.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    Search
+    Search, ApartmentCard
   },
   computed: {
     ...mapGetters(['getName'])
   },
   mounted(){
-    if(localStorage.getItem('sta_id')){
-      this.getDestinations()
-    }
+    this.getDestinations()
+    this.getHomeApartments()
   },
   data(){
     return{
       destinations: [],
-      sta_name: null
+      sta_name: null,
+      home_apartments: []
     }
   },
   methods:{
     async getDestinations(){
-      let res = await service.getDestinationsById(localStorage.getItem('sta_id'))
-      this.destinations = res
-      this.sta_name = localStorage.getItem('sta_name')
+      let res = await service.getDestinationsById(1)
+      this.destinations = res.data.data
+      this.sta_name = res.data.data[0].sta_name
     },
     redirect(){
       this.$router.push({name: "hotels"}) 
@@ -64,7 +71,11 @@ export default {
       localStorage.setItem('des_name', des_name)
       localStorage.setItem('sta_name', sta_name)
       this.$router.push({name: 'hotels'})
-    }
+    },
+    async getHomeApartments(){
+      let res = await service.getApartments(2, null, null, null, 3)
+      this.home_apartments = res
+    } 
   }
 }
 </script>
