@@ -102,6 +102,7 @@ export default{
       this.filters.end_price = data.end_price
       this.filters.featuresArr = data.filters_arr
       this.selected_page = 0;
+      this.showFiltersComp = false
       this.getHotels()
     },
     showFilters(){

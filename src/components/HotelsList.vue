@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex f-col a-center w-100">
     <ul class="hot-list" id="hotels-list">
-      <li class="hot-list-item" v-for="hot in hotels" :key="hot.hot_id">
+      <li class="hot-list-item shadow" v-for="hot in hotels" :key="hot.hot_id">
         <Carousel class="carousel" :wrapAround="true" v-if="hot.images">
           <Slide v-for="img in hot.images" :key="img.file_id" class="carousel-slide">
             <div class="hot-card-img" @click="redirectToHotel(hot.hot_id)">
@@ -19,7 +19,7 @@
             </div>
           </Slide>
         </Carousel>
-        <div class="hot-list-details pr-1">
+        <div class="hot-list-details">
           <div class="card-horizontal-header">
             <div class="hot-header">
               <div class="d-flex a-center">

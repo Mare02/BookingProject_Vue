@@ -1,8 +1,11 @@
 <template>
   <div class="profile-container section-div mt-nav g-1">
     <section class="user-section sec-white shadow">
-      <div class="user-img shadow">
+      <div class="user-img shadow" v-if="user_data.usr_image">
         <img :src="user_data.usr_image" alt="">
+      </div>
+      <div class="user-img shadow" v-else>
+        <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg" alt="">
       </div>
       <div class="mt-1">
         <div class="d-flex f-col mt-1">
@@ -22,7 +25,7 @@
 
     <section class="content-section sec-white shadow">
       <h2>Your reservations:</h2>
-      <div class="mt-1 p-05 border-radius-10 shadow d-flex res-item" v-for="res in reservations" :key="res.res_id">
+      <div class="mt-1 p-05 border-radius-10 shadow d-flex p-rel" v-for="res in reservations" :key="res.res_id">
         <div class="res-image">
           <img :src="res.apa_image" alt="">
         </div>
@@ -77,6 +80,7 @@ export default {
   },
   methods:{
     async getUser(){
+      console.log(this.getUserId);
       let res = await service.getUser(this.getUserId)
       console.log(res);
       let res_data = res.data.data[0]
@@ -85,7 +89,7 @@ export default {
       }
     },
     async getReservations(){
-      let res = await service.getReservations(25)
+      let res = await service.getReservations(this.getUserId)
       console.log(res);
       this.reservations = res.data.data
     }
@@ -94,90 +98,5 @@ export default {
 </script>
 
 <style>
-.expired{
-  position: absolute;
-  top: 0.5rem;
-  right: 1rem;
-  color: red;
-  font-size: 1.2rem;
-}
-.active{
-  position: absolute;
-  top: 0.5rem;
-  right: 1rem;
-  color: green;
-  font-size: 1.2rem;
-}
-.upcoming{
-  position: absolute;
-  top: 0.5rem;
-  right: 1rem;
-  color: var(--nav-bg-color);
-  font-size: 1.2rem;
-}
-.res-item{
-  cursor: pointer;
-  transition: all .2s;
-  position: relative;
-}
-.res-item:hover{
-  scale: 1.02;
-  background-color: rgb(217, 211, 231);
-}
-  .title-abs{
-    position: absolute;
-    background-color: white;
-    height: 3rem;
-    top: 0;
-  }
-  .res-image{
-    width: 10.5rem;
-    height: 6.5rem;
-    overflow: hidden;
-    border-radius: 5px;
-    margin-right: 2rem;
-  }
-  .res-image img{
-    object-fit: cover;
-    object-position: center;
-    height: 100%;
-    width: 100%;
-  }
-  .usr-details{
-    display: flex;
-    flex-direction: column;
-    margin-top: 2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  .user-img{
-    width: 7rem;
-    height: 7rem;
-    overflow: hidden;
-    border-radius: 50%;
-    border: 2px solid white;
-  }
-  .user-img img{
-    object-fit: fill;
-    object-position: center;
-    height: 100%;
-  }
-  .profile-container{
-    padding-top: 2rem;
-    display: flex;
-    justify-content: center;
-  }
-  .user-section{
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 82.5vh;
-  }
-  .content-section{
-    position: relative;
-    width: 70%;
-    height: 82.5vh;
-    overflow-y: scroll;
-  }
+
 </style>

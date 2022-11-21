@@ -21,12 +21,12 @@
         </div>
       </div>
     </div>
-    <div class="mt-5 sec-white d-flex f-col a-center">
+    <!-- <div class="mt-5 sec-white d-flex f-col a-center">
       <h2>Hotel apartments you might like</h2>
       <div class="mt-1 d-flex j-center f-wrap">
         <ApartmentCard v-for="apa in home_apartments" :key="apa.cat_id" :apartment="apa"/>
       </div>
-    </div>
+    </div> -->
   </section>
   <div class="mt-3"></div>
 </div>
@@ -36,12 +36,12 @@
 import { mapGetters } from 'vuex'
 import Search from '../components/Search-Component.vue'
 import service from '../services/API'
-import ApartmentCard from '../components/Apartment-Card.vue'
+// import ApartmentCard from '../components/Apartment-Card.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    Search, ApartmentCard
+    Search
   },
   computed: {
     ...mapGetters(['getName'])

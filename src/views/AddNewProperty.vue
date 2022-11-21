@@ -63,9 +63,17 @@
               <label>Property name:</label>
               <input type="text" spellcheck="false" v-model="hotel_input_data.name">
             </div>
-            <div class="d-flex f-col w-100 mt-1">
+            <div class="d-flex f-col w-100 mt-1" v-if="property_type_id === 1">
               <label>Stars (optional):</label>
               <input type="number" v-model="hotel_input_data.hotel_stars">
+            </div>
+            <div class="d-flex f-col w-100 mt-1" v-if="property_type_id !== 1">
+              <label>Property size (sq m):</label>
+              <input type="number" v-model="hotel_input_data.size">
+            </div>
+            <div class="d-flex f-col w-100 mt-1" v-if="property_type_id !== 1">
+              <label>Price per night (RSD):</label>
+              <input type="number" v-model="hotel_input_data.price">
             </div>
             <div class="d-flex f-col w-100 mt-1">
               <label>Property features</label>
@@ -214,6 +222,8 @@ export default {
       hotel_data_mode: 'new',
 
       hotel_input_data: {
+        size: null,
+        price: null,
         type: null,
         name: "",
         description: "",
@@ -306,6 +316,8 @@ export default {
         "hot_map_lat": this.selected_coord.lat,
         "hot_map_lng": this.selected_coord.lng,
         "type_id": this.hotel_input_data.type,
+        "size": this.hotel_input_data.size,
+        "price": this.hotel_input_data.price,
       }
       let formdata = new FormData()
       for(let index in hotel_params){

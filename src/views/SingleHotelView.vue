@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex f-col mt-nav">
     <div class="section-div">
-      <div class="sec-white mt-1 d-flex j-between">
+      <div class="sec-white mt-1 top-cont">
         <div class="sec-title-fea">
           <div class="d-flex a-center border-radius-10 p-05 shadow">
             <span class="hotel-title">{{hotel.hot_name}}</span>
@@ -30,7 +30,7 @@
             marginwidth="0" 
             :src="'https://maps.google.com/maps?q='+lat+','+lng+'&hl=en&z=14&z=17&amp;output=embed'">
           </iframe>
-          <label class="m-1">{{hotel.hot_address}}</label>
+          <label class="map-address">{{hotel.hot_address}}</label>
         </div>
       </div>
       <div class="gallery-loc-wrap mt-1 d-flex ">
@@ -186,9 +186,9 @@ export default{
 </script>
 
 <style>
-.padding{
-  padding-right: 15rem;
-  padding-left: 15rem;
+.top-cont{
+  display: flex;
+  justify-content: space-between;
 }
 .comments-div{
   max-height: 18rem;
@@ -230,12 +230,7 @@ export default{
   border-radius: 10px;
   padding: 1rem;
 }
-.map{
-  border-radius: 10px;
-  height: 15rem;
-  width: 20rem;
-  margin-left: 1rem;
-}
+
 .sec-white{
   background-color: white;
   padding: 1rem;

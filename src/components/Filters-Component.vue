@@ -18,19 +18,19 @@
               <input class="price-input" type="number" v-model="filters.end_price"> 
             </div>
           </div>
-          <div class="submit-btn">
-            <button class="search-btn" @click="emitFilters()"
-            >Submit</button>
-          </div>
           <div class="border-b w-100"></div>
           <div class="mt-1">
             <label class="filter-label">Features</label>
           </div>
           <div class="features-div">
             <div class="features-item" v-for="fea in featuresDb" :key="fea.fea_id">
-              <input type="checkbox" class="checkbox" :value="fea.fea_id" @change="getCheckedFeatures()">
+              <input type="checkbox" class="checkbox" :value="fea.fea_id">
               <label>{{fea.fea_name}}</label>
             </div>
+          </div>
+          <div class="submit-btn">
+            <button class="search-btn" @click="getCheckedFeatures()"
+            >Submit</button>
           </div>
         </div>
       </div>
