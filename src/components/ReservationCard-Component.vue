@@ -31,7 +31,7 @@
         </div>
         <div class="d-flex f-col mt-1">
           <label>Credit card number:</label>
-          <input type="number" placeholder="0000 0000 0000 0000">
+          <input type="number" placeholder="0000 0000 0000 0000" required>
         </div>
         <div class="d-flex a-center mt-1 w-100 j-evenly">
           <div class="d-flex f-col a-center">

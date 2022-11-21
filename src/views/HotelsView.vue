@@ -12,7 +12,17 @@
   <div class="filter-sort-div section-div">
     <div class="sec-white w-100 d-flex j-evenly shadow">
       <button class="filter-btn shadow" @click="showFilters()">Filters</button>
-      <button class="sort-btn shadow">Sort by</button>    
+      <!-- <div class="p-rel" style="width: 35%;">
+        <button class="sort-btn shadow w-100" @click="showSort()">Sort by</button> 
+        <div class="sort-dropdown shadow" v-if="showSortDropdown">
+          <span class="sort-item">Price (asc)</span>
+          <span class="sort-item">Price (desc)</span>
+        </div>
+      </div> -->
+      <select class="sort-btn" v-model="sort_param" @change="getHotels()">
+        <option value="pri_asc" >Price (asc)</option>
+        <option value="pri_desc">Price (desc)</option>
+      </select>
     </div>
   </div>
   <div class="section-div d-flex mt-1 mb-2" id="hotels-view">
@@ -70,6 +80,7 @@ export default{
       featuresDb: [],
       pages: null,
       selected_page: 0,
+      sort_param: 'pri_desc',
       filters: {
         start_price: null,
         end_price: null,
@@ -78,19 +89,21 @@ export default{
       isLoadedList: false,
       filters_responsive: false,
       showFiltersComp: false,
+      showSortDropdown: false,
 
       bg_des: null
     }
   },
   methods:{
     async getHotels(){
+      console.log(this.sort_param);
       let res = await service.getHotels(localStorage.getItem('des_id'), 
                                         localStorage.getItem('check_in'), 
                                         localStorage.getItem('check_out'),
                                         this.filters.start_price || null,
                                         this.filters.end_price || null,
                                         JSON.stringify(this.filters.featuresArr) || null,
-                                        null, this.selected_page)
+                                        null, this.selected_page, this.sort_param)
       this.hotels = res.data
       this.pages = res.pages[0].pages
       this.bg_des = res.data[0].des_image
@@ -108,6 +121,9 @@ export default{
     showFilters(){
       this.showFiltersComp = !this.showFiltersComp
     },
+    showSort(){
+      this.showSortDropdown = !this.showSortDropdown
+    },
     selectPage(value){
       this.selected_page = value
       this.getHotels()
@@ -117,6 +133,25 @@ export default{
 </script>
 
 <style>
+  .sort-dropdown{
+    position: absolute;
+    background-color: white;
+    width: 92%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .sort-dropdown .sort-item{
+    padding: .7rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .sort-dropdown .sort-item:hover{
+    background-color: lightgray;
+  }
   .bg-des{
     background-repeat: no-repeat;
     background-size: cover;

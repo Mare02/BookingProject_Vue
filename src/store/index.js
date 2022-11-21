@@ -23,6 +23,9 @@ export default createStore({
     getUserId(state){
       return state.user.usr_id
     },
+    getUserRoleId(state){
+      return state.user.rol_id
+    },
   },
   mutations: {
   },

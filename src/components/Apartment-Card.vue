@@ -5,7 +5,7 @@
     </div>
     <div class="card-ver-header d-flex j-between">
       <span>{{apartment.cat_name}}</span>
-      <button class="delete-btn" @click="deleteApartments()">Remove</button>
+      <button class="delete-btn" @click="deleteApartments()" v-if="getUserRoleId === 2">Remove</button>
     </div>
     <div class="card-ver-body">
       <span>Features:</span>
@@ -51,9 +51,13 @@
 </template>
 
 <script>
-  import service from '../services/API'
+  import { mapGetters } from 'vuex'
+import service from '../services/API'
   export default{
     props: ['apartment'],
+    computed:{
+      ...mapGetters(['getUserRoleId'])
+    },
     methods:{
       emitReserve(){
         this.$emit('reserve')
