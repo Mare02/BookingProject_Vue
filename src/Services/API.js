@@ -3,10 +3,10 @@ const api_url = 'http://908q122.e2.mars-hosting.com/booking/';
 const bing_maps_key = 'AgHPai2_f_uHB1ftS5vQLzvSRcP7qgGW-lxFGSof_AULvD3eRtywQLjFgB-DYU8F';
 
 const utils = {
-  "getApartments": async function(hot_id, check_in_date, check_out_date, randQ, limitQ){
+  "getApartments": async function(hot_id, check_in_date, check_out_date){
     try {
       const res = await axios.get(`${api_url + 'apartments'}`, 
-        {params:{hot_id: hot_id, check_in: check_in_date, check_out: check_out_date, randQ: randQ, limitQ: limitQ}}
+        {params:{hot_id: hot_id, check_in: check_in_date, check_out: check_out_date}}
       )
       return res.data.data
     } 
@@ -218,7 +218,16 @@ const utils = {
     catch (error) {
       return error
     }
-  }
+  },
+  "updateImg": async function(params_obj){
+    try {
+      let res = await axios.post(`${api_url + 'files'}`, params_obj)
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
 }
 
 export default utils 

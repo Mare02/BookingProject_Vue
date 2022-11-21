@@ -36,7 +36,7 @@
       <div class="gallery-loc-wrap mt-1 d-flex ">
         <grid-images :items="images_arr" :cells="4"/>
       </div>
-      <div class="sec-white mt-1">
+      <div class="sec-white mt-1" v-if="hotel.comments">
         <span class="section-desc-dark">Reviews: </span>
         <div class="comments-div">
           <div class="d-flex f-col">
@@ -58,7 +58,7 @@
       <div class="sec-white d-flex j-center mt-1 shadow">
         <Search :only_date_mode="true" @selected_date="getApartments()"/>
       </div> 
-      <div class="mt-1 d-flex j-center f-wrap">
+      <div class="mt-1 d-flex j-center f-wrap bg-white border-radius-10 p-05">
         <ApartmentCard v-for="apa in apartments" :key="apa.cat_id" :apartment="apa" 
          @reserve="makeReservation(
                       getUserId, apa.apartments[0].apa_id, apa.cat_id, apa.full_price

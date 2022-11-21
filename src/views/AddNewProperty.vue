@@ -321,7 +321,7 @@ export default {
       }
       let formdata = new FormData()
       for(let index in hotel_params){
-        if(index !== 'hot_stars'){
+        if(index !== 'hot_stars' && index !== 'size' && index !== 'price'){
           if(hotel_params[index] === null || hotel_params[index] === '' || hotel_params[index] === []){
             const toast = useToast()
             toast.warning(`You didn't fill required inputs!`, {position: POSITION.TOP_CENTER})
@@ -363,14 +363,15 @@ export default {
       
       let formdata = new FormData()
       for(let index in apa_params){
-        if(apa_params[index] === null || apa_params[index] === '' || apa_params[index] === []){
-            console.log('greska unosa apartmana');
-            const toast = useToast()
-            toast.warning(`You didn't fill required inputs!`, {position: POSITION.TOP_CENTER})
-            return
-          }
+        // if(apa_params[index] === null || apa_params[index] === '' || apa_params[index] === []){
+        //   console.log('greska unosa apartmana');
+        //   const toast = useToast()
+        //   toast.warning(`You didn't fill required inputs!`, {position: POSITION.TOP_CENTER})
+        //   return
+        // }
         formdata.append([index], apa_params[index])
       }
+      
       let apa_features = this.apa_input_data.apa_features_selected
       for(let el of apa_features){
         formdata.append('apa_features', JSON.stringify(el))

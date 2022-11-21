@@ -680,18 +680,41 @@ textarea{
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
   .user-img{
     width: 7rem;
     height: 7rem;
     overflow: hidden;
     border-radius: 50%;
     border: 2px solid white;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
   }
   .user-img img{
-    object-fit: fill;
+    position: absolute;
     object-position: center;
     height: 100%;
   }
+  .update-img{
+    color: white;
+  }
+  .user-img:hover{
+    cursor: pointer;
+  }
+  .user-img img:hover{
+    opacity: .5;
+  }
+  .user-img:hover .update-img{
+    z-index: 20;
+    pointer-events: none;
+  }
+  .update-img-input{
+    display: none;
+  }
+  
   .profile-container{
     padding-top: 2rem;
     display: flex;

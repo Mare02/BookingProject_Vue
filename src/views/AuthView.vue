@@ -73,6 +73,8 @@
 import service from '../services/API'
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
+import {useToast } from "vue-toastification";
+import {POSITION} from "vue-toastification";
 
 export default {
   name: 'AuthView',
@@ -126,6 +128,8 @@ export default {
         else{
           this.api_error_msg = '';
           this.changeReg()
+          const toast = useToast()
+          toast.success('Registration sussessful, you can now sign in!', {position: POSITION.TOP_CENTER})
         }
       }
     },

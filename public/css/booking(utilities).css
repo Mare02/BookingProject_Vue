@@ -159,6 +159,9 @@
 .bg-white{
   background-color: white;
 }
+/* .bg-lg{
+  background-color: rgb(212, 194, 255) !important;
+} */
 .shadow{
   box-shadow: 0 5px 5px 3px rgba(0, 0, 0, 0.3);
 }

@@ -1,11 +1,15 @@
 <template>
   <div class="profile-container section-div mt-nav g-1">
     <section class="user-section sec-white shadow">
-      <div class="user-img shadow" v-if="user_data.usr_image">
-        <img :src="user_data.usr_image" alt="">
+      <div class="user-img shadow" @click="showImgInput()">
+        <img :src="user_data.usr_image" alt="" v-if="user_data.usr_image" id="usr-img">
+        <img v-else src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg" alt="">
+        <span class="update-img">Update picture</span>
       </div>
-      <div class="user-img shadow" v-else>
-        <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg" alt="">
+      <input type="file" class="update-img-input" id="img-input" @change="getUsrImg">
+      <div class="d-flex a-center g-05 mt-1" v-if="showConfirm">
+        <button class="search-btn" @click="showConfirmImg()">Cancel</button>
+        <button class="search-btn" @click="updateUsrImg()">Confirm</button>
       </div>
       <div class="mt-1">
         <div class="d-flex f-col mt-1">
@@ -56,6 +60,8 @@
 </template>
 
 <script>
+import {useToast } from "vue-toastification";
+import {POSITION} from "vue-toastification";
 import { mapGetters } from 'vuex'
 import service from '../services/API'
 
@@ -75,6 +81,9 @@ export default {
         usr_email: '',
       },
 
+      new_usr_img: null,
+      showConfirm: false,
+
       reservations: []
     }
   },
@@ -92,6 +101,39 @@ export default {
       let res = await service.getReservations(this.getUserId)
       console.log(res);
       this.reservations = res.data.data
+    },
+    showImgInput(){
+      document.getElementById('img-input').click()
+    },
+    getUsrImg(e){
+      this.new_usr_img = e.target.files[0]
+      const reader = new FileReader()
+      reader.readAsDataURL(e.target.files[0])
+      if(e.target.files[0]){
+        reader.addEventListener('load', () => {
+          const imgELem = document.getElementById('usr-img')
+          imgELem.src = reader.result
+          this.showConfirmImg()
+        })
+      }
+    },
+    async updateUsrImg(){
+      let formdata = new FormData()
+
+      formdata.append('file', this.new_usr_img)
+      formdata.append('usr_id', this.getUserId)
+
+      let res = await service.updateImg(formdata)
+      console.log(res);
+      if(res.status === 200){
+        this.showConfirmImg()
+        const toast = useToast()
+        toast.success('Profile image updated!', {position: POSITION.TOP_CENTER})
+        this.getUser()
+      }
+    },
+    showConfirmImg(){
+      this.showConfirm = !this.showConfirm
     }
   }
 }
