@@ -1,6 +1,6 @@
 <template>
 <div class="auth-container">
-  <div class="auth-content">
+  <div class="auth-content bg-white">
     <div class="inputs-wrapper">
       <span class="title" v-if="!showRegister">Sign In</span>
       <span class="title" v-if="showRegister">Sign Up</span>
@@ -131,7 +131,6 @@ export default {
       }
     },
     async logIn(){
-      console.log(this.v$);
       this.v$.$validate(this.inputs.email, this.inputs.password)
       if(!this.v$.inputs.email.$error && !this.v$.inputs.password.$error){
         for(let el in this.inputs){

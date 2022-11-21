@@ -3,10 +3,10 @@ const api_url = 'http://908q122.e2.mars-hosting.com/booking/';
 const bing_maps_key = 'AgHPai2_f_uHB1ftS5vQLzvSRcP7qgGW-lxFGSof_AULvD3eRtywQLjFgB-DYU8F';
 
 const utils = {
-  "getApartments": async function(hot_id, check_in_date, check_out_date){
+  "getApartments": async function(hot_id, check_in_date, check_out_date, randQ, limitQ){
     try {
       const res = await axios.get(`${api_url + 'apartments'}`, 
-        {params:{hot_id: hot_id, check_in: check_in_date, check_out: check_out_date}}
+        {params:{hot_id: hot_id, check_in: check_in_date, check_out: check_out_date, randQ: randQ, limitQ: limitQ}}
       )
       return res.data.data
     } 
@@ -14,12 +14,23 @@ const utils = {
       return error
     }
   },
-  "getHotels": async function(des_id, check_in, check_out, start_price, end_price, features, luxury, page){
+  "deleteApartments": async function(cat_id, hot_id){
+    try {
+      const res = await axios.delete(`${api_url + 'apartments'}`, 
+        {params:{cat_id: cat_id, hot_id: hot_id}}
+      )
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getHotels": async function(des_id, check_in, check_out, start_price, end_price, features, luxury, page, sortParam){
     try {
       const res = await axios.get(`${api_url + 'hotels'}`, {params:{
         des_id: des_id, check_in: check_in, check_out: check_out, 
         start_price: start_price, end_price: end_price, features: features,
-        luxury: luxury, page: page
+        luxury: luxury, page: page, sortParam: sortParam
       }})
       return res.data
     } 
@@ -92,6 +103,24 @@ const utils = {
       return error
     }
   },
+  "getUser": async function(user_id){
+    try {
+      const res = await axios.get(`${api_url + 'users/' + user_id}`)
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getReservations": async function(user_id){
+    try {
+      const res = await axios.get(`${api_url + 'reservations'}`, {params: {usr_id: user_id}})
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
   "searchDestinations": async function(search){
     try {
       let res = await axios.get(`${api_url + 'destinations/search'}`, {
@@ -104,18 +133,27 @@ const utils = {
       return error  
     }
   },
-  "getDestinationsById": async function(sta_id){
+  "getDestinationsById": async function(sta_id, randQ){
     try {
       let res = await axios.get(`${api_url + 'destinations'}`, {
-        params:{sta_id: sta_id}
+        params:{sta_id: sta_id, randQ: randQ}
       })
-      return res.data.data
+      return res
     } 
     catch (error) {
       return error  
     }
   },
-  "getFeatures": async function(){
+  "getHotelFeatures": async function(){
+    try {
+      let res = await axios.get(`${api_url + 'features'}`)
+      return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getApaFeatures": async function(){
     try {
       let res = await axios.get(`${api_url + 'features'}`)
       return res.data.data
@@ -133,6 +171,24 @@ const utils = {
       return error
     }
   },
+  "getSubtypes": async function(id){
+    try {
+      let res = await axios.get(`${api_url + 'hotels/types/subtypes'}`, {params:{type_id: id}})
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "getCategories": async function(){
+    try {
+      let res = await axios.get(`${api_url + 'apartments/categories'}`)
+      return res.data.data
+    } 
+    catch (error) {
+      return error
+    }
+  },
   "getLocations": async function(query){
     try {
       let res = await axios.get(`http://dev.virtualearth.net/REST/v1/Locations?query=${query}&key=${bing_maps_key}`)
@@ -142,6 +198,27 @@ const utils = {
       return error
     }
   },
+
+  "addNewHotel": async function(params_obj){
+    try {
+      let res = await axios.post(`${api_url + 'hotels'}`, params_obj)
+      console.log(res);
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  },
+  "addNewApartment": async function(params_obj){
+    try {
+      let res = await axios.post(`${api_url + 'apartments'}`, params_obj)
+      console.log(res);
+      return res
+    } 
+    catch (error) {
+      return error
+    }
+  }
 }
 
 export default utils 

@@ -65,7 +65,7 @@
       }
     },
     methods:{
-      async searchDestinations(){
+       async searchDestinations(){
         if(this.search !== ''){
           const res = await service.searchDestinations(this.search.trim())
           this.destinations = res.data.data
@@ -86,6 +86,7 @@
       selectDate(){
         localStorage.setItem('check_in', this.checkInDate)
         localStorage.setItem('check_out', this.checkOutDate)
+        this.$emit('selected_date')
       },
       closeDropdown(){
         this.destinations = []

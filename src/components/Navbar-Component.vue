@@ -7,11 +7,10 @@
     </div>
     <div class="d-flex a-center">
       <nav class="nav-links">
-        <router-link class="link" :to="{name: 'ProfileView', params:{usr_id:25}}">Profile</router-link>
-        <router-link class="link" :to="{name: 'add_new_property'}">List your property</router-link>
-        <!-- <button class="link-signin" v-if="this.$route.path !== '/auth' && !getUserId" @click="redirectToAuth()">Sign In</button> -->
-        <router-link v-if="this.$route.path !== '/auth' && !getUserId" class="link-signin" :to="{name: 'auth'}">Sign In</router-link>
-        <button class="link-signin" v-if="getUserId" @click="logOut()">Sign Out</button>
+        <router-link v-if="getUserId && this.$route.name !== 'profile'" class="link" :to="{name: 'profile'}">Profile</router-link>
+        <router-link class="link" :to="{name: 'add_new_property'}" v-if="getUserId && this.$route.name !== 'add_new_property'">List your property</router-link>
+        <router-link v-if="!getUserId" class="link-signin" :to="{name: 'auth'}">Sign In</router-link>
+        <a class="link-signin" v-if="getUserId" @click="logOut()">Sign Out</a>
       </nav>
     </div>
   </div>
@@ -36,11 +35,9 @@ export default{
     async logOut(){
       const res = await service.logOut(localStorage.getItem('sid'))
       console.log(res);
-      if(res.status === 200){
-        localStorage.clear()
-        location.reload()
-        this.$router.push({name: 'home'})
-      }
+      localStorage.clear()
+      await this.$router.push({name: 'home'})
+      location.reload()
     }
   }
 }

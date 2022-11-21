@@ -1,9 +1,9 @@
 <template>
   <div class="d-flex f-col mt-nav">
     <div class="section-div">
-      <div class="sec-white mt-1 d-flex j-between shadow">
+      <div class="sec-white mt-1 top-cont">
         <div class="sec-title-fea">
-          <div class="d-flex a-center">
+          <div class="d-flex a-center border-radius-10 p-05 shadow">
             <span class="hotel-title">{{hotel.hot_name}}</span>
             <div class="hot-stars-div">
               <img class="hot-star" v-for="star in hotel.hot_stars" :key="star" src="../assets/Plain_Yellow_Star.png" alt=""/>
@@ -11,32 +11,39 @@
           </div>
           <span class="mt-1 section-desc">{{hotel.hot_description}}</span>
           <div class="d-flex a-center mt-1">
-            <span class="section-desc-dark">User rating: </span>&nbsp;
-            <span class="rating-number-big">{{Number(hotel.rating).toFixed(1)}} / 10</span>
+            <h3>User rating:</h3>
+            <span class="rating-number-big ml-05">{{Number(hotel.rating).toFixed(1)}} / 10</span>
+          </div>
+          <div class="d-flex g-05 f-wrap mt-2">
+            <h3 class="w-100">Property highlights:</h3>
+            <div class="d-flex border-light" v-for="fea in hotel.features" :key="fea.fea_id">
+              <img class="fea_image" :src="fea.fea_image" alt="">
+              <span class="ml-05 section-desc">{{fea.fea_name}}</span>
+            </div>
           </div>
         </div>
-        <iframe class="map shadow"
-          frameborder="0" 
-          scrolling="yes" 
-          marginheight="0" 
-          marginwidth="0" 
-          :src="'https://maps.google.com/maps?q='+lat+','+lng+'&hl=en&z=14&z=17&amp;output=embed'">
-        </iframe>
-      </div>
-      <div class="gallery-loc-wrap mt-1 d-flex shadow">
-        <div class="hotel-gallery">
-          <grid-images :items="images_arr" :cells="3"/>
+        <div class="d-flex f-col">
+          <iframe class="map shadow"
+            frameborder="0" 
+            scrolling="yes" 
+            marginheight="0" 
+            marginwidth="0" 
+            :src="'https://maps.google.com/maps?q='+lat+','+lng+'&hl=en&z=14&z=17&amp;output=embed'">
+          </iframe>
+          <label class="map-address">{{hotel.hot_address}}</label>
         </div>
-        <span class="section-desc-big">{{hotel.hot_description_long}}</span>
       </div>
-      <div class="sec-white shadow mt-1">
+      <div class="gallery-loc-wrap mt-1 d-flex ">
+        <grid-images :items="images_arr" :cells="4"/>
+      </div>
+      <div class="sec-white mt-1">
         <span class="section-desc-dark">Reviews: </span>
         <div class="comments-div">
           <div class="d-flex f-col">
             <div class="d-flex mt-1" v-for="com in hotel.comments" :key="com">
-              <!-- <div class="profile-img">
+              <div class="profile-img">
                 <img :src="com.usr_image" alt="">
-              </div> -->
+              </div>
               <div class="d-flex f-col">
                 <span class="comment-name">{{com.usr_firstname}}</span>
                 <div class="d-flex a-center">
@@ -49,22 +56,36 @@
         </div>
       </div>
       <div class="sec-white d-flex j-center mt-1 shadow">
-        <Search :only_date_mode="true"/>
+        <Search :only_date_mode="true" @selected_date="getApartments()"/>
       </div> 
       <div class="mt-1 d-flex j-center f-wrap">
-        <ApartmentCard v-for="apa in apartments" :key="apa.cat_id" :apartment="apa" @reserve="makeReservation(
-          getUserId, apa.apartments[0].apa_id, apa.cat_id
-        )"/>
+        <ApartmentCard v-for="apa in apartments" :key="apa.cat_id" :apartment="apa" 
+         @reserve="makeReservation(
+                      getUserId, apa.apartments[0].apa_id, apa.cat_id, apa.full_price
+                    )"
+         @reload="getApartments()"
+        />
       </div>
-      <div class="mt-3"></div>
+      
+      <div class="mt-2 sec-white d-flex f-col">
+        <h3 class="mb-1 p-05 border-radius-10 bg-white shadow a-self-start">Property description</h3>
+        <span class="section-desc">{{hotel.hot_description_long}}</span>
+      </div>
     </div>
+    <ReservationCard v-if="showBookCardComp" @close="showBookCard()"
+                                              :price="selected_price"
+                                              @proceed="makeReservation(
+                                                          getUserId, selected_apa, selected_cat
+                                                        )"/>
   </div>
 </template>
+
 
 <script>
 import service from '../services/API'
 import Search from '../components/Search-Component.vue'
 import ApartmentCard from '../components/Apartment-Card.vue'
+import ReservationCard from '../components/ReservationCard-Component.vue'
 import { mapGetters } from 'vuex'
 import {useToast } from "vue-toastification";
 import {POSITION} from "vue-toastification";
@@ -76,14 +97,9 @@ export default{
   },
   computed: {
     ...mapGetters(['getUserId']),
-
-    src(){
-      const position = `44.8134029+,+20.4340126`
-      return `https://maps.google.com/maps?q=+` + position + `+&hl=en&z=14&amp;output=embed`
-    }
   },
   components:{
-    Search, ApartmentCard
+    Search, ApartmentCard, ReservationCard
   },
   data(){
     return{
@@ -94,6 +110,12 @@ export default{
       images_arr: [],
       lat: null,
       lng: null,
+
+      selected_price: null,
+      selected_apa: null,
+      selected_cat: null,
+
+      showBookCardComp: false
     }
   },
   methods:{
@@ -114,9 +136,13 @@ export default{
                                               localStorage.getItem('check_out')) || null
       this.apartments = res
     },
-    async makeReservation(usr_id, apa_id, cat_id){
+    async makeReservation(usr_id, apa_id, cat_id, price){
+      if(price){
+        this.selected_price = price
+        this.selected_apa = apa_id
+        this.selected_cat = cat_id
+      }
       const toast = useToast()
-      console.log(usr_id, apa_id, cat_id);
       let check_in = localStorage.getItem('check_in')
       let check_out = localStorage.getItem('check_out')
       console.log(typeof(check_in), typeof(check_out));
@@ -129,6 +155,10 @@ export default{
         localStorage.setItem('log_error', true)
       }
       else{
+        if(!this.showBookCardComp){
+          this.showBookCard()
+          return
+        }
         localStorage.removeItem('log_error')
         const res = await service.makeReservation(usr_id ,apa_id, cat_id, this.$route.params.hot_id,
                                             check_in, check_out)
@@ -138,12 +168,28 @@ export default{
           this.$router.push({name: 'hotels'})
         }
       }
+    },
+    selectApartment(price){
+      console.log(price);
+      this.selected_price = price
+      this.showBookCard()
+    },
+    showBookCard(){
+      this.showBookCardComp = !this.showBookCardComp
+    },
+    handleProceed(id, apa_id, cat_id){
+      console.log(id, apa_id, cat_id);
+      this.makeReservation(id, apa_id, cat_id)
     }
   }
 }
 </script>
 
 <style>
+.top-cont{
+  display: flex;
+  justify-content: space-between;
+}
 .comments-div{
   max-height: 18rem;
   overflow-y: scroll;
@@ -179,17 +225,12 @@ export default{
 .gallery-loc-wrap{
   display: flex;
   justify-content: center;
-  height: 30rem;
+  height: 25rem;
   background-color: white;
   border-radius: 10px;
   padding: 1rem;
 }
-.map{
-  border-radius: 10px;
-  height: 20rem;
-  width: 20rem;
-  margin-left: 1rem;
-}
+
 .sec-white{
   background-color: white;
   padding: 1rem;

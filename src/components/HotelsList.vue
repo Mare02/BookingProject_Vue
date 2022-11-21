@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex f-col a-center w-100">
     <ul class="hot-list" id="hotels-list">
-      <li class="hot-list-item" v-for="hot in hotels" :key="hot.hot_id">
+      <li class="hot-list-item shadow" v-for="hot in hotels" :key="hot.hot_id">
         <Carousel class="carousel" :wrapAround="true" v-if="hot.images">
           <Slide v-for="img in hot.images" :key="img.file_id" class="carousel-slide">
             <div class="hot-card-img" @click="redirectToHotel(hot.hot_id)">
@@ -19,7 +19,7 @@
             </div>
           </Slide>
         </Carousel>
-        <div class="hot-list-details pr-1">
+        <div class="hot-list-details">
           <div class="card-horizontal-header">
             <div class="hot-header">
               <div class="d-flex a-center">
@@ -42,8 +42,8 @@
           <div class="card-horizontal-footer">
             <div class="hot-price">
               <label class="price-label">Starting from: </label>
-              <span class="price" v-if="hot.full_price">{{hot.full_price.toLocaleString("en-US")}} RSD</span>
-              <span class="price" v-if="!hot.full_price && hot.price_per_day">{{hot.price_per_day.toLocaleString("en-US")}} RSD / day</span>
+              <span class="price-small" v-if="hot.full_price">{{hot.full_price.toLocaleString("en-US")}} RSD</span>
+              <span class="price-small" v-if="!hot.full_price && hot.price_per_day">{{hot.price_per_day.toLocaleString("en-US")}} RSD / day</span>
             </div>
           </div>
         </div>
@@ -79,7 +79,6 @@ export default{
   },
   methods:{
     redirectToHotel(hot_id){
-      console.log(hot_id);
       this.$router.push({name: 'hotel', params:{hot_id: hot_id}})
       localStorage.setItem('hot_id', hot_id)
     },
@@ -88,6 +87,10 @@ export default{
 </script>
 
 <style>
+.price-small{
+  color: rgb(89, 60, 134);
+  font-size: 1.1rem;
+}
 .hot-star{
   width: 1.3rem;
 }
