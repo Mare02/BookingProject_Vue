@@ -9,6 +9,8 @@
   <section class="mt-5 section-div">
     <div class="d-flex f-col a-center sec-white">
       <div class="section-header d-flex a-center">
+        <a href="#" onclick="window.open(encodeURI('http://www.google.com/'), '_system')">Test link cordova</a>
+
         <span class="section-title">Popular destinations</span>
         <span class="section-desc">Here are some popular destinations to explore</span>
       </div>
